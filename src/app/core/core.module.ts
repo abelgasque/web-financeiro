@@ -1,9 +1,16 @@
 import { NgModule, LOCALE_ID } from '@angular/core';
-import { LocationStrategy, HashLocationStrategy } from '@angular/common';
+import { LocationStrategy, HashLocationStrategy, registerLocaleData } from '@angular/common';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
+import { Title } from '@angular/platform-browser';
+import localePt from '@angular/common/locales/pt';
+import { RouterModule } from '@angular/router';
 
 import { JwtHelperService } from '@auth0/angular-jwt';
+
+import { MessageService, ConfirmationService } from 'primeng/api';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { ToastModule } from 'primeng/toast';
 
 import { ErrorHandlerService } from './error-handler.service';
 import { DashboardService } from '../dashboard/dashboard.service';
@@ -15,21 +22,22 @@ import { ToastService } from '../shared/components/toast/toast.service';
 import { GenericHttp } from '../seguranca/generic-http';
 import { PaginaNaoEncontradaComponent } from './pagina-nao-encontrada.component';
 import { NaoAutorizadoComponent } from './nao-autorizado.component';
-import { ConfirmDialogModule } from 'primeng/confirmdialog';
-import { ToastModule } from 'primeng/toast';
 import { LancamentosModule } from '../lancamentos/lancamentos.module';
 import { DashboardModule } from '../dashboard/dashboard.module';
 import { RelatoriosModule } from '../relatorios/relatorios.module';
 import { PessoasModule } from '../pessoas/pessoas.module';
 import { DefaultModule } from '../default/default.module';
 import { RelatoriosService } from '../relatorios/relatorios.service';
-import { MessageService, ConfirmationService } from 'primeng/api';
-import { Title } from '@angular/platform-browser';
+
+
+registerLocaleData(localePt);
 
 @NgModule({
   imports: [
     CommonModule,
     HttpClientModule,
+    RouterModule,
+
     LancamentosModule,
     DashboardModule,
     RelatoriosModule,
@@ -61,7 +69,7 @@ import { Title } from '@angular/platform-browser';
     MessageService,
     JwtHelperService,
     Title,
-    { provide: LOCALE_ID, useValue: 'pt-br' },
+    { provide: LOCALE_ID, useValue: 'pt' },
     { provide: LocationStrategy, useClass: HashLocationStrategy }
   ]
 })

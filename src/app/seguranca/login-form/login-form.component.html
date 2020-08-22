@@ -1,5 +1,7 @@
 <app-spinner [hidden]="!displaySpinner"></app-spinner>
-<h1 style="text-align: center;">Login</h1>
+<div fxLayout="row" fxLayoutAlign="center center">
+    <img class="img" src="../../../assets/img/box-login.png">
+</div>
 <form #f="ngForm" autocomplete="off" (ngSubmit)="autenticarLogin()">
     <div class="ui-g-12 ui-fluid">
         <span class="ui-float-label">
@@ -17,7 +19,7 @@
         </span>
     </div>
     <div class="ui-g-12 ui-fluid">
-        <button pButton type="submit" label="Salvar"
+        <button pButton type="submit" label="Entrar"
         [disabled]="!f.valid"></button>
     </div>
 </form>

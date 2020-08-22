@@ -21,10 +21,12 @@ export class NavbarComponent implements OnInit {
     private logoutService: LogoutService,
     private errorHandler: ErrorHandlerService,
     private router: Router
-  ) { }
+  ) { 
+    this.get();
+  }
 
   ngOnInit(): void {
-    this.get();
+    
   }
 
   get(){
@@ -35,21 +37,12 @@ export class NavbarComponent implements OnInit {
       this.gerenciarBtnNavbar = true;
     }
   }
-
-  obterNovoAccessToken(){
-    this.auth.obterNovoAccessToken();
-  }
-
+  
   logout(){
-    console.log(localStorage.getItem('token'));
     this.logoutService.logout()
     .then(response=>{
-      this.router.navigate(['/seguranca','login-autenticacao']);
+      this.router.navigate(['']);
     })
     .catch(erro => this.errorHandler.handle(erro));
-  }
-
-  getMenu(){
-    return this.router.url != '';
   }
 }

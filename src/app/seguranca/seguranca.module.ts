@@ -19,6 +19,7 @@ import { SegurancaComponent } from './seguranca.component';
 import { SharedModule } from '../shared/shared.module';
 import { LogoutService } from './logout.service';
 import { UsuarioCadastroComponent } from './usuario-cadastro/usuario-cadastro.component';
+import { SegurancaRoutingModule } from './seguranca.routing.module';
 
 export function tokenGetter() {
   return localStorage.getItem('token');
@@ -34,7 +35,8 @@ export function tokenGetter() {
     CommonModule,
     RouterModule,
     FormsModule,
-    HttpClientModule,
+    
+    // SegurancaRoutingModule,
     
     JwtModule.forRoot({
       config: {

@@ -8,16 +8,19 @@ import { GenericHttp } from 'src/app/seguranca/generic-http';
 })
 export class DashboardService {
 
-  
-  constructor(private http: GenericHttp) { }
+  lancamentosUrl: string;
+
+  constructor(private http: GenericHttp) { 
+    this.lancamentosUrl = `${this.lancamentosUrl}`;
+  }
 
   estatisticasLancamentosPorCategoria(): Promise<any> {
-    return this.http.get<Promise<any>>(`${environment.apiUrl}/lancamentos/estatisticas/por-categoria`)
+    return this.http.get<Promise<Array<any>>>(`${this.lancamentosUrl}/estatisticas/por-categoria`)
     .toPromise();
   }
 
   estatisticasLancamentosPorDia(): Promise<any> {
-    return this.http.get<Array<any>>(`${environment.apiUrl}/lancamentos/estatisticas/por-dia`)
+    return this.http.get<Array<any>>(`${this.lancamentosUrl}/estatisticas/por-dia`)
       .toPromise()
       .then(response => {
         const dados = response;

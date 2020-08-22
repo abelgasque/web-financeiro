@@ -15,6 +15,7 @@ import { PaginaNaoEncontradaComponent } from './core/pagina-nao-encontrada.compo
 import { UsuarioCadastroComponent } from './seguranca/usuario-cadastro/usuario-cadastro.component';
 import { RelatoriosComponent } from './relatorios/relatorios.component';
 import { RelatorioLancamentosComponent } from './relatorios/relatorio-lancamentos/relatorio-lancamentos.component';
+import { HomeComponent } from './default/home/home.component';
 
 const routes: Routes = [
   { path: 'lancamentos', 
@@ -71,7 +72,12 @@ const routes: Routes = [
     ]
   }, 
 
-  { path: '',  component:  DefaultComponent, children: [] },
+ 
+  { path: '',  component:  DefaultComponent, 
+      children: [
+        { path: '' , component: HomeComponent }
+      ] 
+    },
   { path: '', redirectTo: '', pathMatch: 'full' },
   { path: 'nao-autorizado', component: NaoAutorizadoComponent },
   { path: 'pagina-nao-encontrada', component: PaginaNaoEncontradaComponent },

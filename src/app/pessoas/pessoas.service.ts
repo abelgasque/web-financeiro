@@ -11,7 +11,11 @@ import { PessoaFilter } from 'src/app/core/model';
 })
 export class PessoasService {
 
-  constructor(private http: GenericHttp) { }
+  urlPessoa : string;
+
+  constructor(private http: GenericHttp) {
+    this.urlPessoa = `${environment.apiUrl}/pessoas`;
+   }
 
   pesquisar(filtro: PessoaFilter): Promise<any>{
     let params = new HttpParams({
@@ -26,7 +30,7 @@ export class PessoasService {
     if(filtro.cpf){
       params = params.append('cpf', filtro.cpf);
     }
-    return this.http.get<any>(`${environment.apiUrl}/pessoas/pesquisar`,{params})
+    return this.http.get<any>(`${this.urlPessoa}/pesquisar?resumo`,{params})
     .toPromise()
     .then(response => {
       const pessoas = response.content;
@@ -39,22 +43,22 @@ export class PessoasService {
   }
 
   salvar(entidade: any): Promise<any> {
-    return this.http.post<any>(`${environment.apiUrl}/pessoas`, entidade).toPromise();
+    return this.http.post<any>(`${this.urlPessoa}`, entidade).toPromise();
   }
   
   editar(entidade: any): Promise<any> {
-    return this.http.put<any>(`${environment.apiUrl}/pessoas`, entidade).toPromise();
+    return this.http.put<any>(`${this.urlPessoa}`, entidade).toPromise();
   }
 
   buscarPorId(id: number): Promise<any> {
-    return this.http.get<any>(`${environment.apiUrl}/pessoas/${id}`).toPromise();
+    return this.http.get<any>(`${this.urlPessoa}/${id}`).toPromise();
   }
 
   listar(): Promise<any> {
-    return this.http.get(`${environment.apiUrl}/pessoas`).toPromise();
+    return this.http.get(`${this.urlPessoa}`).toPromise();
   }
 
   excluir(id: number): Promise<any>{
-    return this.http.delete(`${environment.apiUrl}/pessoas/${id}`).toPromise();
+    return this.http.delete(`${this.urlPessoa}/${id}`).toPromise();
   }
 }

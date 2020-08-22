@@ -17,7 +17,6 @@ export class LoginFormComponent implements OnInit {
 
   constructor(
     private authService: AuthService,
-    private toastService: ToastService,
     private errorHandler: ErrorHandlerService,
     private router: Router
     ) { 
@@ -31,17 +30,12 @@ export class LoginFormComponent implements OnInit {
     this.displaySpinner = true;
     this.authService.login(this.usuario.email, this.usuario.senha)
     .then(response=>{
-      this.router.navigate(['/dashboard', 'admin']);
+      this.router.navigate(['']);
       this.displaySpinner = false;
     })
     .catch(erro=>{
       console.log(erro); 
-      if(erro.status === 400){
-        this.toastService.showError("Usuario ou senha inválido");
-        this.usuario.senha = "";
-      }else{
-        this.errorHandler.handle(erro);
-      }
+      this.errorHandler.handle(erro);
       this.displaySpinner = false;
     });
   }

@@ -11,7 +11,11 @@ import { GenericHttp } from 'src/app/seguranca/generic-http';
 })
 export class LancamentosService {
 
-  constructor(private http: GenericHttp) { }
+  urlLancamento: string;
+
+  constructor(private http: GenericHttp) { 
+    this.urlLancamento =`${environment.apiUrl}/lancamentos`;
+  }
 
   pesquisar(filtro: LancamentoFilter): Promise<any>{
     let params = new HttpParams({
@@ -29,7 +33,7 @@ export class LancamentosService {
     if(filtro.vencimentoAte){
       params = params.append('dataVencimentoAte', moment(filtro.vencimentoAte).format('YYYY-MM-DD'));
     }
-    return this.http.get<any>(`${environment.apiUrl}/lancamentos/pesquisar`, {params})
+    return this.http.get<any>(`${this.urlLancamento}/pesquisar?resumo`, {params})
     .toPromise()
     .then(response => {
       let lancamentos = response.content;
@@ -45,30 +49,30 @@ export class LancamentosService {
   }
 
   salvar(entidade: any): Promise<any> {
-    return this.http.post<Lancamento>(`${environment.apiUrl}/lancamentos`, entidade)
+    return this.http.post<Lancamento>(`${this.urlLancamento}`, entidade)
     .toPromise();
   }
   
   editar(entidade: any): Promise<any> {
-    return this.http.put<Lancamento>(`${environment.apiUrl}/lancamentos`, entidade)
+    return this.http.put<Lancamento>(`${this.urlLancamento}`, entidade)
     .toPromise()
     .then(response => response);
   }
 
   buscarPorId(id: number): Promise<any> {
-    return this.http.get<Lancamento>(`${environment.apiUrl}/lancamentos/${id}`)
+    return this.http.get<Lancamento>(`${this.urlLancamento}/${id}`)
     .toPromise()
     .then(response => response);
   }
 
   listar(): Promise<any> {
-    return this.http.get<any>(`${environment.apiUrl}/lancamentos`,)
+    return this.http.get<any>(`${this.urlLancamento}`,)
     .toPromise()
     .then(response => response);
   }
 
   excluir(id: number): Promise<any>{
-    return this.http.delete(`${environment.apiUrl}/lancamentos/${id}`)
+    return this.http.delete(`${this.urlLancamento}/${id}`)
     .toPromise()
     .then(response => null);
   }
