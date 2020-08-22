@@ -1,11 +1,17 @@
 <app-toast></app-toast>
 <div class="body" fxLayout="row" fxLayoutAlign="center center" >
-    <mat-card class="card" fxLayoutAlign="center center">
-        <router-outlet></router-outlet>
-    </mat-card>
-    <div fxLayoutAlign="center center">
-        <a mat-button [routerLink]="['']" routerLinkActive="active-link">
-            Voltar ao inicio
-        </a>
-    </div>
+    <ul>
+        <li>
+            <mat-card class="card" fxLayoutAlign="center center">
+                <router-outlet></router-outlet>
+            </mat-card>
+        </li>
+        <li>
+            <div fxLayoutAlign="center center">
+                <a mat-button [routerLink]="['']" routerLinkActive="active-link">
+                    Voltar ao inicio
+                </a>
+            </div>
+        </li>
+    </ul>
 </div>

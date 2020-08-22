@@ -18,10 +18,11 @@ export class AuthService {
   constructor(
     private http: HttpClient,
     private jwtHelper: JwtHelperService,
-    private router: Router
-  ) {
-      this.carregarToken();
-      this.oauthTokenUrl = `${environment.apiUrl}/oauth/token`;
+    private router: Router) 
+  {
+    
+    this.oauthTokenUrl = `${environment.apiUrl}/oauth/token`;
+    this.carregarToken();
   }
 
   login(usuario: string, senha: string): Promise<void> {
@@ -30,8 +31,8 @@ export class AuthService {
         .append('Authorization', 'Basic YW5ndWxhcjpAbmd1bEByMA==');
 
     const body = `username=${usuario}&password=${senha}&grant_type=password`;
-    return this.http.post<any>(this.oauthTokenUrl, body,
-        { headers, withCredentials: true })
+
+    return this.http.post<any>(this.oauthTokenUrl, body, { headers, withCredentials: true })
       .toPromise()
       .then(response => {
         this.armazenarToken(response.access_token);
@@ -50,12 +51,13 @@ export class AuthService {
   }
 
   obterNovoAccessToken(): Promise<void> {
-    let headers = new HttpHeaders()
-    headers = headers.append('Content-Type', 'application/x-www-form-urlencoded');
-    headers = headers.append('Authorization', 'Basic YW5ndWxhcjpAbmd1bEByMA==');
-    let body = 'grant_type=refresh_token';
-    return this.http.post<any>(this.oauthTokenUrl, body,
-        { headers, withCredentials: true })
+    const headers = new HttpHeaders()
+      .append('Content-Type', 'application/x-www-form-urlencoded')
+      .append('Authorization', 'Basic YW5ndWxhcjpAbmd1bEByMA==');
+    
+    const body = 'grant_type=refresh_token';
+
+    return this.http.post<any>(this.oauthTokenUrl, body, { headers, withCredentials: true })
       .toPromise()
       .then(response => {
         this.armazenarToken(response.access_token);
@@ -77,7 +79,7 @@ export class AuthService {
   }
 
   isAccessTokenInvalido() {
-    let token = localStorage.getItem('token');
+    const token = localStorage.getItem('token');
 
     return !token || this.jwtHelper.isTokenExpired(token);
   }

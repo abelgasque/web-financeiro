@@ -2,11 +2,9 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 import { AuthGuard } from './auth.guard'
-import { JwtModule, JwtHelperService } from "@auth0/angular-jwt";
-
-import { FinanceiroHttpInterceptor } from "src/app/seguranca/financeiro-http-interceptor";
+import { JwtModule } from "@auth0/angular-jwt";
 
 import { FlexLayoutModule } from "@angular/flex-layout";
 import { MatButtonModule } from '@angular/material/button';
@@ -37,6 +35,15 @@ export function tokenGetter() {
     RouterModule,
     FormsModule,
     HttpClientModule,
+    
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: tokenGetter,
+        allowedDomains: environment.tokenWhitelistedDomains,
+        disallowedRoutes: environment.tokenBlacklistedRoutes,
+      },
+    }),
+
     FlexLayoutModule,
 
     SharedModule,
@@ -45,25 +52,11 @@ export function tokenGetter() {
     PasswordModule,
     ButtonModule,
     
-    MatButtonModule,
-
-    JwtModule.forRoot({
-      config: {
-        tokenGetter: tokenGetter,
-        allowedDomains: environment.tokenWhitelistedDomains,
-        disallowedRoutes: environment.tokenBlacklistedRoutes,
-      },
-    }),
+    MatButtonModule,    
   ],
   providers: [
-    JwtHelperService,
     LogoutService,
-    AuthGuard,
-    {
-        provide: HTTP_INTERCEPTORS,
-        useClass: FinanceiroHttpInterceptor,
-        multi: true
-    }
+    AuthGuard
   ]
 })
 export class SegurancaModule { }

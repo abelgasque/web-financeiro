@@ -20,7 +20,9 @@ export class LoginFormComponent implements OnInit {
     private toastService: ToastService,
     private errorHandler: ErrorHandlerService,
     private router: Router
-    ) { }
+    ) { 
+      this.authService.limparAccessToken();
+    }
 
   ngOnInit(): void {
   }

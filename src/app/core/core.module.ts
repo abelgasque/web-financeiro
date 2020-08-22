@@ -23,6 +23,8 @@ import { RelatoriosModule } from '../relatorios/relatorios.module';
 import { PessoasModule } from '../pessoas/pessoas.module';
 import { DefaultModule } from '../default/default.module';
 import { RelatoriosService } from '../relatorios/relatorios.service';
+import { MessageService, ConfirmationService } from 'primeng/api';
+import { Title } from '@angular/platform-browser';
 
 @NgModule({
   imports: [
@@ -51,10 +53,14 @@ import { RelatoriosService } from '../relatorios/relatorios.service';
     CategoriaService,
     ToastService,
     RelatoriosService,
-    
-    JwtHelperService,
-    GenericHttp,
     AuthService,
+    GenericHttp,
+
+
+    ConfirmationService,
+    MessageService,
+    JwtHelperService,
+    Title,
     { provide: LOCALE_ID, useValue: 'pt-br' },
     { provide: LocationStrategy, useClass: HashLocationStrategy }
   ]
