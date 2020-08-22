@@ -1,0 +1,15 @@
+<div class="ui-g">
+    <div class="ui-g-12 ui-md-6">
+        <h1>Gráfico de lançamentos por dia</h1>
+        <canvas  baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions"
+        [legend]="barChartLegend" [chartType]="barChartType"></canvas>
+        <button pButton label="Gráfico de {{barChartType === 'bar'? 'linha':'barra'}}" (click)="randomize()"></button>
+    </div>
+    <div class="ui-g-12 ui-md-6 ui-fluid">
+        <h1>Gráfico lançamentos por categoria</h1>
+        <canvas baseChart [data]="pieChartData" [labels]="pieChartLabels"
+          [chartType]="pieChartType" [options]="pieChartOptions"
+          [colors]="pieChartColors" [legend]="pieChartLegend">
+        </canvas>
+    </div>
+</div>

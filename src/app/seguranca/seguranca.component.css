@@ -1,0 +1,17 @@
+.body{
+    height: 100% !important;
+    width:  100% !important;
+    background:  url(../../assets/img/fundo-login.png);
+    background-repeat: no-repeat, repeat;
+}
+
+.card{
+    height: 100%;
+    width:  100%;
+}
+.mat-card{
+    background:rgba(0,0,0,0.5);
+    color: #fff;
+    width: 350px;
+    height: 300px;
+}

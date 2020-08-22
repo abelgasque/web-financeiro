@@ -1,0 +1,91 @@
+<app-spinner [hidden]="!displaySpinner"></app-spinner>
+<div class="ui-g">
+    <div class="ui-g-12">
+        <form  #f="ngForm" autocomplete="off" (ngSubmit)="gerenciarPersistencia(f)">
+            <div class="ui-g-12 ui-md-6 ui-fluid">
+                <span class="ui-float-label">
+                    <input pInputText type="text" name="descricao" [(ngModel)]="lancamento.descricao"  
+                    required minlength="5" maxlength="50"> 
+                    <label>Descrição</label>
+                </span>
+                <small>Campo obrigatório</small>
+            </div>
+            <div class="ui-g-6 ui-md-2 ui-fluid">
+                <span class="ui-float-label">
+                    <p-calendar name="dataVencimento" dateFormat="dd/mm/yy" showButtonBar="true"
+                    readonlyInput="false"appendTo="body" showIcon="true" 
+                    [(ngModel)]="lancamento.dataVencimento" required>
+                    </p-calendar>
+                    <label>Vencimento</label>
+                </span>
+                <small>Campo obrigatório</small>
+            </div>
+            <div class="ui-g-6 ui-md-2 ui-fluid">
+                <span class="ui-float-label">
+                    <p-calendar name="dataPagamento" dateFormat="dd/mm/yy" showButtonBar="true"
+                    appendTo="body" readonlyInput="false" showIcon="true"
+                    [(ngModel)]="lancamento.dataPagamento"></p-calendar>
+                    <label>{{tipo.value === 'RECEITA' ? 'Recebimento' : 'Pagamento'}}</label>
+                </span>
+                <small>Campo opcional</small>
+            </div>
+            <div class="ui-g-6 ui-md-2 ui-fluid">
+                <span class="ui-float-label">
+                    <input pInputText type="text" name="valor"
+                    currencyMask [options]="{ prefix: '', thousands: '.', decimal: ',' }"
+                    [(ngModel)]="lancamento.valor" #valor="ngModel" required> 
+                    <label>Valor</label>
+                </span>
+                <small>Campo obrigatório</small>
+            </div>
+            <div class="ui-g-12 ui-md-4 ui-fluid">
+                <span class="ui-float-label">
+                    <p-dropdown name="categoria" [options]="categorias"
+                    [showClear]="true" appendTo="body" [autoDisplayFirst]="false" 
+                    optionLabel="nome" [(ngModel)]="lancamento.categoria" required></p-dropdown> 
+                     <label>Categoria</label>
+                </span>
+                <small>Campo obrigatório</small>
+            </div>
+            <div class="ui-g-12 ui-md-6 ui-fluid">
+                <span class="ui-float-label">
+                    <p-dropdown name="pessoa" [options]="pessoas" [filter]="true" 
+                    optionLabel="nome" [showClear]="true" appendTo="body" 
+                    [autoDisplayFirst]="false" [(ngModel)]="lancamento.pessoa" required></p-dropdown> 
+                    <label>Pessoa</label>
+                </span>
+                <small>Campo obrigatório</small>
+            </div>
+            <div class="ui-g-12 ui-md-2">
+                <p-selectButton [options]="tipos" name="tipo"
+                [(ngModel)]="lancamento.tipo" #tipo="ngModel" required>
+                </p-selectButton><br>
+                <small>Tipo. Campo obrigatório</small>
+            </div>
+            <div class="ui-g-12 ui-fluid">
+                <span class="ui-float-label">
+                    <textarea rows="5" cols="30" pInputTextarea autoResize="autoResize"></textarea>
+                    <label>Observação</label>
+                </span>
+                <small>Campo opcional</small>
+            </div>
+            <div class="ui-g-6 ui-md-1 ui-fluid">
+                <button pButton type="submit" label="Salvar" class="ui-button-success ui-button-rounded"
+                [disabled]="!f.valid"></button>
+            </div>
+            <div class="ui-g-6 ui-md-1 ui-fluid">
+                <button pButton type="button" label="Novo" class="ui-button-rounded ui-button-secondary"
+                (click)="novo(f)"></button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<p-dialog header="Godfather I" [(visible)]="display" [modal]="true" [style]="{width: '50%'}"
+ [baseZIndex]="10000" [draggable]="false" [resizable]="false">
+   
+    <p-footer>
+        <button type="button" pButton icon="pi pi-check" (click)="display=false" label="Yes"></button>
+        <button type="button" pButton icon="pi pi-times" (click)="display=false" label="No" class="ui-button-secondary"></button>
+    </p-footer>
+</p-dialog>

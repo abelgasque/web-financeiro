@@ -1,0 +1,55 @@
+<mat-toolbar color="primary">
+    <mat-toolbar-row>
+      <a mat-icon-button (click)="this.sideBarOpen = !this.sideBarOpen">
+        <mat-icon>menu</mat-icon>
+      </a>
+      <a mat-button [routerLink]="['']">Financeiro</a>
+      <span class="example-spacer"></span>
+      <a mat-button [hidden]="gerenciarBtnNavbar"
+        [routerLink]="['/seguranca','login-autenticacao']">
+        <mat-icon>login</mat-icon>Login
+      </a>
+    </mat-toolbar-row>
+</mat-toolbar>
+
+<p-sidebar [(visible)]="sideBarOpen" [showCloseIcon]="false">
+ <p-scrollPanel [style]="{width: '100%', height: '100%'}" styleClass="custombar">
+    <p>{{ auth.jwtPayload?.nome }}</p>
+    <p>{{ auth.jwtPayload?.user_name }}</p>
+    <mat-selection-list [multiple]="false">
+      <div mat-subheader>Usuario</div>
+      <mat-list-option *ngIf="auth.temPermissao('ROLE_PESQUISAR_LANCAMENTO')">
+        <mat-icon mat-list-icon>dashboard</mat-icon>
+        <a routerLinkActive="select"
+        [routerLink]="['/dashboard']" >Dashboard</a>
+      </mat-list-option>
+      <mat-list-option  *ngIf="auth.temPermissao('ROLE_CADASTRAR_LANCAMENTO') ||
+      auth.temPermissao('ROLE_PESQUISAR_LANCAMENTO')">
+          <mat-icon mat-list-icon>add</mat-icon>
+          <a [routerLink]="['/lancamentos']" 
+          routerLinkActive="select">Lançamentos</a>
+      </mat-list-option>
+      <mat-list-option  *ngIf="auth.temPermissao('ROLE_CADASTRAR_LANCAMENTO') ||
+      auth.temPermissao('ROLE_PESQUISAR_LANCAMENTO')">
+          <mat-icon mat-list-icon>list</mat-icon>
+          <a [routerLink]="['/pessoas']" 
+          routerLinkActive="select">Pessoas</a>
+      </mat-list-option>
+      <mat-list-option *ngIf="auth.temPermissao('ROLE_PESQUISAR_LANCAMENTO')">
+        <mat-icon mat-list-icon>list</mat-icon>
+        <a [routerLink]="['/relatorios', 'lancamentos']" 
+        routerLinkActive="select">Relatórios</a>
+     </mat-list-option>
+      <mat-divider *ngIf="auth.temPermissao('ROLE_CADASTRAR_PESSOA') ||  
+      auth.temPermissao('ROLE_PESQUISAR_PESSOA')"></mat-divider>
+      <mat-list-option [hidden]="!gerenciarBtnNavbar">
+        <mat-icon mat-list-icon>login</mat-icon>
+        <a href="javascript:;" (click)="logout()">Logout</a>
+      </mat-list-option>
+      <mat-list-option [hidden]="gerenciarBtnNavbar">
+        <mat-icon mat-list-icon>login</mat-icon>
+        <a href="javascript:;" (click)="logout()">Login</a>
+      </mat-list-option>
+    </mat-selection-list>
+  </p-scrollPanel>
+</p-sidebar>

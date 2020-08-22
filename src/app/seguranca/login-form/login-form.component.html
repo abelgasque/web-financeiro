@@ -1,0 +1,36 @@
+<app-spinner [hidden]="!displaySpinner"></app-spinner>
+<h1 style="text-align: center;">Login</h1>
+<form #f="ngForm" autocomplete="off" (ngSubmit)="autenticarLogin()">
+    <div class="ui-g-12 ui-fluid">
+        <span class="ui-float-label">
+            <input pInputText type="text" name="email" [(ngModel)]="usuario.email"
+                minlength="5" maxlength="50" required> 
+            <label>E-mail</label>
+        </span>
+        <small>Exemplo@dominio.com</small>
+    </div>
+    <div class="ui-g-12 ui-fluid">
+        <span class="ui-float-label">
+            <input pInputText type="password" name="senha" [(ngModel)]="usuario.senha"
+                minlength="5" maxlength="50" required> 
+            <label>Senha</label>
+        </span>
+    </div>
+    <div class="ui-g-12 ui-fluid">
+        <button pButton type="submit" label="Salvar"
+        [disabled]="!f.valid"></button>
+    </div>
+</form>
+<div class="ui-g-12 ui-fluid">
+    <div class="ui-g-6">
+        <a mat-button>
+            Perdeu sua senha?
+        </a>
+    </div>
+    <div class="ui-g-6">
+        <a mat-button [routerLink]="['/seguranca','usuario-cadastro']" routerLinkActive="active-link">
+            Cadastrar-se
+        </a>
+    </div>
+</div>
+

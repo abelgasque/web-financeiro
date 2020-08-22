@@ -1,0 +1,18 @@
+<div class="ui-g">
+    <div class="ui-g-12">
+        <form class="ui-g-12" autocomplete="off" #formRelatorio="ngForm" (ngSubmit)="gerar()">
+            <div class="ui-g-12">
+                <p-calendar name="periodoInicio" dateFormat="dd/mm/yy" showButtonBar="true"
+                readonlyInput="false"appendTo="body" [(ngModel)]="periodoInicio" required>
+                </p-calendar>
+                <label>Até</label>
+                <p-calendar name="periodoFim" dateFormat="dd/mm/yy" showButtonBar="true"
+                readonlyInput="false" appendTo="body"  [(ngModel)]="periodoFim" required>
+                </p-calendar>
+            </div>
+            <div class="ui-g-12">
+                <button pButton type="submit" label="Gerar" [disabled]="!formRelatorio.valid"></button>
+            </div>
+        </form>
+    </div>
+</div>

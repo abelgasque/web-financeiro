@@ -1,0 +1,13 @@
+a{
+    color: #fff;
+    text-align: center;
+}
+
+a:hover{
+    color: #fff;
+}
+
+ul{
+    text-align: center;
+    list-style: none;
+}
