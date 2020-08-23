@@ -8,7 +8,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     color:  #fff !important;
 }
 .custombar .p-scrollpanel-wrapper {
-    border-right: 9px solid #f4f4f4;
+    border-right: 50px solid green;
 }
     
 .custombar .p-scrollpanel-bar {

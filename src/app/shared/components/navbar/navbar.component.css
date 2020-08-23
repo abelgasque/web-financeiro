@@ -57,3 +57,9 @@ a:hover{
 p{
     text-align: center;
 }
+
+.imgUser{
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+}

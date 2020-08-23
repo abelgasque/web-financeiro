@@ -22,8 +22,6 @@ import {NavbarComponent} from './components/navbar/navbar.component';
 import {ToastComponent} from './components/toast/toast.component';
 import {SpinnerComponent} from './components/spinner/spinner.component';
 
-
-
 @NgModule({
   declarations: [
     NavbarComponent,
@@ -33,6 +31,7 @@ import {SpinnerComponent} from './components/spinner/spinner.component';
   imports: [
     CommonModule,
     RouterModule,
+    
     FlexLayoutModule,
     
     MatToolbarModule,
