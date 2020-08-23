@@ -22,7 +22,7 @@ import { UsuarioCadastroComponent } from './usuario-cadastro/usuario-cadastro.co
 import { SegurancaRoutingModule } from './seguranca.routing.module';
 
 export function tokenGetter() {
-  return localStorage.getItem('token');
+  return localStorage.getItem("access_token");
 }
 
 @NgModule({
@@ -35,9 +35,7 @@ export function tokenGetter() {
     CommonModule,
     RouterModule,
     FormsModule,
-    
-    // SegurancaRoutingModule,
-    
+    HttpClientModule,
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter,
