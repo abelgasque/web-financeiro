@@ -13,7 +13,8 @@ export class PessoasService {
 
   urlPessoa : string;
 
-  constructor(private http: GenericHttp) {
+  constructor(
+    private http: GenericHttp) {
     this.urlPessoa = `${environment.apiUrl}/pessoas`;
    }
 
