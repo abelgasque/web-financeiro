@@ -6,6 +6,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { JwtModule } from "@auth0/angular-jwt";
 
 import { environment } from 'src/environments/environment';
+
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
@@ -30,8 +31,15 @@ export function tokenGetter() {
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter,
-        allowedDomains: environment.tokenWhitelistedDomains,
-        disallowedRoutes: environment.tokenBlacklistedRoutes,
+        allowedDomains: [ 
+          "http://localhost:8080", 
+          "https://polar-river-52878.herokuapp.com",
+          "https://stark-garden-05417.herokuapp.com"
+        ],
+        disallowedRoutes: [ 
+          "http://localhost:8080/oauth/token", 
+          "https://polar-river-52878.herokuapp.com/oauth/token"
+        ],
       },
     }),
   ],
