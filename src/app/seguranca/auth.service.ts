@@ -17,8 +17,7 @@ export class AuthService {
 
   constructor(
     private http: HttpClient,
-    private jwtHelper: JwtHelperService,
-    private router: Router) 
+    private jwtHelper: JwtHelperService) 
   {
     this.oauthTokenUrl = `${environment.apiUrl}/oauth/token`;
     this.carregarToken();

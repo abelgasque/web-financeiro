@@ -1,10 +1,17 @@
-const express = require('express')
-const path = require('path')
-const app = express()
+const express = require('express');
+const path = require('path');
+var cors = require('cors');
+const app = express();
 
-app.use(express.static(`${__dirname}/dist/Financeiro-web`))
+var corsOptions = {
+    origin: 'https://polar-river-52878.herokuapp.com',
+    optionsSuccessStatus: 200
+}
 
-app.get('/*',(req, res) => {
+app.use(express.static(`${__dirname}/dist/Financeiro-web`));
+
+app.get('/*', cors(corsOptions), (req, res) => {
+    res.json({msg: 'This is CORS-enabled for only https://polar-river-52878.herokuapp.com.'})
     res.sendFile(path.join(`${__dirname}/dist/Financeiro-web/index.html`))
 });
 
