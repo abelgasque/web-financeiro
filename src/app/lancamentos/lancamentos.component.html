@@ -13,7 +13,7 @@
         <div class="ui-g-6 ui-md-2">
             <span class="ui-float-label">
                 <p-calendar name="vencimentoDe" dateFormat="dd/mm/yy" showButtonBar="true"
-                readonlyInput="false"appendTo="body" showIcon="true" 
+                readonlyInput="false"appendTo="body" showIcon="true" [locale]="ptBr"
                 [(ngModel)]="filtro.vencimentoDe" #vencimentoDe="ngModel"> 
                 </p-calendar>
                 <label>Vencimento De</label>
@@ -22,7 +22,7 @@
         <div class="ui-g-6 ui-md-2">
             <span class="ui-float-label">
                 <p-calendar name="vencimentoAte" dateFormat="dd/mm/yy" showButtonBar="true"
-                readonlyInput="false"appendTo="body" showIcon="true" 
+                readonlyInput="false"appendTo="body" showIcon="true" [locale]="ptBr"
                 [(ngModel)]="filtro.vencimentoAte" #vencimentoAte="ngModel">
                 </p-calendar> 
                 <label>Vencimento Até</label>
@@ -39,7 +39,7 @@
             <ng-template pTemplate="caption">  
                 <div class="ui-helper-clearfix" style="text-align: center">
                     Lista de lançamentos
-                    <button type="button" pButton class="ui-button-rounded"
+                    <button type="button" pButton class="ui-button-rounded" (click)="novoLancamento()"
                     pButton iconPos="left" style="float:right" icon="pi pi-plus" label="Novo"></button>
                 </div>
             </ng-template>
@@ -86,7 +86,8 @@
 </div>
 
 <p-dialog [(visible)]="displayFormLancamento" [modal]="true" [style]="{width: '95%'}" 
-[header]="lancamentoForm.id === 0 ? 'Novo lançamento' : 'Edição de lançamentos'">
+[header]="lancamentoForm.id === 0 ? 'Novo lançamento' : 'Edição de lançamentos'"
+[draggable]="false">
     <app-lancamento-form [lancamento]="lancamentoForm"></app-lancamento-form>
 </p-dialog>
 

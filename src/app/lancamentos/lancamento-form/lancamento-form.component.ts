@@ -7,6 +7,7 @@ import { ToastService } from 'src/app/shared/components/toast/toast.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import * as moment from 'moment';
 import { PessoasService } from 'src/app/pessoas/pessoas.service';
+import { ApoioService } from 'src/app/util/apoio.service';
 
 @Component({
   selector: 'app-lancamento-form',
@@ -24,23 +25,22 @@ export class LancamentoFormComponent implements OnInit {
     {label:'Receita', value: 'RECEITA'},
     {label:'Despesa', value: 'DESPESA'},
   ];
+  ptBr: any;
 
   constructor(
     private lancamentosService: LancamentosService,
     private categoriaService: CategoriaService,
     private pessoasService: PessoasService,
     private toastyService: ToastService,
-    private route: ActivatedRoute,
-    private router: Router
-  ) {}
+    private router: Router,
+    public apoioService: ApoioService
+  ) {
+    this.ptBr = apoioService.getCalendarioPtBr();
+  }
 
   ngOnInit(): void {
     this.carregarCategorias();
     this.carregarPessoas();
-    const idLancamento = this.route.snapshot.params['id'];
-    if(idLancamento){
-      this.buscarPorId(idLancamento);
-    }
   }
 
   get editando(){

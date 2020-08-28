@@ -6,6 +6,7 @@ import { AuthService } from 'src/app/seguranca/auth.service';
 import { PessoasService } from '../pessoas/pessoas.service';
 import { LancamentosService } from './lancamentos.service';
 import * as moment from 'moment';
+import { ApoioService } from '../util/apoio.service';
 
 @Component({
   selector: 'app-lancamentos',
@@ -20,22 +21,26 @@ export class LancamentosComponent implements OnInit {
   displaySpinner: boolean = false;
   displayFormLancamento: boolean = false;
   lancamentoForm = new Lancamento();
+  ptBr: any;
 
   constructor(
     private pessoasService: PessoasService,
     private lancamentosService: LancamentosService,
     private toastService: ToastService,
     private confirmationService: ConfirmationService,
-    public auth: AuthService
-  ) { }
+    public auth: AuthService,
+    public apoioService: ApoioService) 
+  { 
+    this.ptBr = apoioService.getCalendarioPtBr();
+  }
 
   ngOnInit(): void {
     this.pesquisar();
   }
 
   novoLancamento(){
-    this.displayFormLancamento = true;
     this.lancamentoForm = new Lancamento();
+    this.displayFormLancamento = true;
   }
 
   aoMudarPagina(event: LazyLoadEvent){
@@ -77,6 +82,7 @@ export class LancamentosComponent implements OnInit {
   }
 
   getLancamento(id: number){
+    this.lancamentoForm = new Lancamento();
     this.buscarPorId(id);
     this.displayFormLancamento = !this.displayFormLancamento;
   }

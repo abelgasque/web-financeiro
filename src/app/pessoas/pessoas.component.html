@@ -77,7 +77,7 @@
 </div>
 
 <p-dialog [(visible)]="displayFormPessoa" [modal]="true" [style]="{width: '95%'}" 
-[header]="pessoaForm.id === 0 ? 'Nova pessoa' : 'Edição de pessoa'">
+[header]="pessoaForm.id === 0 ? 'Nova pessoa' : 'Edição de pessoa'" [draggable]="false">
     <app-pessoa-form [pessoa]="pessoaForm"></app-pessoa-form>
 </p-dialog>
 

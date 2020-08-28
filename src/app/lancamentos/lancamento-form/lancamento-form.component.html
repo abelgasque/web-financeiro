@@ -13,7 +13,7 @@
             <div class="ui-g-6 ui-md-2 ui-fluid">
                 <span class="ui-float-label">
                     <p-calendar name="dataVencimento" dateFormat="dd/mm/yy" showButtonBar="true"
-                    readonlyInput="false"appendTo="body" showIcon="true" 
+                    readonlyInput="false"appendTo="body" showIcon="true" [locale]="ptBr"
                     [(ngModel)]="lancamento.dataVencimento" required>
                     </p-calendar>
                     <label>Vencimento</label>
@@ -23,7 +23,7 @@
             <div class="ui-g-6 ui-md-2 ui-fluid">
                 <span class="ui-float-label">
                     <p-calendar name="dataPagamento" dateFormat="dd/mm/yy" showButtonBar="true"
-                    appendTo="body" readonlyInput="false" showIcon="true"
+                    appendTo="body" readonlyInput="false" showIcon="true" [locale]="ptBr"
                     [(ngModel)]="lancamento.dataPagamento"></p-calendar>
                     <label>{{tipo.value === 'RECEITA' ? 'Recebimento' : 'Pagamento'}}</label>
                 </span>
