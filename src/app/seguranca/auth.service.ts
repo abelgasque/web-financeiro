@@ -17,7 +17,9 @@ export class AuthService {
 
   constructor(
     private http: HttpClient,
-    private jwtHelper: JwtHelperService) 
+    private jwtHelper: JwtHelperService,
+    private router: Router
+    ) 
   {
     this.oauthTokenUrl = `${environment.apiUrl}/oauth/token`;
     this.carregarToken();
@@ -67,6 +69,7 @@ export class AuthService {
         return Promise.resolve(null);
       })
       .catch(response => {
+        this.router.navigate(['/seguranca','login-autenticacao']);
         console.error('Erro ao renovar token.', response);
         return Promise.resolve(null);
       });

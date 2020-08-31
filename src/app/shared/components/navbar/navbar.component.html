@@ -31,26 +31,27 @@
       </mat-list-option>
       <mat-divider></mat-divider>
       <div mat-subheader>Usuario</div>
-      <mat-list-option *ngIf="auth.temPermissao('ROLE_PESQUISAR_LANCAMENTO')">
+      <mat-list-option *ngIf="auth.temPermissao('ROLE_ADMINISTRADOR')">
         <mat-icon mat-list-icon>dashboard</mat-icon>
         <a routerLinkActive="select" [routerLink]="['/dashboard']">Dashboard</a>
       </mat-list-option>
-      <mat-list-option *ngIf="auth.temPermissao('ROLE_CADASTRAR_LANCAMENTO') ||
-      auth.temPermissao('ROLE_PESQUISAR_LANCAMENTO')">
+      <mat-list-option *ngIf="auth.temPermissao('ROLE_ADMINISTRADOR')">
         <mat-icon mat-list-icon>add</mat-icon>
         <a [routerLink]="['/lancamentos']" routerLinkActive="select">Lançamentos</a>
       </mat-list-option>
-      <mat-list-option *ngIf="auth.temPermissao('ROLE_CADASTRAR_LANCAMENTO') ||
-      auth.temPermissao('ROLE_PESQUISAR_LANCAMENTO')">
+      <mat-list-option *ngIf="auth.temPermissao('ROLE_ADMINISTRADOR')">
         <mat-icon mat-list-icon>list</mat-icon>
         <a [routerLink]="['/pessoas']" routerLinkActive="select">Pessoas</a>
       </mat-list-option>
-      <mat-list-option *ngIf="auth.temPermissao('ROLE_PESQUISAR_LANCAMENTO')">
+      <mat-list-option *ngIf="auth.temPermissao('ROLE_ADMINISTRADOR')">
+        <mat-icon mat-list-icon>people</mat-icon>
+        <a [routerLink]="['/usuarios']" routerLinkActive="select">Usuários</a>
+      </mat-list-option>
+      <mat-list-option *ngIf="auth.temPermissao('ROLE_ADMINISTRADOR')">
         <mat-icon mat-list-icon>list</mat-icon>
         <a [routerLink]="['/relatorios', 'lancamentos']" routerLinkActive="select">Relatórios</a>
       </mat-list-option>
-      <mat-divider *ngIf="auth.temPermissao('ROLE_CADASTRAR_PESSOA') ||  
-      auth.temPermissao('ROLE_PESQUISAR_PESSOA')"></mat-divider>
+      <mat-divider *ngIf="auth.temPermissao('ROLE_ADMINISTRADOR')"></mat-divider>
       <mat-list-option [hidden]="!gerenciarBtnNavbar">
         <mat-icon mat-list-icon>login</mat-icon>
         <a href="javascript:;" (click)="logout()">Logout</a>

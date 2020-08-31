@@ -28,6 +28,7 @@ import { RelatoriosModule } from '../relatorios/relatorios.module';
 import { PessoasModule } from '../pessoas/pessoas.module';
 import { DefaultModule } from '../default/default.module';
 import { RelatoriosService } from '../relatorios/relatorios.service';
+import { UsuariosModule } from '../usuarios/usuarios.module';
 
 
 registerLocaleData(localePt);
@@ -38,6 +39,7 @@ registerLocaleData(localePt);
     HttpClientModule,
     RouterModule,
 
+    UsuariosModule,
     LancamentosModule,
     DashboardModule,
     RelatoriosModule,

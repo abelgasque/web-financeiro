@@ -1,7 +1,7 @@
 <app-spinner [hidden]="!displaySpinner"></app-spinner>
 <div class="ui-g">
     <div class="ui-g-12">
-        <form class="ui-g-12" #f="ngForm" autocomplete="off" (ngSubmit)="gerenciarPersistencia(f)">
+        <form class="ui-g-12" #f="ngForm" autocomplete="off" (ngSubmit)="gerenciarPersistencia()">
             <div class="ui-g-12 ui-fluid">
                 <div class="ui-g-12 ui-md-6 ui-fluid">
                     <span class="ui-float-label">
@@ -95,7 +95,7 @@
                 </div>
             </div>
             <div class="ui-g-12">
-                <p-panel header="Contatos" [toggleable]="true">
+                <p-panel header="Contatos" [toggleable]="true" [hidden]="pessoa.id==0">
                     <app-pessoa-contato-form [pessoa]="pessoa"></app-pessoa-contato-form>
                 </p-panel>
             </div>

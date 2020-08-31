@@ -1,0 +1,63 @@
+<app-toast></app-toast>
+<app-usuario-form [display]="display" [usuario]="usuario" (eventDisplay)="display=$event"
+(retornoPersistencia)="getRetornoPersistencia($event)"></app-usuario-form>
+<app-navbar></app-navbar>
+<div class="ui-g">
+    <div class="ui-g-12">
+        <button type="button" (click)="getTabela()"
+        icon="pi pi-list" label="Listar" pButton></button>
+    </div>
+    <div class="ui-g-12">
+        <p-table [value]="usuarios" [rowHover]="true" [responsive]="true" [paginator]="true" [rows]="10">
+            <ng-template pTemplate="caption">  
+                <div class="ui-helper-clearfix" style="text-align: center">
+                    Lista de usuarios
+                    <button type="button" class="ui-button-rounded" (click)="novoUsuario()"
+                    pButton iconPos="left" style="float:right" icon="pi pi-plus" label="Novo"></button>
+                </div>
+            </ng-template>
+            <ng-template pTemplate="header">
+                <tr style="text-align: center;">
+                    <th>Nome</th>
+                    <th>E-mail</th>
+                    <th style="width: 15em;">Situação</th>
+                    <th style="width: 7em;">Opções</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-rowData>
+                <tr class="ui-selectable-row" style="text-align: center;">
+                    <td>{{rowData.nome}}</td>
+                    <td>{{rowData.email}}</td>
+                    <td [style.color]="rowData.situacao === 'ATIVO' ? 'green' : 'red'">
+                        {{rowData.situacao}} 
+                    </td>
+                    <td>
+                        <button class="ui-button-rounded ui-button-secondary"
+                        pButton icon="pi pi-pencil" (click)="getUsuario(rowData.id)"></button>
+                        <button class="ui-button-rounded ui-button-secondary"
+                        pButton icon="pi pi-trash" (click)="confirmarExclusao(rowData.id)"
+                        [disabled]="!auth.temPermissao('ROLE_ADMINISTRADOR')"></button>
+                    </td>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="emptymessage">
+                <tr>
+                    <td><h2>Sem dados para listar.</h2></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+</div>
+
+<p-confirmDialog header="Alerta" icon="pi pi-exclamation-triangle" #confirmacao>
+    <p-footer>
+        <button pButton class="ui-button-rounded ui-button-success"
+        type="button" icon="pi pi-check" label="Sim"
+        (click)="confirmacao.accept()"></button>
+        <button pButton class="ui-button-rounded ui-button-danger"
+        type="button" icon="pi pi-times" label="Não"
+        (click)="confirmacao.reject()"></button>
+    </p-footer>
+</p-confirmDialog>

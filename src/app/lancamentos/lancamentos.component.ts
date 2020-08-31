@@ -72,6 +72,7 @@ export class LancamentosComponent implements OnInit {
           response.dataPagamento = moment(response.dataPagamento, 'YYYY-MM-DD').toDate();
         }
         this.lancamentoForm = response;
+        console.log(this.lancamentoForm);
       }
       this.displaySpinner = false;
     })

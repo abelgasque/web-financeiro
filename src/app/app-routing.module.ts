@@ -16,35 +16,45 @@ import { UsuarioCadastroComponent } from './seguranca/usuario-cadastro/usuario-c
 import { RelatoriosComponent } from './relatorios/relatorios.component';
 import { RelatorioLancamentosComponent } from './relatorios/relatorio-lancamentos/relatorio-lancamentos.component';
 import { HomeComponent } from './default/home/home.component';
+import { UsuariosComponent } from './usuarios/usuarios.component';
 
 const routes: Routes = [
-  { path: 'lancamentos', 
+  { 
+    path: 'usuarios', 
+    component:  UsuariosComponent, 
+    canActivate: [AuthGuard],
+    data: { roles:['ROLE_ADMINISTRADOR']},
+  },
+  { 
+    path: 'lancamentos', 
     component:  LancamentosComponent, 
     canActivate: [AuthGuard],
-    data: { roles:['ROLE_PESQUISAR_LANCAMENTO','ROLE_CADASTRAR_LANCAMENTO']}
+    data: { roles:['ROLE_ADMINISTRADOR']}
   },
   { 
     path: 'pessoas', 
     component:  PessoasComponent, 
     canActivate: [AuthGuard],
-    data: { roles:['ROLE_PESQUISAR_PESSOA','ROLE_CADASTRAR_PESSOA']}
+    data: { roles:['ROLE_ADMINISTRADOR']}
   },
   { path: 'dashboard', 
     component:  DashboardComponent,
-    canActivate: [AuthGuard], 
+    canActivate: [AuthGuard],
+    data: { roles:['ROLE_ADMINISTRADOR']} 
+  },
+  { path: 'relatorios', 
+    component:  RelatoriosComponent, 
+    canActivate: [AuthGuard],
+    data: { roles:['ROLE_ADMINISTRADOR']},
     children: [
       { 
-        path: 'admin', 
-        component: DashboardAdminComponent,
-        canActivate: [AuthGuard]
+        path: 'lancamentos', 
+        component: RelatorioLancamentosComponent,
+        canActivate: [AuthGuard],
+        data: { roles:['ROLE_ADMINISTRADOR']}
       },
-      { 
-        path: 'pessoa', 
-        component: DashboardPessoaComponent,
-        canActivate: [AuthGuard]
-      }
     ]
-  },
+  }, 
   { path: 'seguranca', 
     component: SegurancaComponent,
     children: [
@@ -58,21 +68,6 @@ const routes: Routes = [
       }
     ]
   },
-  { path: 'relatorios', 
-    component:  RelatoriosComponent, 
-    canActivate: [AuthGuard],
-    data: { roles:['ROLE_PESQUISAR_LANCAMENTO']},
-    children: [
-      { 
-        path: 'lancamentos', 
-        component: RelatorioLancamentosComponent,
-        canActivate: [AuthGuard],
-        data: { roles:['ROLE_PESQUISAR_LANCAMENTO']}
-      },
-    ]
-  }, 
-
- 
   { path: '',  component:  DefaultComponent, 
       children: [
         { path: '' , component: HomeComponent }

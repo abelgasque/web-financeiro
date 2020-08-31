@@ -53,21 +53,19 @@ export class PessoaFormComponent implements OnInit {
     });
   }
 
-  gerenciarPersistencia(form: NgForm){
+  gerenciarPersistencia(){
     if(this.pessoa.id > 0){
       this.alterar();
     }else{
-      this.salvar(form);
+      this.salvar();
     }
   }
 
-  salvar(form: NgForm){
+  salvar(){
     this.displaySpinner = true;
     this.pessoaService.salvar(this.pessoa)
     .then(response=>{
       this.toastyService.showSuccess("Pessoa adicionada com sucesso!");
-      this.pessoa = new Pessoa();
-      form.resetForm();
       this.displaySpinner = false;
     })
     .catch(erro=>{

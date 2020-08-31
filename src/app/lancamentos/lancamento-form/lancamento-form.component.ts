@@ -26,6 +26,7 @@ export class LancamentoFormComponent implements OnInit {
     {label:'Despesa', value: 'DESPESA'},
   ];
   ptBr: any;
+  uploadEmAndamento = false;
 
   constructor(
     private lancamentosService: LancamentosService,
@@ -33,7 +34,7 @@ export class LancamentoFormComponent implements OnInit {
     private pessoasService: PessoasService,
     private toastyService: ToastService,
     private router: Router,
-    public apoioService: ApoioService
+    public apoioService: ApoioService,
   ) {
     this.ptBr = apoioService.getCalendarioPtBr();
   }
@@ -41,6 +42,40 @@ export class LancamentoFormComponent implements OnInit {
   ngOnInit(): void {
     this.carregarCategorias();
     this.carregarPessoas();
+  }
+
+  antesUploadAnexo(event) {
+    this.displaySpinner = true;
+  }
+
+  aoTerminarUploadAnexo(event) {
+    const anexo = event.originalEvent.body;
+    this.lancamento.anexo = anexo.nome;
+    this.lancamento.urlAnexo = 'https:'+anexo.url;
+    this.displaySpinner = false;
+  }
+
+  erroUpload(event) {
+    this.toastyService.showError("Erro ao tentar enviar anexo!");
+    console.log(event);
+    this.displaySpinner = false;
+  }
+
+  removerAnexo() {
+    this.lancamento.anexo = null;
+    this.lancamento.urlAnexo = null;
+  }
+
+  get nomeAnexo() {
+    const nome = this.lancamento.anexo;
+    if (nome != null) {
+      return nome.substring(nome.indexOf('_') + 1, nome.length);
+    }
+    return '';
+  }
+
+  get urlUploadAnexo() {
+    return this.lancamentosService.urlUploadAnexo();
   }
 
   get editando(){
@@ -60,7 +95,6 @@ export class LancamentoFormComponent implements OnInit {
     this.lancamentosService.salvar(this.lancamento)
     .then(response=>{
       this.toastyService.showSuccess("Lançamento adicionado com sucesso!");
-      this.router.navigate(['/lancamentos']);
       this.displaySpinner = false;
     })  
     .catch(erro => {
@@ -75,7 +109,6 @@ export class LancamentoFormComponent implements OnInit {
     this.lancamentosService.editar(this.lancamento)
     .then(response =>{
       this.toastyService.showSuccess("Lancaçamento editado com sucesso!");
-      this.router.navigate(['/lancamentos']);
       this.displaySpinner = false;
     })
     .catch(erro =>{
@@ -89,7 +122,7 @@ export class LancamentoFormComponent implements OnInit {
     if(this.lancamento.id > 0){
       this.editar();
     }else{
-      this,this.salvar();
+      this.salvar();
     }
   }
 

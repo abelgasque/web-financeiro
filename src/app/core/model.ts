@@ -39,6 +39,8 @@ export class Lancamento{
     tipo = 'RECEITA';
     categoria = new Categoria();
     pessoa = new Pessoa();
+    anexo: string = null;
+    urlAnexo: string = null;
 }
 
 export class LancamentoFilter{
@@ -60,7 +62,16 @@ export class PessoaFilter{
     total = 0;
 }
 
+export class Permissao{
+    id: number;
+    descricao: string;
+}
+
 export class Usuario{
+    id: number = 0;
+    nome: string;
     email: string;
     senha: string; 
+    permissoes: any[] = [];
+    situacao: string = 'ATIVO';
 }

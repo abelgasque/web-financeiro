@@ -50,7 +50,7 @@
                 <td>{{rowData.cpf}}</td>
                 <td>{{rowData.endereco===null?'':rowData.endereco.uf}}</td>
                 <td>{{rowData.endereco===null?'':rowData.endereco.cidade}}</td>
-                <td [style.color]="rowData.situacao==='ATIVO'?'green':'red'">
+                <td>
                     {{rowData.situacao}} 
                 </td>
                 <td class="opcoes">
@@ -58,7 +58,7 @@
                     pButton icon="pi pi-pencil" (click)="getPessoa(rowData.id)"></button>
                     <button class="ui-button-rounded ui-button-secondary"
                     pButton icon="pi pi-trash" (click)="confirmarExclusao(rowData.id)"
-                    [disabled]="!auth.temPermissao('ROLE_REMOVER_PESSOA')"></button>
+                    [disabled]="!auth.temPermissao('ROLE_ADMINISTRADOR')"></button>
                 </td>
             </tr>
         </ng-template>

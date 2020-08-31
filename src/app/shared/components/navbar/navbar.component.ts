@@ -42,6 +42,7 @@ export class NavbarComponent implements OnInit {
     this.logoutService.logout()
     .then(response=>{
       this.router.navigate(['']);
+      this.gerenciarBtnNavbar= false;
     })
     .catch(erro => this.errorHandler.handle(erro));
   }

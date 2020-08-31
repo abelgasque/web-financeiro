@@ -69,6 +69,21 @@
                 </span>
                 <small>Campo opcional</small>
             </div>
+            <div class="ui-g-6 ui-g-offset-6 ui-md-2 ui-md-offset-10 ui-fluid" *ngIf="lancamento.anexo == null">
+                <p-fileUpload name="anexo" mode="basic" auto="true" maxFileSize="100000000"
+                chooseLabel="Anexar" accept="image/*,application/*"
+                [url]="urlUploadAnexo"
+                (onSend)="antesUploadAnexo($event)"
+                (onUpload)="aoTerminarUploadAnexo($event)"
+                ></p-fileUpload>
+            </div>
+            
+            <div class="ui-g-12 ui-fluid" *ngIf="lancamento.anexo != null">
+                <button pButton type="button" class="ui-button-danger" icon="pi pi-trash"
+                 pTooltip="Remover anexo" tooltipPosition="top" (click)="removerAnexo()"></button>
+                <a pTooltip="Baixar anexo" tooltipPosition="top"
+                [href]="lancamento.urlAnexo">{{ nomeAnexo }}</a>
+            </div>
             <div class="ui-g-6 ui-md-1 ui-fluid">
                 <button pButton type="submit" label="Salvar" class="ui-button-success ui-button-rounded"
                 [disabled]="!f.valid"></button>
@@ -80,12 +95,3 @@
         </form>
     </div>
 </div>
-
-<p-dialog header="Godfather I" [(visible)]="display" [modal]="true" [style]="{width: '50%'}"
- [baseZIndex]="10000" [draggable]="false" [resizable]="false">
-   
-    <p-footer>
-        <button type="button" pButton icon="pi pi-check" (click)="display=false" label="Yes"></button>
-        <button type="button" pButton icon="pi pi-times" (click)="display=false" label="No" class="ui-button-secondary"></button>
-    </p-footer>
-</p-dialog>

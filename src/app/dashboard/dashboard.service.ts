@@ -11,7 +11,7 @@ export class DashboardService {
   lancamentosUrl: string;
 
   constructor(private http: GenericHttp) { 
-    this.lancamentosUrl = `${this.lancamentosUrl}`;
+    this.lancamentosUrl =`${environment.apiUrl}/lancamentos`;
   }
 
   estatisticasLancamentosPorCategoria(): Promise<any> {

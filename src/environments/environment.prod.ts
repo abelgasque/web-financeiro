@@ -1,6 +1,6 @@
 export const environment = {
   production: true,
-  apiUrl: 'https://polar-river-52878.herokuapp.com',
-  tokenWhitelistedDomains: [ new RegExp('polar-river-52878.herokuapp.com') ],
+  apiUrl: 'https://protected-stream-77116.herokuapp.com',
+  tokenWhitelistedDomains: [ new RegExp('protected-stream-77116.herokuapp.com') ],
   tokenBlacklistedRoutes: [ new RegExp('\/oauth\/token') ]
 };

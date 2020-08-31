@@ -1,0 +1,51 @@
+<p-dialog [(visible)]="display" [modal]="true" [style]="{width: '50%'}" [closable]="false"
+[header]="usuario.id === 0 ? 'Novo usuário' : 'Edição de usuário'"
+[draggable]="false">
+    <form class="ui-g-12" #f="ngForm" autocomplete="off" (ngSubmit)="gerenciarPersistencia(f)">
+        <div class="ui-g-12 ui-fluid">
+            <span class="ui-float-label">
+                <input pInputText type="text" name="nome" [(ngModel)]="usuario.nome"  
+                required  maxlength="50"> 
+                <label>Nome</label>
+            </span>
+            <small>Campo obrigatório</small>
+        </div>
+        <div class="ui-g-12 ui-fluid">
+            <span class="ui-float-label">
+                <input pInputText type="text" name="email" [(ngModel)]="usuario.email"  
+                required  maxlength="50"> 
+                <label>E-mail</label>
+            </span>
+            <small>Campo obrigatório</small>
+        </div>
+        <div class="ui-g-12 ui-md-6 ui-fluid">
+            <span class="ui-float-label">
+                <input pPassword type="password" name="senha" [(ngModel)]="usuario.senha"> 
+                <label>Senha</label>
+            </span>
+            <small>Campo obrigatório</small>
+        </div>
+        <div class="ui-g-12 ui-md-6 ui-fluid">
+            <p-selectButton [options]="situacoes" [(ngModel)]="usuario.situacao" name="situacao"
+            required>
+            </p-selectButton><br>
+            <small>Situação. Campo obrigatório</small>
+        </div>
+        <div class="ui-g-12 ui-fluid">
+            <span class="ui-float-label">
+                <p-multiSelect [options]="listaPermissoes" [(ngModel)]="usuario.permissoes"
+                name="permissoes" optionLabel="descricao" appendTo="body" defaultLabel="_"
+                ></p-multiSelect>
+                <label>Permissões</label>
+            </span>
+            <small>Campo obrigatório</small>
+        </div>
+    </form>
+    <p-footer>
+        <button type="submit" (click)="gerenciarPersistencia(f)" [disabled]="!f.valid"
+        icon="pi pi-check" [label]="usuario.id === 0 ? 'Adicionar' : 'Editar'"
+        pButton></button>
+        <button type="button" icon="pi pi-trash" label="Cancelar"
+        (click)="fecharDisplay(f)" pButton></button>
+    </p-footer>
+</p-dialog>
