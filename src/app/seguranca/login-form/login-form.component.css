@@ -1,3 +1,20 @@
+.form{
+    margin-top: 25px;
+}
+
+.img{
+    align-items: center !important;
+    margin-top: -50px;
+    margin-bottom: 0px;
+    height: 100px;
+    width: 100px;
+}
+
+.login{
+    font-size:30px;
+    font-weight: bold;
+}
+
 a{
     color: #fff;
     text-align: center;
@@ -10,11 +27,4 @@ a:hover{
 ul{
     text-align: center;
     list-style: none;
-}
-
-.img{
-    align-items: center !important;
-    margin-top: -200px;
-    height: 150px;
-    width: 150px;
 }

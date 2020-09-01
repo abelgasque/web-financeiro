@@ -19,7 +19,6 @@ import { PessoasService } from '../pessoas/pessoas.service';
 import { LancamentosService } from '../lancamentos/lancamentos.service';
 import { CategoriaService } from '../util/categoria.service';
 import { ToastService } from '../shared/components/toast/toast.service';
-import { GenericHttp } from '../seguranca/generic-http';
 import { PaginaNaoEncontradaComponent } from './pagina-nao-encontrada.component';
 import { NaoAutorizadoComponent } from './nao-autorizado.component';
 import { LancamentosModule } from '../lancamentos/lancamentos.module';
@@ -64,8 +63,6 @@ registerLocaleData(localePt);
     ToastService,
     RelatoriosService,
     AuthService,
-    GenericHttp,
-
 
     ConfirmationService,
     MessageService,

@@ -1,10 +1,6 @@
 <app-navbar></app-navbar>
 <div class="ui-g">
     <div class="ui-g-12">
-        <app-dashboard-admin></app-dashboard-admin>
-        <!-- <p-accordion [(activeIndex)]="index">
-            <p-accordionTab header="Dashboard administrador">    
-            </p-accordionTab>
-        </p-accordion> -->
+        <app-dashboard-admin *ngIf="auth.temPermissao('ROLE_ADMINISTRADOR')"></app-dashboard-admin>
     </div>
 </div>

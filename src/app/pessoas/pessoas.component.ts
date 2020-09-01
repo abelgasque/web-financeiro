@@ -5,7 +5,6 @@ import { PessoaFilter, Pessoa, Endereco } from 'src/app/core/model';
 import { Table } from 'primeng/table';
 import { AuthService } from 'src/app/seguranca/auth.service';
 import { PessoasService } from './pessoas.service';
-import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-pessoas',
@@ -32,6 +31,12 @@ export class PessoasComponent implements OnInit {
     this.pesquisar();
   }
   
+  getEventFormPessoa(pessoa: Pessoa){
+    if(pessoa != null){
+      this.pesquisar();
+    }
+  }
+
   novaPessoa(){
     this.pessoaForm = new Pessoa();
     this.displayFormPessoa = true;

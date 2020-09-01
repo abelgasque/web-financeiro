@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Lancamento } from 'src/app/core/model';
 import { NgForm } from '@angular/forms';
 import { CategoriaService } from 'src/app/util/categoria.service';
@@ -8,6 +8,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import * as moment from 'moment';
 import { PessoasService } from 'src/app/pessoas/pessoas.service';
 import { ApoioService } from 'src/app/util/apoio.service';
+import { ConfirmationService } from 'primeng/api';
 
 @Component({
   selector: 'app-lancamento-form',
@@ -16,9 +17,11 @@ import { ApoioService } from 'src/app/util/apoio.service';
 })
 export class LancamentoFormComponent implements OnInit {
 
+  @Input() display: boolean;
+  @Output() eventDisplay = new EventEmitter<boolean>();
+  @Output() retornoPersistencia = new EventEmitter<Lancamento>();
   @Input() lancamento : Lancamento;
   displaySpinner: boolean = false;
-  display: boolean = false;
   pessoas: any[] = [];
   categorias: any[] = [];
   tipos = [ 
@@ -33,8 +36,8 @@ export class LancamentoFormComponent implements OnInit {
     private categoriaService: CategoriaService,
     private pessoasService: PessoasService,
     private toastyService: ToastService,
-    private router: Router,
     public apoioService: ApoioService,
+    private confirmationService: ConfirmationService
   ) {
     this.ptBr = apoioService.getCalendarioPtBr();
   }
@@ -81,48 +84,68 @@ export class LancamentoFormComponent implements OnInit {
   get editando(){
     return Boolean(this.lancamento.id);
   }
+  
+  cancelar(f: NgForm){
+    this.novo(f);
+    this.retornoPersistencia.emit(null);
+    this.eventDisplay.emit(false);
+  }
 
   novo(f: NgForm){
     f.resetForm();
     setTimeout(function() {
       this.lancamento = new Lancamento();
     }.bind(this), 1);
-    this.router.navigate['/lancamentos/cadastro'];
   }
 
-  salvar(){
+  salvar(f: NgForm){
     this.displaySpinner = true;
     this.lancamentosService.salvar(this.lancamento)
     .then(response=>{
+      this.retornoPersistencia.emit(response);
+      this.eventDisplay.emit(false);
+      this.novo(f);
       this.toastyService.showSuccess("Lançamento adicionado com sucesso!");
       this.displaySpinner = false;
     })  
     .catch(erro => {
+      this.retornoPersistencia.emit(null);
       console.log(erro);
       this.toastyService.showError("Erro ao adicionar lançamento!");
       this.displaySpinner = false;
     });
   }
 
-  editar(){
+  editar(f: NgForm){
     this.displaySpinner = true;
     this.lancamentosService.editar(this.lancamento)
     .then(response =>{
+      this.retornoPersistencia.emit(response);
+      this.eventDisplay.emit(false);
+      this.novo(f);
       this.toastyService.showSuccess("Lancaçamento editado com sucesso!");
       this.displaySpinner = false;
     })
     .catch(erro =>{
+      this.retornoPersistencia.emit(null);
       console.log(erro);
       this.toastyService.showError("Erro ao editar lançamento!");
       this.displaySpinner = false;
     });
   }
 
+  confirmarEdicao(form: NgForm){
+    this.confirmationService.confirm({message: 'Tem certeza que deseja editar lançamento?',
+    accept: ()=>{
+       this.editar(form);
+    }});
+  }
+
   gerenciarPersistencia(f: NgForm){
     if(this.lancamento.id > 0){
-      this.editar();
+      this.confirmarEdicao(f);
     }else{
-      this.salvar();
+      this.salvar(f);
     }
   }
 

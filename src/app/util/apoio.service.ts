@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
-import { GenericHttp } from '../seguranca/generic-http';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ApoioService {
 
-  constructor(private http: GenericHttp) { }
+  constructor(private http: HttpClient) { }
 
   getCalendarioPtBr(){
     let data = {

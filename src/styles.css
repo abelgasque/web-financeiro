@@ -7,22 +7,9 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     background:rgba(0,0,0,0.7) !important;
     color:  #fff !important;
 }
-.custombar .p-scrollpanel-wrapper {
-    border-right: 50px solid green;
-}
-    
-.custombar .p-scrollpanel-bar {
-    background-color: #1976d2;
+
+.ui-scrollpanel-bar {
+    background-color: #fff;
     opacity: 1;
     transition: background-color .3s;
 }
-    
-.custombar .p-scrollpanel-bar:hover {
-    background-color: #135ba1;
-}
-
-/* .ui-table-caption {
-    border: 0 none;
-    padding: 12px;
-    font-size: 20px;
-} */

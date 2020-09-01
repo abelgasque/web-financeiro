@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
-import { HttpParams} from '@angular/common/http';
+import { HttpParams, HttpClient} from '@angular/common/http';
 import * as moment from 'moment';
 import { environment } from 'src/environments/environment';
 import { LancamentoFilter, Lancamento } from 'src/app/core/model';
-import { GenericHttp } from 'src/app/seguranca/generic-http';
 
 
 @Injectable({
@@ -13,7 +12,7 @@ export class LancamentosService {
 
   urlLancamento: string;
 
-  constructor(private http: GenericHttp) { 
+  constructor(private http: HttpClient) { 
     this.urlLancamento =`${environment.apiUrl}/lancamentos`;
   }
 

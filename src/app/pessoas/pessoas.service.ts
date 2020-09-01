@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
-import { HttpParams} from '@angular/common/http';
+import { HttpParams, HttpClient} from '@angular/common/http';
 
-import { GenericHttp } from 'src/app/seguranca/generic-http';
 import { environment } from 'src/environments/environment';
 import { PessoaFilter } from 'src/app/core/model';
 
@@ -14,7 +13,7 @@ export class PessoasService {
   urlPessoa : string;
 
   constructor(
-    private http: GenericHttp) {
+    private http: HttpClient) {
     this.urlPessoa = `${environment.apiUrl}/pessoas`;
    }
 

@@ -85,11 +85,9 @@
     </div>
 </div>
 
-<p-dialog [(visible)]="displayFormLancamento" [modal]="true" [style]="{width: '95%'}" 
-[header]="lancamentoForm.id === 0 ? 'Novo lançamento' : 'Edição de lançamentos'"
-[draggable]="false">
-    <app-lancamento-form [lancamento]="lancamentoForm"></app-lancamento-form>
-</p-dialog>
+<app-lancamento-form [lancamento]="lancamentoForm" [display]="displayFormLancamento" 
+(eventDisplay)="displayFormLancamento=$event" 
+(retornoPersistencia)="getEventFormLancamento($event)"></app-lancamento-form>
 
 <p-confirmDialog header="Alerta" icon="pi pi-exclamation-triangle" #confirmacao>
     <p-footer>

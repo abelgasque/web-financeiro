@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { GenericHttp } from './generic-http';
 import { HttpClient } from '@angular/common/http';
 import { AuthService } from './auth.service';
 import { environment } from './../../environments/environment';
@@ -12,7 +11,7 @@ export class LogoutService {
   tokensRenokeUrl: string;
 
   constructor(
-    private http: GenericHttp,
+    private http: HttpClient,
     private auth: AuthService
   ) { 
     this.tokensRenokeUrl = `${environment.apiUrl}/tokens/revoke`;

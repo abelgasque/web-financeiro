@@ -3,6 +3,7 @@ import { Usuario } from 'src/app/core/model';
 import { NgForm } from '@angular/forms';
 import { UsuariosService } from '../usuarios.service';
 import { ToastService } from 'src/app/shared/components/toast/toast.service';
+import { ConfirmationService } from 'primeng/api';
 
 @Component({
   selector: 'app-usuario-form',
@@ -24,7 +25,8 @@ export class UsuarioFormComponent implements OnInit {
 
   constructor(
     private usuariosService: UsuariosService,
-    private toastService: ToastService
+    private toastService: ToastService,
+    private confirmationService: ConfirmationService
   ) { }
 
   ngOnInit(): void {
@@ -34,19 +36,10 @@ export class UsuarioFormComponent implements OnInit {
   fecharDisplay(form: NgForm) {
     this.usuario = new Usuario();
     form.resetForm();
-    let value: boolean = false;
-    this.eventDisplay.emit(value);
+    this.eventDisplay.emit(false);
   }
 
-  gerenciarPersistencia(form: NgForm){
-    if(this.usuario.id > 0){
-      this.editar(form);
-    }else{
-      this.adicionarUsuario(form);
-    }
-  }
-
-  adicionarUsuario(form: NgForm){
+  adicionar(form: NgForm){
     this.usuariosService.salvar(this.usuario)
     .then(response => {
       this.retornoPersistencia.emit(response);
@@ -70,6 +63,25 @@ export class UsuarioFormComponent implements OnInit {
       console.log(error);
       this.toastService.showError("Erro ao editar usuário!");
     });
+  }
+
+  confirmarEdicao(form: NgForm){
+    this.confirmationService.confirm({message: 'Tem certeza que deseja editar usuário?',
+    accept: ()=>{
+       this.editar(form);
+    }});
+  }
+
+  gerenciarPersistencia(form: NgForm){
+    if(this.usuario.permissoes.length > 0){
+      if(this.usuario.id > 0){
+        this.confirmarEdicao(form);
+      }else{
+        this.adicionar(form);
+      }  
+    }else{
+      this.toastService.showWarn("Selecione pelo menos uma permissão!");
+    }
   }
 
   carregarPermissoes(){

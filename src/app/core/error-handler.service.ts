@@ -3,7 +3,6 @@ import { Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 
 import { ToastService } from '../shared/components/toast/toast.service';
-import { NotAuthenticatedError } from '../seguranca/generic-http';
 
 
 @Injectable({
@@ -21,9 +20,6 @@ export class ErrorHandlerService {
 
     if (typeof errorResponse === 'string') {
       msg = errorResponse;
-    } else if (errorResponse instanceof NotAuthenticatedError) {
-      msg = 'Sua sessão expirou!';
-      this.router.navigate(['/seguranca','login-autenticacao']);
     } else if (errorResponse instanceof HttpErrorResponse
         && errorResponse.status >= 400 && errorResponse.status <= 499) {
       msg = 'Ocorreu um erro ao processar a sua solicitação';

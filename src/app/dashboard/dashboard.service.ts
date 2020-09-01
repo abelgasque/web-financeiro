@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import * as moment from 'moment';
-import { GenericHttp } from 'src/app/seguranca/generic-http';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +10,7 @@ export class DashboardService {
 
   lancamentosUrl: string;
 
-  constructor(private http: GenericHttp) { 
+  constructor(private http: HttpClient) { 
     this.lancamentosUrl =`${environment.apiUrl}/lancamentos`;
   }
 

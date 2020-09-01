@@ -1,11 +1,11 @@
 <app-toast></app-toast>
+<app-spinner [hidden]="!displaySpinner"></app-spinner>
 <app-usuario-form [display]="display" [usuario]="usuario" (eventDisplay)="display=$event"
 (retornoPersistencia)="getRetornoPersistencia($event)"></app-usuario-form>
 <app-navbar></app-navbar>
 <div class="ui-g">
     <div class="ui-g-12">
-        <button type="button" (click)="getTabela()"
-        icon="pi pi-list" label="Listar" pButton></button>
+        <button type="button" (click)="getTabela()" label="Listar" pButton></button>
     </div>
     <div class="ui-g-12">
         <p-table [value]="usuarios" [rowHover]="true" [responsive]="true" [paginator]="true" [rows]="10">

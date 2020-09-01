@@ -12,7 +12,7 @@ import {InputMaskModule} from 'primeng/inputmask';
 import {ConfirmDialogModule} from 'primeng/confirmdialog';
 import {ConfirmationService} from 'primeng/api';
 import {DialogModule} from 'primeng/dialog';
-import {PanelModule} from 'primeng/panel';
+import {DropdownModule} from 'primeng/dropdown';
 
 import { SharedModule } from 'src/app/shared/shared.module';
 import { ApoioService } from 'src/app/util/apoio.service';
@@ -41,7 +41,7 @@ import { PessoaContatoFormComponent } from './pessoa-contato-form/pessoa-contato
     InputMaskModule,
     ConfirmDialogModule,
     DialogModule,
-    PanelModule
+    DropdownModule
   ],
   providers:[
     ApoioService,

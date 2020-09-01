@@ -38,8 +38,7 @@
             <tr style="text-align: center;">
                 <th>Nome</th>
                 <th style="width: 10em;">CPF</th>
-                <th style="width: 4em;">UF</th>
-                <th style="width: 20em;">Cidade</th>
+                <th>Usuário</th>
                 <th style="width: 8em;">Situação</th>
                 <th style="width: 7em;">Opções</th>
             </tr>
@@ -48,10 +47,9 @@
             <tr class="ui-selectable-row" style="text-align: center;">
                 <td>{{rowData.nome}}</td>
                 <td>{{rowData.cpf}}</td>
-                <td>{{rowData.endereco===null?'':rowData.endereco.uf}}</td>
-                <td>{{rowData.endereco===null?'':rowData.endereco.cidade}}</td>
-                <td>
-                    {{rowData.situacao}} 
+                <td>{{rowData.usuario.email}}</td>
+                <td [style.color]="rowData.situacao === 'ATIVO' ? 'green' : 'red'">
+                    {{rowData.situacao}}
                 </td>
                 <td class="opcoes">
                     <button class="ui-button-rounded ui-button-secondary"
@@ -76,10 +74,9 @@
     </div>
 </div>
 
-<p-dialog [(visible)]="displayFormPessoa" [modal]="true" [style]="{width: '95%'}" 
-[header]="pessoaForm.id === 0 ? 'Nova pessoa' : 'Edição de pessoa'" [draggable]="false">
-    <app-pessoa-form [pessoa]="pessoaForm"></app-pessoa-form>
-</p-dialog>
+
+<app-pessoa-form [pessoa]="pessoaForm" [display]="displayFormPessoa" (eventDisplay)="displayFormPessoa=$event" 
+(retornoPersistencia)="getEventFormPessoa($event)"></app-pessoa-form>
 
 <p-confirmDialog header="Alerta" icon="pi pi-exclamation-triangle" #confirmacao>
     <p-footer>

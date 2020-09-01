@@ -1,97 +1,96 @@
 <app-spinner [hidden]="!displaySpinner"></app-spinner>
-<div class="ui-g">
-    <div class="ui-g-12">
-        <form  #f="ngForm" autocomplete="off" (ngSubmit)="gerenciarPersistencia(f)">
-            <div class="ui-g-12 ui-md-6 ui-fluid">
-                <span class="ui-float-label">
-                    <input pInputText type="text" name="descricao" [(ngModel)]="lancamento.descricao"  
-                    required minlength="5" maxlength="50"> 
-                    <label>Descrição</label>
-                </span>
-                <small>Campo obrigatório</small>
-            </div>
-            <div class="ui-g-6 ui-md-2 ui-fluid">
-                <span class="ui-float-label">
-                    <p-calendar name="dataVencimento" dateFormat="dd/mm/yy" showButtonBar="true"
-                    readonlyInput="false"appendTo="body" showIcon="true" [locale]="ptBr"
-                    [(ngModel)]="lancamento.dataVencimento" required>
-                    </p-calendar>
-                    <label>Vencimento</label>
-                </span>
-                <small>Campo obrigatório</small>
-            </div>
-            <div class="ui-g-6 ui-md-2 ui-fluid">
-                <span class="ui-float-label">
-                    <p-calendar name="dataPagamento" dateFormat="dd/mm/yy" showButtonBar="true"
-                    appendTo="body" readonlyInput="false" showIcon="true" [locale]="ptBr"
-                    [(ngModel)]="lancamento.dataPagamento"></p-calendar>
-                    <label>{{tipo.value === 'RECEITA' ? 'Recebimento' : 'Pagamento'}}</label>
-                </span>
-                <small>Campo opcional</small>
-            </div>
-            <div class="ui-g-6 ui-md-2 ui-fluid">
-                <span class="ui-float-label">
-                    <input pInputText type="text" name="valor"
-                    currencyMask [options]="{ prefix: '', thousands: '.', decimal: ',' }"
-                    [(ngModel)]="lancamento.valor" #valor="ngModel" required> 
-                    <label>Valor</label>
-                </span>
-                <small>Campo obrigatório</small>
-            </div>
-            <div class="ui-g-12 ui-md-4 ui-fluid">
-                <span class="ui-float-label">
-                    <p-dropdown name="categoria" [options]="categorias"
-                    [showClear]="true" appendTo="body" [autoDisplayFirst]="false" 
-                    optionLabel="nome" [(ngModel)]="lancamento.categoria" required></p-dropdown> 
-                     <label>Categoria</label>
-                </span>
-                <small>Campo obrigatório</small>
-            </div>
-            <div class="ui-g-12 ui-md-6 ui-fluid">
-                <span class="ui-float-label">
-                    <p-dropdown name="pessoa" [options]="pessoas" [filter]="true" 
-                    optionLabel="nome" [showClear]="true" appendTo="body" 
-                    [autoDisplayFirst]="false" [(ngModel)]="lancamento.pessoa" required></p-dropdown> 
-                    <label>Pessoa</label>
-                </span>
-                <small>Campo obrigatório</small>
-            </div>
-            <div class="ui-g-12 ui-md-2">
-                <p-selectButton [options]="tipos" name="tipo"
-                [(ngModel)]="lancamento.tipo" #tipo="ngModel" required>
-                </p-selectButton><br>
-                <small>Tipo. Campo obrigatório</small>
-            </div>
-            <div class="ui-g-12 ui-fluid">
-                <span class="ui-float-label">
-                    <textarea rows="5" cols="30" pInputTextarea autoResize="autoResize"></textarea>
-                    <label>Observação</label>
-                </span>
-                <small>Campo opcional</small>
-            </div>
-            <div class="ui-g-6 ui-g-offset-6 ui-md-2 ui-md-offset-10 ui-fluid" *ngIf="lancamento.anexo == null">
-                <p-fileUpload name="anexo" mode="basic" auto="true" maxFileSize="100000000"
-                chooseLabel="Anexar" accept="image/*,application/*"
-                [url]="urlUploadAnexo"
-                (onSend)="antesUploadAnexo($event)"
-                (onUpload)="aoTerminarUploadAnexo($event)"
-                ></p-fileUpload>
-            </div>
-            
-            <div class="ui-g-12 ui-fluid" *ngIf="lancamento.anexo != null">
-                <button pButton type="button" class="ui-button-danger" icon="pi pi-trash"
-                 pTooltip="Remover anexo" tooltipPosition="top" (click)="removerAnexo()"></button>
-                <a pTooltip="Baixar anexo" tooltipPosition="top"
-                [href]="lancamento.urlAnexo">{{ nomeAnexo }}</a>
-            </div>
-            <div class="ui-g-6 ui-md-1 ui-fluid">
-                <button pButton type="submit" label="Salvar" class="ui-button-success ui-button-rounded"
-                [disabled]="!f.valid"></button>
-            </div>
-            <div class="ui-g-6 ui-md-1 ui-fluid">
-                <button pButton type="button" label="Novo" class="ui-button-rounded ui-button-secondary"
-                (click)="novo(f)"></button>
-            </div>
-        </form>
+<app-toast></app-toast>
+<p-dialog [(visible)]="display" [modal]="true" [style]="{width: '95%'}" [closable]="false"
+[header]="lancamento.id === 0 ? 'Novo lançamento' : 'Edição de lançamentos'"
+[draggable]="false">
+<form  #f="ngForm" autocomplete="off" (ngSubmit)="gerenciarPersistencia(f)">
+    <div class="ui-g-12 ui-md-6 ui-fluid">
+        <span class="ui-float-label">
+            <input pInputText type="text" name="descricao" [(ngModel)]="lancamento.descricao"  
+            required minlength="5" maxlength="50"> 
+            <label>Descrição</label>
+        </span>
+        <small>Campo obrigatório</small>
     </div>
-</div>
+    <div class="ui-g-6 ui-md-2 ui-fluid">
+        <span class="ui-float-label">
+            <p-calendar name="dataVencimento" dateFormat="dd/mm/yy" showButtonBar="true"
+            readonlyInput="false"appendTo="body" showIcon="true" [locale]="ptBr"
+            [(ngModel)]="lancamento.dataVencimento" required>
+            </p-calendar>
+            <label>Vencimento</label>
+        </span>
+        <small>Campo obrigatório</small>
+    </div>
+    <div class="ui-g-6 ui-md-2 ui-fluid">
+        <span class="ui-float-label">
+            <p-calendar name="dataPagamento" dateFormat="dd/mm/yy" showButtonBar="true"
+            appendTo="body" readonlyInput="false" showIcon="true" [locale]="ptBr"
+            [(ngModel)]="lancamento.dataPagamento"></p-calendar>
+            <label>{{tipo.value === 'RECEITA' ? 'Recebimento' : 'Pagamento'}}</label>
+        </span>
+        <small>Campo opcional</small>
+    </div>
+    <div class="ui-g-6 ui-md-2 ui-fluid">
+        <span class="ui-float-label">
+            <input pInputText type="text" name="valor"
+            currencyMask [options]="{ prefix: '', thousands: '.', decimal: ',' }"
+            [(ngModel)]="lancamento.valor" #valor="ngModel" required> 
+            <label>Valor</label>
+        </span>
+        <small>Campo obrigatório</small>
+    </div>
+    <div class="ui-g-12 ui-md-4 ui-fluid">
+        <span class="ui-float-label">
+            <p-dropdown name="categoria" [options]="categorias"
+            [showClear]="true" appendTo="body" [autoDisplayFirst]="false" 
+            optionLabel="nome" [(ngModel)]="lancamento.categoria" required></p-dropdown> 
+             <label>Categoria</label>
+        </span>
+        <small>Campo obrigatório</small>
+    </div>
+    <div class="ui-g-12 ui-md-6 ui-fluid">
+        <span class="ui-float-label">
+            <p-dropdown name="pessoa" [options]="pessoas" [filter]="true" 
+            optionLabel="nome" [showClear]="true" appendTo="body" 
+            [autoDisplayFirst]="false" [(ngModel)]="lancamento.pessoa" required></p-dropdown> 
+            <label>Pessoa</label>
+        </span>
+        <small>Campo obrigatório</small>
+    </div>
+    <div class="ui-g-12 ui-md-2">
+        <p-selectButton [options]="tipos" name="tipo"
+        [(ngModel)]="lancamento.tipo" #tipo="ngModel" required>
+        </p-selectButton><br>
+        <small>Tipo. Campo obrigatório</small>
+    </div>
+    <div class="ui-g-12 ui-fluid">
+        <span class="ui-float-label">
+            <textarea rows="5" cols="30" pInputTextarea autoResize="autoResize"></textarea>
+            <label>Observação</label>
+        </span>
+        <small>Campo opcional</small>
+    </div>
+    <div class="ui-g-6 ui-g-offset-6 ui-md-2 ui-md-offset-10 ui-fluid" *ngIf="lancamento.anexo == null">
+        <p-fileUpload name="anexo" mode="basic" auto="true" maxFileSize="100000000"
+        chooseLabel="Anexar" accept="image/*,application/*"
+        [url]="urlUploadAnexo"
+        (onSend)="antesUploadAnexo($event)"
+        (onUpload)="aoTerminarUploadAnexo($event)"
+        ></p-fileUpload>
+    </div>
+    
+    <div class="ui-g-12 ui-fluid" *ngIf="lancamento.anexo != null">
+        <button pButton type="button" class="ui-button-danger" icon="pi pi-trash"
+         pTooltip="Remover anexo" tooltipPosition="top" (click)="removerAnexo()"></button>
+        <a pTooltip="Baixar anexo" tooltipPosition="top"
+        [href]="lancamento.urlAnexo">{{ nomeAnexo }}</a>
+    </div>
+</form>
+    <p-footer>
+        <button pButton type="button" label="Salvar" (click)="gerenciarPersistencia(f)"
+        class="ui-button-success ui-button-rounded" [disabled]="!f.valid"></button>
+        <button pButton type="button" label="Cancelar" (click)="cancelar(f)" 
+        class="ui-button-rounded ui-button-danger"></button>
+    </p-footer>
+</p-dialog>

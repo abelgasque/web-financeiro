@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import { GenericHttp } from '../seguranca/generic-http';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +9,7 @@ export class CategoriaService {
 
   categoriasUrl: string;
 
-  constructor(private http: GenericHttp) {
+  constructor(private http: HttpClient) {
     this.categoriasUrl = `${environment.apiUrl}/categorias`;
   }
 

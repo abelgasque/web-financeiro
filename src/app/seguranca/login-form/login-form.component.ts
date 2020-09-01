@@ -19,12 +19,9 @@ export class LoginFormComponent implements OnInit {
     private authService: AuthService,
     private errorHandler: ErrorHandlerService,
     private router: Router
-    ) { 
-      this.authService.limparAccessToken();
-    }
+    ) {}
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   autenticarLogin(){
     this.displaySpinner = true;

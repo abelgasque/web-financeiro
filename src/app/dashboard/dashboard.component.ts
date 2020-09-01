@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from '../seguranca/auth.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -7,22 +8,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DashboardComponent implements OnInit {
 
-  index: number = 0;
   sideBarOpen:boolean = false;
 
-  constructor(
-  ) { }
+  constructor(public auth: AuthService) { }
 
   ngOnInit() {}
 
   sideBarToggler() {
     this.sideBarOpen = !this.sideBarOpen;
   }
-  openNext() {
-    this.index = (this.index === 3) ? 0 : this.index + 1;
-  } 
 
-  openPrev() {
-      this.index = (this.index <= 0) ? 3 : this.index - 1;
-  }
 }

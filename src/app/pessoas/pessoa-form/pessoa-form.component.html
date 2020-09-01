@@ -1,114 +1,120 @@
 <app-spinner [hidden]="!displaySpinner"></app-spinner>
-<div class="ui-g">
-    <div class="ui-g-12">
-        <form class="ui-g-12" #f="ngForm" autocomplete="off" (ngSubmit)="gerenciarPersistencia()">
-            <div class="ui-g-12 ui-fluid">
-                <div class="ui-g-12 ui-md-6 ui-fluid">
-                    <span class="ui-float-label">
-                        <input pInputText type="text" name="nome" [(ngModel)]="pessoa.nome" 
-                            minlength="5" maxlength="50" required> 
-                        <label>Nome</label>
-                    </span>
-                    <small>Campo obrigatório</small>
-                </div>
-                <div class="ui-g-6 ui-md-2 ui-fluid">
-                    <span class="ui-float-label">
-                        <p-inputMask mask="999.999.999-99" name="cpf" 
-                        [(ngModel)]="pessoa.cpf" #cpf="ngModel" required></p-inputMask>
-                        <label>CPF</label>
-                    </span>
-                    <small>Campo obrigatório</small>
-                </div>
-                <div class="ui-g-6 ui-md-2">
-                    <p-selectButton [options]="situacoes" name="situacao"
-                    [(ngModel)]="pessoa.situacao" #situacao="ngModel" required>
-                    </p-selectButton><br>
-                    <small>Situação. Campo obrigatório</small>
-                </div>
+<app-toast></app-toast>
+<p-dialog [(visible)]="display" [modal]="true" [style]="{width: '95%'}"  [closable]="false"
+[header]="pessoa.id === 0 ? 'Nova pessoa' : 'Edição de pessoa'" [draggable]="false">
+    <form class="ui-g-12" #f="ngForm" autocomplete="off" (ngSubmit)="gerenciarPersistencia(f)">
+        <div class="ui-g-12 ui-fluid">
+            <div class="ui-g-12 ui-md-6 ui-fluid">
+                <span class="ui-float-label">
+                    <input pInputText type="text" name="nome" [(ngModel)]="pessoa.nome" 
+                        minlength="5" maxlength="50" required> 
+                    <label>Nome</label>
+                </span>
+                <small>Campo obrigatório</small>
             </div>
-            <div class="ui-g-12 ui-fluid">
-                <h1>Endereço</h1>
-                <div class="ui-g-6 ui-md-2">
-                    <div class="ui-inputgroup">
-                        <span class="ui-float-label">
-                            <input pInputText type="text" name="cep" 
-                            [(ngModel)]="pessoa.endereco.cep" #cep="ngModel"> 
-                            <label>CEP</label>
-                        </span>
-                        <button type="button" pButton icon="pi pi-search"
-                            (click)="getEnderecoPorCep(pessoa.endereco.cep)"></button>
-                    </div>
-                    <small>Campo opcional</small>
-                </div>  
-                <div class="ui-g-6 ui-md-1">
-                    <span class="ui-float-label">
-                        <input pInputText type="text" name="uf" [(ngModel)]="pessoa.endereco.uf" 
-                        #uf="ngModel" disabled> 
-                        <label>UF</label>
-                    </span>
-                    <small>Opcional</small>
-                </div>
-                <div class="ui-g-6 ui-md-2 ui-fluid">
-                    <span class="ui-float-label">
-                        <input pInputText type="text" name="cidade" 
-                        [(ngModel)]="pessoa.endereco.cidade" 
-                        #cidade="ngModel" disabled> 
-                        <label>Cidade</label>
-                    </span>
-                    <small>Campo opcional</small>
-                </div>
-                <div class="ui-g-6 ui-md-2 ui-fluid">
-                    <span class="ui-float-label">
-                        <input pInputText type="text" name="bairro" 
-                        [(ngModel)]="pessoa.endereco.bairro" 
-                        #bairro="ngModel" disabled> 
-                        <label>Bairro</label>
-                    </span>
-                    <small>Campo opcional</small>
-                </div>
-                <div class="ui-g-6 ui-md-3 ui-fluid">
-                    <span class="ui-float-label">
-                        <input pInputText type="text" name="logradouro" 
-                        [(ngModel)]="pessoa.endereco.logradouro" 
-                        #logradouro="ngModel" disabled> 
-                        <label>Logradouro</label>
-                    </span>
-                    <small>Campo opcional</small>
-                </div>
-                <div class="ui-g-6 ui-md-2 ui-fluid">
-                    <span class="ui-float-label">
-                        <input pInputText type="text" name="complemento" 
-                        [(ngModel)]="pessoa.endereco.complemento" 
-                        #complemento="ngModel"> 
-                        <label>Complemento</label>
-                    </span>
-                    <small>Campo opcional</small>
-                </div>
-                <div class="ui-g-6 ui-md-2 ui-fluid">
-                    <span class="ui-float-label">
-                        <input pInputText type="text" name="numero" 
-                        [(ngModel)]="pessoa.endereco.numero" 
-                        #numero="ngModel"> 
-                        <label>Número</label>
-                    </span>
-                    <small>Opcional</small>
-                </div>
+            <div class="ui-g-6 ui-md-2 ui-fluid">
+                <span class="ui-float-label">
+                    <p-inputMask mask="999.999.999-99" name="cpf" 
+                    [(ngModel)]="pessoa.cpf" #cpf="ngModel" required></p-inputMask>
+                    <label>CPF</label>
+                </span>
+                <small>Campo obrigatório</small>
             </div>
-            <div class="ui-g-12">
-                <p-panel header="Contatos" [toggleable]="true" [hidden]="pessoa.id==0">
-                    <app-pessoa-contato-form [pessoa]="pessoa"></app-pessoa-contato-form>
-                </p-panel>
+            <div class="ui-g-6 ui-md-2">
+                <p-selectButton [options]="situacoes" name="situacao"
+                [(ngModel)]="pessoa.situacao" #situacao="ngModel" required>
+                </p-selectButton><br>
+                <small>Situação. Campo obrigatório</small>
             </div>
-            <div class="ui-g-12">
-                <div class="ui-g-6 ui-md-1 ui-fluid">
-                    <button pButton type="submit" label="Salvar" [disabled]="!f.valid"
-                    class="ui-button-success ui-button-rounded"></button>
-                </div>
-                <div class="ui-g-6 ui-md-1 ui-fluid">
-                    <button pButton type="button" label="Novo" (click)="novo(f)"
-                    class="ui-button-rounded"></button>
-                </div>
+            <div class="ui-g-12 ui-md-6">
+                <span class="ui-float-label">
+                    <p-dropdown name="usuario" [options]="usuarios" [filter]="true" 
+                    optionLabel="email" [showClear]="true" appendTo="body"
+                    [autoDisplayFirst]="false" [(ngModel)]="pessoa.usuario" required
+                    [disabled]="pessoa.id > 0 ? true : false"
+                    (onShow)="carregarListaUsuariosDisponiveis()"></p-dropdown> 
+                    <label>Usuário</label>
+                </span>
+                <small>Situação. Campo obrigatório</small>
             </div>
-        </form>
-    </div>
-</div>
+        </div>
+        <div class="ui-g-12 ui-fluid">
+            <h1>Endereço</h1>
+            <div class="ui-g-6 ui-md-2">
+                <div class="ui-inputgroup">
+                    <span class="ui-float-label">
+                        <input pInputText type="text" name="cep" 
+                        [(ngModel)]="pessoa.endereco.cep" #cep="ngModel"> 
+                        <label>CEP</label>
+                    </span>
+                    <button type="button" pButton icon="pi pi-search"
+                        (click)="getEnderecoPorCep(pessoa.endereco.cep)"></button>
+                </div>
+                <small>Campo opcional</small>
+            </div>  
+            <div class="ui-g-6 ui-md-1">
+                <span class="ui-float-label">
+                    <input pInputText type="text" name="uf" [(ngModel)]="pessoa.endereco.uf" 
+                    #uf="ngModel" disabled> 
+                    <label>UF</label>
+                </span>
+                <small>Opcional</small>
+            </div>
+            <div class="ui-g-6 ui-md-2 ui-fluid">
+                <span class="ui-float-label">
+                    <input pInputText type="text" name="cidade" 
+                    [(ngModel)]="pessoa.endereco.cidade" 
+                    #cidade="ngModel" disabled> 
+                    <label>Cidade</label>
+                </span>
+                <small>Campo opcional</small>
+            </div>
+            <div class="ui-g-6 ui-md-2 ui-fluid">
+                <span class="ui-float-label">
+                    <input pInputText type="text" name="bairro" 
+                    [(ngModel)]="pessoa.endereco.bairro" 
+                    #bairro="ngModel" disabled> 
+                    <label>Bairro</label>
+                </span>
+                <small>Campo opcional</small>
+            </div>
+            <div class="ui-g-6 ui-md-3 ui-fluid">
+                <span class="ui-float-label">
+                    <input pInputText type="text" name="logradouro" 
+                    [(ngModel)]="pessoa.endereco.logradouro" 
+                    #logradouro="ngModel" disabled> 
+                    <label>Logradouro</label>
+                </span>
+                <small>Campo opcional</small>
+            </div>
+            <div class="ui-g-6 ui-md-2 ui-fluid">
+                <span class="ui-float-label">
+                    <input pInputText type="text" name="complemento" 
+                    [(ngModel)]="pessoa.endereco.complemento" 
+                    #complemento="ngModel"> 
+                    <label>Complemento</label>
+                </span>
+                <small>Campo opcional</small>
+            </div>
+            <div class="ui-g-6 ui-md-2 ui-fluid">
+                <span class="ui-float-label">
+                    <input pInputText type="text" name="numero" 
+                    [(ngModel)]="pessoa.endereco.numero" 
+                    #numero="ngModel"> 
+                    <label>Número</label>
+                </span>
+                <small>Opcional</small>
+            </div>
+        </div>
+        <div class="ui-g-12" [hidden]="pessoa.id==0">
+            <app-pessoa-contato-form [pessoa]="pessoa"></app-pessoa-contato-form>
+        </div>
+    </form>
+    <p-footer>
+        <button pButton type="button" (click)="gerenciarPersistencia(f)"
+        label="Salvar" [disabled]="!f.valid"
+        class="ui-button-success ui-button-rounded"></button>
+        <button pButton type="button" label="Cancelar" (click)="cancelar(f)"
+        class="ui-button-rounded ui-button-danger"></button>
+    </p-footer>
+</p-dialog>

@@ -38,6 +38,12 @@ export class LancamentosComponent implements OnInit {
     this.pesquisar();
   }
 
+  getEventFormLancamento(lancamento: Lancamento){
+    if(lancamento != null){
+      this.pesquisar();
+    }
+  }
+
   novoLancamento(){
     this.lancamentoForm = new Lancamento();
     this.displayFormLancamento = true;

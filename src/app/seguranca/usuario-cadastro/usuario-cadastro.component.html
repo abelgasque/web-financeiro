@@ -1,9 +1,31 @@
-<div class="ui-g-12">
-    
-    <div class="ui-g-6">
-        <a mat-button>Voltar</a>
-    </div>
-    <div class="ui-g-6">
-        <a mat-button>Cadastrar</a>
-    </div>
+<h1 class="titulo">Novo usuário</h1> 
+<div class="ui-g">
+    <form class="ui-g-12" autocomplete="off" #f="ngForm" autocomplete="off" (ngSubmit)="adicionar()">
+        <div class="ui-g-12 ui-fluid">
+            <span class="ui-float-label">
+                <input pInputText type="text" name="nome" [(ngModel)]="usuario.nome" maxlength="30"> 
+                <label>Nome</label>
+            </span>
+        </div>
+        <div class="ui-g-12 ui-fluid">
+            <span class="ui-float-label">
+                <input pInputText type="text" name="email" [(ngModel)]="usuario.email" maxlength="50"> 
+                <label>E-mail</label>
+            </span>
+        </div>
+        <div class="ui-g-12 ui-fluid">
+            <span class="ui-float-label">
+                <input pPassword type="password" name="senha" [(ngModel)]="usuario.senha" maxlength="12"
+                [feedback]="false"> 
+                <label>Senha</label>
+            </span>
+        </div>
+        <div class="ui-g-6">
+            <button mat-button routerLinkActive="active" 
+            [routerLink]="['/seguranca', 'login-autenticacao']">Cancelar</button>
+        </div>
+        <div class="ui-g-6">
+            <button mat-button type="submit">Adicionar</button>
+        </div>
+    </form>
 </div>

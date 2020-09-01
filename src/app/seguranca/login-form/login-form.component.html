@@ -1,8 +1,9 @@
 <app-spinner [hidden]="!displaySpinner"></app-spinner>
 <div fxLayout="row" fxLayoutAlign="center center">
     <img class="img" src="../../../assets/img/box-login.png">
+    <span class="login">Login</span>
 </div>
-<form #f="ngForm" autocomplete="off" (ngSubmit)="autenticarLogin()">
+<form class="form" #f="ngForm" autocomplete="off" (ngSubmit)="autenticarLogin()">
     <div class="ui-g-12 ui-fluid">
         <span class="ui-float-label">
             <input pInputText type="text" name="email" [(ngModel)]="usuario.email"
@@ -23,16 +24,16 @@
         [disabled]="!f.valid"></button>
     </div>
 </form>
-<!-- <div class="ui-g-12 ui-fluid">
-    <div class="ui-g-6">
+<div class="ui-g-12 ui-fluid">
+    <!-- <div class="ui-g-6">
         <a mat-button>
             Perdeu sua senha?
         </a>
-    </div>
+    </div> -->
     <div class="ui-g-6">
-        <a mat-button [routerLink]="['/seguranca','usuario-cadastro']" routerLinkActive="active-link">
+        <button mat-button [routerLink]="['/seguranca','usuario-cadastro']" routerLinkActive="active-link">
             Cadastrar-se
-        </a>
+        </button>
     </div>
-</div> -->
+</div>
 
