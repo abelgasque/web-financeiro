@@ -4,6 +4,7 @@ export const environment = {
   tokenWhitelistedDomains: [ new RegExp('protected-stream-77116.herokuapp.com') ],
   tokenBlacklistedRoutes: [ 
     new RegExp('\/oauth\/token'),
-    new RegExp('\/usuarios\/adicionar') 
+    new RegExp('\/usuarios\/adicionar'),
+    new RegExp('\/usuarios\/validar-autenticacao') 
   ]
 };

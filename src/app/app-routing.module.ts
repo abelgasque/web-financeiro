@@ -40,7 +40,21 @@ const routes: Routes = [
   { path: 'dashboard', 
     component:  DashboardComponent,
     canActivate: [AuthGuard],
-    data: { roles:['ROLE_ADMINISTRADOR']} 
+    data: { roles:['ROLE_ADMINISTRADOR', 'ROLE_PESSOA']},
+    children: [
+      {
+        path: 'admin', 
+        component:  DashboardAdminComponent, 
+        canActivate: [AuthGuard],
+        data: { roles:['ROLE_ADMINISTRADOR']},
+      },
+      {
+        path: 'pessoa', 
+        component:  DashboardPessoaComponent, 
+        canActivate: [AuthGuard],
+        // data: { roles:['ROLE_PESSOA']},
+      }
+    ]
   },
   { path: 'relatorios', 
     component:  RelatoriosComponent, 

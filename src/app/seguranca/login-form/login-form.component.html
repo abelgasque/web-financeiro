@@ -3,7 +3,7 @@
     <img class="img" src="../../../assets/img/box-login.png">
     <span class="login">Login</span>
 </div>
-<form class="form" #f="ngForm" autocomplete="off" (ngSubmit)="autenticarLogin()">
+<form class="form" #f="ngForm" autocomplete="off" (ngSubmit)="validar()">
     <div class="ui-g-12 ui-fluid">
         <span class="ui-float-label">
             <input pInputText type="text" name="email" [(ngModel)]="usuario.email"

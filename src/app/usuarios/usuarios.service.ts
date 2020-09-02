@@ -40,4 +40,8 @@ export class UsuariosService {
   listarDisponiveis(): Promise<any> {
     return this.http.get(`${this.url}/disponiveis`).toPromise();
   }
+
+  validarAutenticacao(email: string): Promise<any> {
+    return this.http.get(`${this.url}/validar-autenticacao/${email}`).toPromise();
+  }
 }

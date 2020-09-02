@@ -4,6 +4,7 @@ import { AuthService } from '../auth.service';
 import { ToastService } from 'src/app/shared/components/toast/toast.service';
 import { ErrorHandlerService } from 'src/app/core/error-handler.service';
 import { Router } from '@angular/router';
+import { UsuariosService } from 'src/app/usuarios/usuarios.service';
 
 @Component({
   selector: 'app-login-form',
@@ -18,7 +19,9 @@ export class LoginFormComponent implements OnInit {
   constructor(
     private authService: AuthService,
     private errorHandler: ErrorHandlerService,
-    private router: Router
+    private router: Router,
+    private usuarioService: UsuariosService,
+    private toastService: ToastService
     ) {}
 
   ngOnInit(): void {}
@@ -37,4 +40,21 @@ export class LoginFormComponent implements OnInit {
     });
   }
   
+  validar(){
+    this.displaySpinner = true;
+    this.usuarioService.validarAutenticacao(this.usuario.email)
+    .then(response => {
+      this.displaySpinner = false;
+      if(response == true){
+        this.autenticarLogin();
+      }else{
+        this.toastService.showWarn("Usuário inativo entre contato com administrador sistema");
+      }
+    })
+    .catch(response => {
+      console.log(response);
+      this.displaySpinner = false;
+      this.toastService.showError("Erro ao validar usuário");
+    });
+  }
 }

@@ -44,14 +44,12 @@ export class UsuarioCadastroComponent implements OnInit {
       this.usuario.permissoes = [
         { id: 2, descricao: 'ROLE_PESSOA'}
       ];
+      this.usuario.situacao = 'INATIVO';
       this.usuariosService.salvar(this.usuario)
         .then(response => {
           this.router.navigate(['/seguranca', 'login-autenticacao']);
-          // if(response.email != null && response.senha != null){
-          //   this.login(response.email, response.senha);
-          // }
           this.usuario = new Usuario();
-          this.toastService.showSuccess("Usuário adicionado com sucesso! Agora basta efetuar seu login.");
+          this.toastService.showSuccess("Usuário adicionado com sucesso!");
           this.displaySpinner = false;
         })
         .catch(error => {

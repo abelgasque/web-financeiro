@@ -7,6 +7,9 @@ import { AuthService } from 'src/app/seguranca/auth.service';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { throwError } from 'rxjs';
+import * as Highcharts from 'highcharts';
+import HC_exporting from 'highcharts/modules/exporting';
+
 @Component({
   selector: 'app-dashboard-admin',
   templateUrl: './dashboard-admin.component.html',
@@ -119,5 +122,4 @@ export class DashboardAdminComponent implements OnInit {
   public randomize(): void {
     this.barChartType = this.barChartType === 'bar' ? 'line' : 'bar';
   }
-
 }

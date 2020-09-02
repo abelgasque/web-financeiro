@@ -29,11 +29,15 @@
         <mat-icon mat-list-icon>home</mat-icon>
         <a routerLinkActive="select" [routerLink]="['']">Home</a>
       </mat-list-option>
+      <mat-list-option *ngIf="auth.temPermissao('ROLE_PESSOA')">
+        <mat-icon mat-list-icon>dashboard</mat-icon>
+        <a routerLinkActive="select" [routerLink]="['/dashboard' ,'pessoa']">Dashboard</a>
+      </mat-list-option>
       <mat-divider></mat-divider>
-      <div mat-subheader>Usuario</div>
+      <div mat-subheader>Sistema</div>
       <mat-list-option *ngIf="auth.temPermissao('ROLE_ADMINISTRADOR')">
         <mat-icon mat-list-icon>dashboard</mat-icon>
-        <a routerLinkActive="select" [routerLink]="['/dashboard']">Dashboard</a>
+        <a routerLinkActive="select" [routerLink]="['/dashboard' ,'admin']">Dashboard</a>
       </mat-list-option>
       <mat-list-option *ngIf="auth.temPermissao('ROLE_ADMINISTRADOR')">
         <mat-icon mat-list-icon>add</mat-icon>
@@ -58,7 +62,7 @@
       </mat-list-option>
       <mat-list-option [hidden]="gerenciarBtnNavbar">
         <mat-icon mat-list-icon>login</mat-icon>
-        <a href="javascript:;" (click)="logout()">Login</a>
+        <a href="javascript:;" [routerLink]="['/seguranca','login-autenticacao']">Login</a>
       </mat-list-option>
     </mat-selection-list>
   </p-scrollPanel>

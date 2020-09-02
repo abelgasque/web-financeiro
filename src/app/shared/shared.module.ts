@@ -18,15 +18,25 @@ import {SidebarModule} from 'primeng/sidebar';
 import {ProgressSpinnerModule} from 'primeng/progressspinner';
 import {ScrollPanelModule} from 'primeng/scrollpanel';
 
+import { HighchartsChartModule } from 'highcharts-angular';
+
 import {NavbarComponent} from './components/navbar/navbar.component';
 import {ToastComponent} from './components/toast/toast.component';
 import {SpinnerComponent} from './components/spinner/spinner.component';
+import { FooterComponent } from './components/footer/footer.component';
+import { ChartAreaLancamentosComponent } from './widgets/chart-area-lancamentos/chart-area-lancamentos.component';
+import { CardsFluxoCaixaComponent } from './widgets/cards-fluxo-caixa/cards-fluxo-caixa.component';
+import { PieFluxoCaixaComponent } from './widgets/pie-fluxo-caixa/pie-fluxo-caixa.component';
 
 @NgModule({
   declarations: [
     NavbarComponent,
     ToastComponent,
-    SpinnerComponent
+    SpinnerComponent,
+    FooterComponent,
+    ChartAreaLancamentosComponent,
+    CardsFluxoCaixaComponent,
+    PieFluxoCaixaComponent
   ],
   imports: [
     CommonModule,
@@ -42,6 +52,8 @@ import {SpinnerComponent} from './components/spinner/spinner.component';
     MatDividerModule,
     MatExpansionModule,
 
+    HighchartsChartModule,
+    
     SidebarModule,
     ToastModule,
     ProgressSpinnerModule,
@@ -50,7 +62,11 @@ import {SpinnerComponent} from './components/spinner/spinner.component';
   exports: [
     NavbarComponent,
     ToastComponent,
-    SpinnerComponent
+    SpinnerComponent,
+    FooterComponent,
+    ChartAreaLancamentosComponent,
+    CardsFluxoCaixaComponent,
+    PieFluxoCaixaComponent
   ],
   providers:[
     MessageService

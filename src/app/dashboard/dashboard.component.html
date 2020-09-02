@@ -1,6 +1,5 @@
 <app-navbar></app-navbar>
-<div class="ui-g">
-    <div class="ui-g-12">
-        <app-dashboard-admin *ngIf="auth.temPermissao('ROLE_ADMINISTRADOR')"></app-dashboard-admin>
-    </div>
+<div class="body">
+    <router-outlet></router-outlet>
 </div>
+<app-footer></app-footer>

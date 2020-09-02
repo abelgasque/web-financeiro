@@ -1,0 +1,25 @@
+.body{
+    margin: 0 auto 0;
+    width: 100% !important;
+    min-height: 85% !important;
+    background-color: rgba(233, 227, 227, 0.774);
+}
+
+app-navbar{
+    background: none;
+}
+
+nav{
+    background-color: #1c1c1c;
+    height: 35px !important;
+}
+
+nav a{
+    color: #fff;
+    height: 35px;
+    text-decoration: none;
+}
+
+.tabIcon {
+    margin-right: 8px;
+}
