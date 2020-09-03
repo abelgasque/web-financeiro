@@ -1,6 +1,7 @@
+<app-spinner [hidden]="!displaySpinner"></app-spinner>
 <p-table [value]="lancamentos" [rowHover]="true" [responsive]="true" [paginator]="true" [totalRecords]="filtro.total"
-    [rowsPerPageOptions]="[10,25,50]" [lazy]="true" [(rows)]="filtro.itensPorPagina"
-    (onLazyLoad)="aoMudarPagina($event)" #table>
+    [rowsPerPageOptions]="[1,10,25,50]" [lazy]="true" [(rows)]="filtro.itensPorPagina"
+    (onPage)="aoMudarPagina($event)" #table>
     <ng-template pTemplate="caption">
         <div class="ui-helper-clearfix" style="text-align: center">
             Lista de lançamentos por pessoa

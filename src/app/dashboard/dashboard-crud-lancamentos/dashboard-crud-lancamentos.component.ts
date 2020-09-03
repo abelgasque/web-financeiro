@@ -46,14 +46,14 @@ export class DashboardCrudLancamentosComponent implements OnInit {
     this.ptBr = this.apoioService.getCalendarioPtBr();
     this.carregarCategorias();
     setTimeout(() => {
-      console.log(this.pessoa);
-      this.getTable(this.pessoa.id);
-    }, 1000);
+      this.getTable();
+    }, 2000);
   }
 
-  getTable(id:number) {
-    if(id != undefined || id != null && id > 0){
-      this.filtro.pessoa = id;
+  getTable() {
+    if(this.pessoa.id != undefined || this.pessoa.id != null && this.pessoa.id > 0){
+      this.displaySpinner = true;
+      this.filtro.pessoa = this.pessoa.id;
       this.lancamentosService.pesquisar(this.filtro)
         .then(response => {
           this.filtro.total = response.total;
@@ -69,7 +69,7 @@ export class DashboardCrudLancamentosComponent implements OnInit {
 
   aoMudarPagina(event: LazyLoadEvent) {
     this.filtro.pagina = event.first / event.rows;
-    // this.getTable(this.pessoa.id);
+    this.getTable();
   }
 
   resetForm(f: NgForm) {
@@ -90,7 +90,7 @@ export class DashboardCrudLancamentosComponent implements OnInit {
     this.lancamentosService.salvar(this.lancamento)
       .then(response => {
         this.retornoPersistencia.emit(true);
-        this.getTable(this.pessoa.id);
+        this.getTable();
         this.display = false;
         this.resetForm(f);
         this.toastyService.showSuccess("Lançamento adicionado com sucesso!");
@@ -109,7 +109,7 @@ export class DashboardCrudLancamentosComponent implements OnInit {
     this.lancamentosService.editar(this.lancamento)
       .then(response => {
         this.retornoPersistencia.emit(true);
-        this.getTable(this.pessoa.id);
+        this.getTable();
         this.display = false;
         this.resetForm(f);
         this.toastyService.showSuccess("Lancaçamento editado com sucesso!");
