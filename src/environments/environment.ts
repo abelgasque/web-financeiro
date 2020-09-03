@@ -4,7 +4,7 @@ export const environment = {
   tokenWhitelistedDomains: [ new RegExp('localhost:8080') ],
   tokenBlacklistedRoutes: [ 
     new RegExp('\/oauth\/token'),
-    new RegExp('\/usuarios\/adicionar'),
+    new RegExp('\/pessoas\/adicionar'),
     new RegExp('\/usuarios\/validar-autenticacao')
   ]
 };

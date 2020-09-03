@@ -15,7 +15,8 @@ export class LoginFormComponent implements OnInit {
 
   usuario = new Usuario();
   displaySpinner: boolean = false;
-
+  display: boolean = false;
+  
   constructor(
     private authService: AuthService,
     private errorHandler: ErrorHandlerService,
@@ -24,7 +25,9 @@ export class LoginFormComponent implements OnInit {
     private toastService: ToastService
     ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.authService.limparAccessToken();
+  }
 
   autenticarLogin(){
     this.displaySpinner = true;

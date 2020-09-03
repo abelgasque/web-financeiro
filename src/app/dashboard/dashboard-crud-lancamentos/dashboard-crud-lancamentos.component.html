@@ -1,0 +1,132 @@
+<p-table [value]="lancamentos" [rowHover]="true" [responsive]="true" [paginator]="true" [totalRecords]="filtro.total"
+    [rowsPerPageOptions]="[10,25,50]" [lazy]="true" [(rows)]="filtro.itensPorPagina"
+    (onLazyLoad)="aoMudarPagina($event)" #table>
+    <ng-template pTemplate="caption">
+        <div class="ui-helper-clearfix" style="text-align: center">
+            Lista de lançamentos por pessoa
+            <button type="button" pButton class="ui-button-rounded" (click)="novo(f)" pButton iconPos="left"
+                style="float:right" icon="pi pi-plus" label="Novo"></button>
+        </div>
+    </ng-template>
+    <ng-template pTemplate="header">
+        <tr style="text-align: center;">
+            <th>Descrição</th>
+            <th style="width: 8em;">Vencimento</th>
+            <th style="width: 8em;">Pagamento</th>
+            <th style="width: 14em;">Valor</th>
+            <th style="width: 7em;">Opções</th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-rowData>
+        <tr class="ui-selectable-row" style="text-align: center;">
+            <td>{{rowData.descricao}}</td>
+            <td>{{rowData.dataVencimento}}</td>
+            <td>{{rowData.dataPagamento}} </td>
+            <td [style.color]="rowData.tipo === 'DESPESA' ? 'red' : 'blue'">
+                <input currencyMask [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }"
+                    [(ngModel)]="rowData.valor" disabled>
+            </td>
+            <td>
+                <button class="ui-button-rounded ui-button-secondary" pButton icon="pi pi-pencil"
+                    (click)="buscarPorId(rowData.id)"></button>
+            </td>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage">
+        <tr>
+            <td>
+                <h2>Sem dados para listar.</h2>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+    </ng-template>
+</p-table>
+
+<p-dialog [visible]="display" [modal]="true" [style]="{width: '95%'}" [draggable]="false" [closable]="false"
+    [header]="lancamento.id === 0 ? 'Adicionar lançamento' : 'Edição de lançamentos'">
+    <form class="ui-g-12" #f="ngForm" autocomplete="off" (ngSubmit)="gerenciarPersistencia(f)">
+        <div class="ui-g-12 ui-md-6 ui-fluid">
+            <span class="ui-float-label">
+                <input pInputText type="text" name="descricao" [(ngModel)]="lancamento.descricao" required minlength="5"
+                    maxlength="50">
+                <label>Descrição</label>
+            </span>
+            <small>Campo obrigatório</small>
+        </div>
+        <div class="ui-g-6 ui-md-2 ui-fluid">
+            <span class="ui-float-label">
+                <p-calendar name="dataVencimento" dateFormat="dd/mm/yy" showButtonBar="true" readonlyInput="false"
+                    appendTo="body" showIcon="true" [locale]="ptBr" [(ngModel)]="lancamento.dataVencimento" required>
+                </p-calendar>
+                <label>Vencimento</label>
+            </span>
+            <small>Campo obrigatório</small>
+        </div>
+        <div class="ui-g-6 ui-md-2 ui-fluid">
+            <span class="ui-float-label">
+                <p-calendar name="dataPagamento" dateFormat="dd/mm/yy" showButtonBar="true" appendTo="body"
+                    readonlyInput="false" showIcon="true" [locale]="ptBr" [(ngModel)]="lancamento.dataPagamento">
+                </p-calendar>
+                <label>{{tipo.value === 'RECEITA' ? 'Recebimento' : 'Pagamento'}}</label>
+            </span>
+            <small>Campo opcional</small>
+        </div>
+        <div class="ui-g-6 ui-md-2 ui-fluid">
+            <span class="ui-float-label">
+                <input pInputText type="text" name="valor" currencyMask
+                    [options]="{ prefix: '', thousands: '.', decimal: ',' }" [(ngModel)]="lancamento.valor"
+                    #valor="ngModel" required>
+                <label>Valor</label>
+            </span>
+            <small>Campo obrigatório</small>
+        </div>
+        <div class="ui-g-12 ui-md-4 ui-fluid">
+            <span class="ui-float-label">
+                <p-dropdown name="categoria" [options]="categorias" [showClear]="true" appendTo="body"
+                    [autoDisplayFirst]="false" optionLabel="nome" [(ngModel)]="lancamento.categoria" required>
+                </p-dropdown>
+                <label>Categoria</label>
+            </span>
+            <small>Campo obrigatório</small>
+        </div>
+        <div class="ui-g-12 ui-md-2">
+            <p-selectButton [options]="tipos" name="tipo" [(ngModel)]="lancamento.tipo" #tipo="ngModel" required>
+            </p-selectButton><br>
+            <small>Tipo. Campo obrigatório</small>
+        </div>
+        <div class="ui-g-12 ui-fluid">
+            <span class="ui-float-label">
+                <textarea rows="5" cols="30" pInputTextarea autoResize="autoResize"></textarea>
+                <label>Observação</label>
+            </span>
+            <small>Campo opcional</small>
+        </div>
+        <div class="ui-g-6 ui-g-offset-6 ui-md-2 ui-md-offset-10 ui-fluid" *ngIf="lancamento.anexo == null">
+            <p-fileUpload name="anexo" mode="basic" auto="true" maxFileSize="100000000" chooseLabel="Anexar"
+                accept="image/*,application/*" [url]="urlUploadAnexo" (onSend)="antesUploadAnexo($event)"
+                (onUpload)="aoTerminarUploadAnexo($event)"></p-fileUpload>
+        </div>
+        <div class="ui-g-12 ui-fluid" *ngIf="lancamento.anexo != null">
+            <button pButton type="button" class="ui-button-danger" icon="pi pi-trash" pTooltip="Remover anexo"
+                tooltipPosition="top" (click)="removerAnexo()"></button>
+            <a pTooltip="Baixar anexo" tooltipPosition="top" [href]="lancamento.urlAnexo">{{ nomeAnexo }}</a>
+        </div>
+    </form>
+    <p-footer>
+        <button pButton [label]="lancamento.id === 0 ? 'Adicionar' : 'Editar'" (click)="gerenciarPersistencia(f)"
+            [disabled]="!f.valid"></button>
+        <button pButton label="Cancelar" (click)="display=false"></button>
+    </p-footer>
+</p-dialog>
+
+<p-confirmDialog header="Alerta" icon="pi pi-exclamation-triangle" #confirmacao>
+    <p-footer>
+        <button pButton class="ui-button-rounded ui-button-success" type="button" icon="pi pi-check" label="Sim"
+            (click)="confirmacao.accept()"></button>
+        <button pButton class="ui-button-rounded ui-button-danger" type="button" icon="pi pi-times" label="Não"
+            (click)="confirmacao.reject()"></button>
+    </p-footer>
+</p-confirmDialog>

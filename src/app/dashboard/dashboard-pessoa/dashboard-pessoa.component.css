@@ -1,7 +1,37 @@
-div{
-    padding: 10px !important;
+.cards-top{
+    height: 100px;
 }
 
-.cards .mat-card{
-    overflow: hidden;
+.cards-big-charts{
+    height: 100%;
+}
+
+.bigChart{
+    max-height: 450px !important;
+}
+
+.cardSaldo{
+    background-color: rgb(123, 238, 123);
+}
+
+.cardReceita{
+    background-color: rgba(118,180,250);
+}
+
+.cardDespesa{
+    background-color: rgba(250, 107, 107);
+}
+
+.cards-top input{
+    width: 100%;
+    background: none;
+    border: none;
+    font-size: 20px;
+    color: #000;
+}
+
+.mat-icon{
+    font-size: 30px;
+    margin-top: 10px;
+    margin-right: 10px;
 }

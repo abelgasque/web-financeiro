@@ -1,0 +1,7 @@
+div{
+    padding: 10px !important;
+}
+
+.cards .mat-card{
+    overflow: hidden;
+}

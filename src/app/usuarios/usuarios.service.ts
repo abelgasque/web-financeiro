@@ -44,4 +44,8 @@ export class UsuariosService {
   validarAutenticacao(email: string): Promise<any> {
     return this.http.get(`${this.url}/validar-autenticacao/${email}`).toPromise();
   }
+
+  buscarPorEmail(email: string): Promise<any> {
+    return this.http.get(`${this.url}/buscar-por-email/${email}`).toPromise();
+  }
 }

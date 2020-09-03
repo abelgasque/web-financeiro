@@ -24,7 +24,8 @@ export class LancamentosService {
     let params = new HttpParams({
       fromObject:{
         page: filtro.pagina.toString(),
-        size: filtro.itensPorPagina.toString()
+        size: filtro.itensPorPagina.toString(),
+        pessoa: filtro.pessoa.toString()
       }
     });
     if(filtro.descricao){
@@ -36,7 +37,7 @@ export class LancamentosService {
     if(filtro.vencimentoAte){
       params = params.append('dataVencimentoAte', moment(filtro.vencimentoAte).format('YYYY-MM-DD'));
     }
-    return this.http.get<any>(`${this.urlLancamento}/pesquisar?resumo`, {params})
+    return this.http.get<any>(`${this.urlLancamento}?resumo`, {params})
     .toPromise()
     .then(response => {
       let lancamentos = response.content;

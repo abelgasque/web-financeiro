@@ -1,27 +1,52 @@
-<div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="20px" class="cards">
-    <mat-card fxFlex="100" fxFlex.gt-md="25">
-        <app-cards-fluxo-caixa label="Saldo em caixa" percentual="90"  total="10k"></app-cards-fluxo-caixa>
-    </mat-card>
-    <mat-card fxFlex="100" fxFlex.gt-md="25">
-        <app-cards-fluxo-caixa label="Receitas" percentual="90" total="10k"></app-cards-fluxo-caixa>
-    </mat-card>
-    <mat-card fxFlex="100" fxFlex.gt-md="25">
-        <app-cards-fluxo-caixa label="Despesas" percentual="90" total="10k"></app-cards-fluxo-caixa>
-    </mat-card>
-    <mat-card fxFlex="100" fxFlex.gt-md="25">
-        <app-cards-fluxo-caixa label="Lucros" percentual="90" total="10k"></app-cards-fluxo-caixa>
-    </mat-card>    
-</div>
-<mat-divider></mat-divider>
-<div fxLayout="row" fxLayoutAlign="center center">
-    <app-chart-area-lancamentos fxFlex="100" [lancamentos]="chartArea" 
-    title="Gráfico de lançamentos por dia"></app-chart-area-lancamentos>
-</div>
-<mat-divider></mat-divider>
-<div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="20px">
-    <div fxFlex="100" fxFlex.gt-md="60">Table</div>
-    <div fxFlex="100" fxFlex.gt-md="40">
-        <app-pie-fluxo-caixa [data]="chartPie"
-        title="Gráfico lançamentos por categoria"></app-pie-fluxo-caixa>
+<app-spinner [hidden]="!displaySpinner"></app-spinner>
+<app-toast></app-toast>
+<div class="ui-g">
+    <div class="ui-g-12">
+        <h1 style="text-align: center;">Bem-vindo {{ auth.jwtPayload?.nome }}</h1>
+    </div>
+    <div class="ui-g-12 ui-md-3">
+        <mat-card class="cards-top cardSaldo">
+            <h1>Saldo</h1>
+            <input  currencyMask [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }" 
+            [(ngModel)]="this.saldo" disabled>
+        </mat-card>
+    </div>
+    <div class="ui-g-12 ui-md-3">
+        <mat-card class="cards-top cardReceita">
+            <h1>Receitas</h1>
+            <input  currencyMask [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }" 
+            [(ngModel)]="this.receitas" disabled>
+        </mat-card>
+    </div>
+    <div class="ui-g-12 ui-md-3">
+        <mat-card class="cards-top cardDespesa">
+            <h1>Despesas</h1>
+            <input  currencyMask [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }" 
+            [(ngModel)]="this.despesas" disabled>
+        </mat-card>
+    </div>
+    <div class="ui-g-12 ui-md-6 ui-fluid">
+        <mat-card class="cards-big-charts">
+            <h1>Gráfico lançamentos por tipo</h1>
+            <canvas baseChart [data]="pieChartData" [labels]="pieChartLabels"
+            [chartType]="pieChartType" [options]="pieChartOptions"
+            [colors]="pieChartColors" [legend]="pieChartLegend">
+            </canvas>
+        </mat-card>    
+    </div>
+    <!-- <div class="ui-g-12">
+        <mat-card class="cards-big-charts">
+            <h1>Gráfico de lançamentos por dia</h1>
+            <canvas class="bigChart" baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions"
+            [legend]="barChartLegend" [chartType]="barChartType"></canvas>
+            <button pButton label="Gráfico de {{barChartType === 'bar'? 'linha':'barra'}}" (click)="randomize()"></button>
+        </mat-card>
+    </div> -->
+    <div class="ui-g-12">
+        <mat-card>
+            <app-dashboard-crud-lancamentos [pessoa]="pessoa" 
+            (retornoPersistencia)="retornoCrudLancamento($event)">
+            </app-dashboard-crud-lancamentos>
+        </mat-card>
     </div>
 </div>

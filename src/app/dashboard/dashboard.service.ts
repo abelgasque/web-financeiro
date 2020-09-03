@@ -16,16 +16,21 @@ export class DashboardService {
   lancamentosUrl: string;
 
   constructor(private http: HttpClient) { 
-    this.lancamentosUrl =`${environment.apiUrl}/lancamentos`;
+    this.lancamentosUrl =`${environment.apiUrl}/lancamentos/estatisticas`;
+  }
+
+  estatisticasLencamentosPorPessoaById(id: number): Promise<any>{
+    return this.http.get<Promise<Array<any>>>(`${this.lancamentosUrl}/por-pessoa-by-id/${id}`)
+    .toPromise();
   }
 
   estatisticasLancamentosPorCategoria(): Promise<any> {
-    return this.http.get<Promise<Array<any>>>(`${this.lancamentosUrl}/estatisticas/por-categoria`)
+    return this.http.get<Promise<Array<any>>>(`${this.lancamentosUrl}/por-categoria`)
     .toPromise();
   }
 
   estatisticasLancamentosPorDia(): Promise<any> {
-    return this.http.get<Array<any>>(`${this.lancamentosUrl}/estatisticas/por-dia`)
+    return this.http.get<Array<any>>(`${this.lancamentosUrl}/por-dia`)
       .toPromise()
       .then(response => {
         const dados = response;

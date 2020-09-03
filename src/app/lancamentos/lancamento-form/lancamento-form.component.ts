@@ -29,7 +29,6 @@ export class LancamentoFormComponent implements OnInit {
     {label:'Despesa', value: 'DESPESA'},
   ];
   ptBr: any;
-  uploadEmAndamento = false;
 
   constructor(
     private lancamentosService: LancamentosService,

@@ -43,7 +43,7 @@ export class PessoasService {
   }
 
   salvar(entidade: any): Promise<any> {
-    return this.http.post<any>(`${this.urlPessoa}`, entidade).toPromise();
+    return this.http.post<any>(`${this.urlPessoa}/adicionar`, entidade).toPromise();
   }
   
   editar(entidade: any): Promise<any> {
@@ -52,6 +52,10 @@ export class PessoasService {
 
   buscarPorId(id: number): Promise<any> {
     return this.http.get<any>(`${this.urlPessoa}/${id}`).toPromise();
+  }
+
+  buscarPorUsuarioId(id: number): Promise<any> {
+    return this.http.get<any>(`${this.urlPessoa}/buscar-por-usuario/${id}`).toPromise();
   }
 
   listar(): Promise<any> {

@@ -18,6 +18,8 @@ import { SegurancaComponent } from './seguranca.component';
 import { SharedModule } from '../shared/shared.module';
 import { LogoutService } from './logout.service';
 import { UsuarioCadastroComponent } from './usuario-cadastro/usuario-cadastro.component';
+import { DialogModule } from 'primeng/dialog';
+import { InputMaskModule } from 'primeng/inputmask';
 
 export function tokenGetter() {
   return localStorage.getItem("access_token");
@@ -42,13 +44,17 @@ export function tokenGetter() {
     }),
     FlexLayoutModule,
 
-    SharedModule,
-    MatCardModule,
+    DialogModule,
     InputTextModule,
     PasswordModule,
     ButtonModule,
+    InputMaskModule,
     
+    MatCardModule,
     MatButtonModule,    
+    
+    SharedModule,
+    
   ],
   providers: [
     LogoutService,

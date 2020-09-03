@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { Usuario } from 'src/app/core/model';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Usuario, Pessoa } from 'src/app/core/model';
 import { UsuariosService } from 'src/app/usuarios/usuarios.service';
 import { ToastService } from 'src/app/shared/components/toast/toast.service';
 import { Router } from '@angular/router';
 import { AuthService } from '../auth.service';
+import { PessoasService } from 'src/app/pessoas/pessoas.service';
 
 @Component({
   selector: 'app-usuario-cadastro',
@@ -12,69 +13,67 @@ import { AuthService } from '../auth.service';
 })
 export class UsuarioCadastroComponent implements OnInit {
 
-  usuario: Usuario;
+  @Output() retornoPersistencia = new EventEmitter<Boolean>();
+  pessoa = new Pessoa();
   displaySpinner: boolean = false;
 
   constructor(
-    private usuariosService: UsuariosService,
+    private pessoaService: PessoasService,
     private toastService: ToastService,
-    private router: Router,
-    private authService: AuthService
-  ) {
-    this.usuario = new Usuario();
+  ) { }
+
+  ngOnInit(): void { }
+
+  cancelar() {
+    this.pessoa = new Pessoa();
+    this.pessoa.contatos = [];
+    this.retornoPersistencia.emit(false);
   }
 
-  ngOnInit(): void {
-  }
-
-  login(username:string, password: string){
-    this.authService.login(username, password)
-    .then(response => {
-      this.router.navigate(['']);
-    })
-    .catch(response => {
-      console.log(response);
-      this.toastService.showError("Erro ao autenticar usuário");
-    });
-  }
-
-  adicionar(){
-    this.displaySpinner = true;
-    if(this.validarUsuario() === true){
-      this.usuario.permissoes = [
-        { id: 2, descricao: 'ROLE_PESSOA'}
+  adicionar() {
+    if (this.validar() === true) {
+      this.displaySpinner = true;
+      this.pessoa.usuario.permissoes = [
+        { id: 2, descricao: 'ROLE_PESSOA' }
       ];
-      this.usuario.situacao = 'INATIVO';
-      this.usuariosService.salvar(this.usuario)
+      this.pessoa.usuario.situacao = 'INATIVO';
+      this.pessoa.nome = this.pessoa.usuario.nome;
+      console.log(this.pessoa);
+      this.pessoaService.salvar(this.pessoa)
         .then(response => {
-          this.router.navigate(['/seguranca', 'login-autenticacao']);
-          this.usuario = new Usuario();
-          this.toastService.showSuccess("Usuário adicionado com sucesso!");
-          this.displaySpinner = false;
+          this.cancelar();
+          this.toastService.showSuccess("Pessoa adicionada com sucesso!");
         })
         .catch(error => {
           console.log(error);
-          if(error.status == 409){
+          if (error.status == 409) {
             this.toastService.showWarn(error.error.message);
-          }else{
-            this.toastService.showError("Erro ao adicionar usuário");
+          } else {
+            this.toastService.showError("Erro ao adicionar pessoa");
           }
           this.displaySpinner = false;
         });
     }
   }
 
-  validarUsuario(){
-    if(this.usuario.nome == undefined || this.usuario.nome == '' || this.usuario.nome == null){
+  validar() {
+    if (this.pessoa.usuario.nome == undefined || this.pessoa.usuario.nome == ''
+      || this.pessoa.usuario.nome == null) {
       this.toastService.showWarn("Insira um nome até 30 caracteres");
       return false;
-    } else  if(this.usuario.email == undefined || this.usuario.email == '' || this.usuario.email == null){
+    } else if (this.pessoa.cpf == undefined || this.pessoa.cpf == ''
+      || this.pessoa.cpf == null) {
+      this.toastService.showWarn("Insira um CPF");
+      return false;
+    } else if (this.pessoa.usuario.email == undefined || this.pessoa.usuario.email == ''
+      || this.pessoa.usuario.email == null) {
       this.toastService.showWarn("Insira um e-mail até 50 caracteres");
       return false;
-    }else if(this.usuario.senha == undefined || this.usuario.senha == '' || this.usuario.senha == null){
+    } else if (this.pessoa.usuario.senha == undefined || this.pessoa.usuario.senha == ''
+      || this.pessoa.usuario.senha == null) {
       this.toastService.showWarn("Insira uma senha entre 6 a 12 caracteres");
       return false;
-    }else{
+    } else {
       return true;
     }
   }
