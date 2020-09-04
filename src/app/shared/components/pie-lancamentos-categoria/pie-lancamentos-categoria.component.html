@@ -1,9 +1,8 @@
-<h1>Gráfico de lançamentos por categoria.</h1>
-<div style="display: block;">
-  <canvas baseChart [data]="pieChartData" [labels]="pieChartLabels" [chartType]="pieChartType"
-    [options]="pieChartOptions" [legend]="pieChartLegend" [colors]="pieChartColors" [hidden]="loading">
+<div class="ui-g-12">
+  <h1>{{title}}</h1>
+</div>
+<div class="ui-g-12" style="display: block;">
+  <canvas baseChart [data]="data" [labels]="labels" [chartType]="pieChartType"
+    [options]="pieChartOptions" [legend]="pieChartLegend" [colors]="pieChartColors">
   </canvas>
 </div>
-<p-progressSpinner [style]="{width: '25px', height: '25px'}" strokeWidth="10" animationDuration=".5s"
-  [hidden]="!loading">
-</p-progressSpinner>

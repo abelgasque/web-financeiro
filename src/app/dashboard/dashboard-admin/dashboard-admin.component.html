@@ -1,34 +1,33 @@
 <div class="ui-g">
-    <!-- <div class="ui-g-12 ui-md-3">
-        <mat-card class="cards-top">
-            <h1>Lançamentos</h1>
-        </mat-card>
-    </div>
-    <div class="ui-g-12 ui-md-3">
-        <mat-card class="cards-top">
-            <h1>Categorias</h1>
-        </mat-card>
-    </div>
-    <div class="ui-g-12 ui-md-3">
-        <mat-card class="cards-top">
-            <h1>Pessoas</h1>
-        </mat-card>
-    </div>
-    <div class="ui-g-12 ui-md-3">
-        <mat-card class="cards-top">
-            <h1>Usuários</h1>
-        </mat-card>
-    </div> -->
-    <div class="ui-g-12">
+
+    <div class="ui-g-12 ui-md-6 ui-fluid">
         <mat-card class="cards-big-charts">
-            <app-big-chart-lancamentos-mesal [ano]="anoReferencia"
-            [receitas]="totaisReceitas" [despesas]="totaisDespesas"></app-big-chart-lancamentos-mesal>
-         </mat-card>
+            <app-pie-lancamentos-tipo *ngIf="!displayChartPieTipo" 
+            [title]="'Lançamentos mensal por tipo'" [receitas]="receitas" [despesas]="despesas">
+            </app-pie-lancamentos-tipo>
+            <p-progressSpinner *ngIf="displayChartPieTipo" [style]="{width: '55px', height: '55px'}" strokeWidth="10"
+                animationDuration=".5s">
+            </p-progressSpinner>
+        </mat-card>
     </div>
     <div class="ui-g-12 ui-md-6 ui-fluid">
         <mat-card class="cards-big-charts">
-            <app-pie-lancamentos-categoria [labels]="pieChartLabels"
-            [data]="pieChartData"></app-pie-lancamentos-categoria>
-        </mat-card>    
+            <app-pie-lancamentos-categoria [title]="'Lançamentos mensal por categoria'"
+                *ngIf="!displayChartPieCategoria" [labels]="pieChartLabels" [data]="pieChartData">
+            </app-pie-lancamentos-categoria>
+            <p-progressSpinner *ngIf="displayChartPieCategoria" [style]="{width: '55px', height: '55px'}"
+                strokeWidth="10" animationDuration=".5s">
+            </p-progressSpinner>
+        </mat-card>
+    </div>
+    <div class="ui-g-12">
+        <mat-card class="cards-big-charts">
+            <app-big-chart-lancamentos-mesal *ngIf="!displayChartDinamic" [ano]="anoReferencia"
+                [title]="'Lançamentos mensal de '+anoReferencia+'.'" [receitas]="totaisReceitas"
+                [despesas]="totaisDespesas"></app-big-chart-lancamentos-mesal>
+            <p-progressSpinner *ngIf="displayChartDinamic" [style]="{width: '55px', height: '55px'}" strokeWidth="10"
+                animationDuration=".5s">
+            </p-progressSpinner>
+        </mat-card>
     </div>
 </div>

@@ -5,19 +5,18 @@ import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 
 import { ChartsModule } from 'ng2-charts';
+import { CurrencyMaskModule } from 'ng2-currency-mask';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
-import {AccordionModule} from 'primeng/accordion';
-import {SplitButtonModule} from 'primeng/splitbutton';
+import { TableModule } from 'primeng/table';
+import { AccordionModule } from 'primeng/accordion';
+import { SplitButtonModule } from 'primeng/splitbutton';
 
 import { MatDividerModule } from '@angular/material/divider';
-import {MatCardModule} from '@angular/material/card';
-import {MatTabsModule} from '@angular/material/tabs';
-import {MatIconModule} from '@angular/material/icon';
+import { MatCardModule } from '@angular/material/card';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-
-import { FlexLayoutModule } from '@angular/flex-layout';
-import { CurrencyMaskModule } from 'ng2-currency-mask';
-import { TableModule } from 'primeng/table';
 
 import { SharedModule } from 'src/app/shared/shared.module';
 import { DashboardComponent } from './dashboard.component';
@@ -34,12 +33,13 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { FileUploadModule } from 'primeng/fileupload';
 import { DashboardCrudLancamentosComponent } from './dashboard-crud-lancamentos/dashboard-crud-lancamentos.component';
 import { ButtonModule } from 'primeng/button';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 
 @NgModule({
   declarations: [
-    DashboardComponent, 
-    DashboardPessoaComponent, 
-    DashboardAdminComponent, 
+    DashboardComponent,
+    DashboardPessoaComponent,
+    DashboardAdminComponent,
     DashboardCrudLancamentosComponent
   ],
   imports: [
@@ -56,8 +56,8 @@ import { ButtonModule } from 'primeng/button';
     MatTabsModule,
     MatIconModule,
     MatButtonModule,
-    MatDividerModule, 
-    
+    MatDividerModule,
+
     TableModule,
     DialogModule,
     InputMaskModule,
@@ -71,13 +71,14 @@ import { ButtonModule } from 'primeng/button';
     SplitButtonModule,
     AccordionModule,
     ButtonModule,
-    
+    ProgressSpinnerModule,
+
     SharedModule
   ],
-  exports:[
+  exports: [
     DashboardPessoaComponent
   ]
 })
-export class DashboardModule { 
-  
+export class DashboardModule {
+
 }

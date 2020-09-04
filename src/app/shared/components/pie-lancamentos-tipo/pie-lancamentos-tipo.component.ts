@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import { Component, Input, ViewChild, AfterViewInit } from '@angular/core';
 import { ChartOptions, ChartType } from 'chart.js';
 import { Label, SingleDataSet, BaseChartDirective } from 'ng2-charts';
 
@@ -7,11 +7,12 @@ import { Label, SingleDataSet, BaseChartDirective } from 'ng2-charts';
   templateUrl: './pie-lancamentos-tipo.component.html',
   styleUrls: ['./pie-lancamentos-tipo.component.css']
 })
-export class PieLancamentosTipoComponent implements OnInit {
+export class PieLancamentosTipoComponent implements AfterViewInit {
 
   @Input() receitas: number;
   @Input() despesas: number;
-  @ViewChild( BaseChartDirective ) chart: BaseChartDirective;
+  @Input() title: string;
+  @ViewChild(BaseChartDirective) chart: BaseChartDirective;
   pieChartOptions: ChartOptions = {
     responsive: true,
     legend: {
@@ -27,7 +28,6 @@ export class PieLancamentosTipoComponent implements OnInit {
     }
   };
   pieChartLabels: Label[] = ['Receitas', 'Despesas'];
-  pieChartData: SingleDataSet = [0,0];
   pieChartType: ChartType = 'pie';
   pieChartLegend = true;
   pieChartPlugins = [];
@@ -36,17 +36,8 @@ export class PieLancamentosTipoComponent implements OnInit {
       backgroundColor: ['rgb(163, 201, 245)', 'rgb(238, 160, 160)'],
     },
   ];
-  loading = true;
 
   constructor() { }
 
-  ngOnInit() {
-    setTimeout(()=>{
-      this.loading = false;
-    },900);
-    setTimeout(()=>{
-      this.pieChartData = [this.receitas, this.despesas];
-    },1000);
-  }
-
+  ngAfterViewInit() {}
 }

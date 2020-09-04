@@ -8,11 +8,11 @@ import { AuthService } from '../seguranca/auth.service';
 })
 export class DashboardComponent implements OnInit {
 
-  sideBarOpen:boolean = false;
+  sideBarOpen: boolean = false;
 
   constructor(public auth: AuthService) { }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
   sideBarToggler() {
     this.sideBarOpen = !this.sideBarOpen;

@@ -1,16 +1,16 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input, AfterViewInit } from '@angular/core';
 import { ChartOptions, ChartType } from 'chart.js';
-import { Label, SingleDataSet } from 'ng2-charts';
 
 @Component({
   selector: 'app-pie-lancamentos-categoria',
   templateUrl: './pie-lancamentos-categoria.component.html',
   styleUrls: ['./pie-lancamentos-categoria.component.css']
 })
-export class PieLancamentosCategoriaComponent implements OnInit {
+export class PieLancamentosCategoriaComponent implements AfterViewInit {
 
   @Input() labels: any[];
   @Input() data: any[];
+  @Input() title: string;
   pieChartOptions: ChartOptions = {
     responsive: true,
     legend: {
@@ -25,8 +25,6 @@ export class PieLancamentosCategoriaComponent implements OnInit {
       },
     }
   };
-  pieChartLabels: Label[] = [''];
-  pieChartData: SingleDataSet = [];
   pieChartType: ChartType = 'pie';
   pieChartLegend = true;
   pieChartColors = [
@@ -36,17 +34,9 @@ export class PieLancamentosCategoriaComponent implements OnInit {
       ],
     },
   ];
-  loading = true;
 
   constructor() { }
 
-  ngOnInit() {
-    setTimeout(() => {
-      this.loading = false;
-    }, 900);
-    setTimeout(() => {
-      this.pieChartLabels = this.labels;
-      this.pieChartData = this.data;
-    }, 1000);
-  }
+  ngAfterViewInit() {}
+
 }

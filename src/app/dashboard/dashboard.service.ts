@@ -24,8 +24,13 @@ export class DashboardService {
     .toPromise();
   }
 
-  estatisticasLancamentosPorCategoria(): Promise<any> {
-    return this.http.get<Promise<Array<any>>>(`${this.lancamentosUrl}/por-categoria`)
+  estatisticasLancamentosPorCategoria(id: number): Promise<any> {
+    return this.http.get<Promise<Array<any>>>(`${this.lancamentosUrl}/por-categoria/${id}`)
+    .toPromise();
+  }
+
+  estatisticasLancamentosPorTipoMensal(): Promise<any> {
+    return this.http.get<Promise<Array<any>>>(`${this.lancamentosUrl}/por-tipo-mensal`)
     .toPromise();
   }
 

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ViewChild, AfterViewInit } from '@angular/core';
 import { LancamentoFilter, Lancamento, Pessoa } from 'src/app/core/model';
 import { AuthService } from 'src/app/seguranca/auth.service';
 import { NgForm } from '@angular/forms';
@@ -16,7 +16,7 @@ import { Router } from '@angular/router';
   templateUrl: './dashboard-crud-lancamentos.component.html',
   styleUrls: ['./dashboard-crud-lancamentos.component.css']
 })
-export class DashboardCrudLancamentosComponent implements OnInit {
+export class DashboardCrudLancamentosComponent implements AfterViewInit {
 
   @Input() pessoa = new Pessoa();
   @Output() retornoPersistencia = new EventEmitter<Boolean>();
@@ -32,9 +32,8 @@ export class DashboardCrudLancamentosComponent implements OnInit {
   ptBr: any;
   filtro = new LancamentoFilter();
   displaySpinner: boolean = false;
-  routeLoading: boolean = false;
-  loading: boolean = true;
   items: MenuItem[];
+  aux: number = 0;
 
   constructor(
     public auth: AuthService,
@@ -46,13 +45,6 @@ export class DashboardCrudLancamentosComponent implements OnInit {
   ) {
     this.ptBr = this.apoioService.getCalendarioPtBr();
     this.carregarCategorias();
-    setTimeout(() => {
-      this.pesquisar();
-      this.loading = false;
-    }, 5000);
-  }
-
-  ngOnInit(): void {
     this.items = [
       {
         label: 'Novo', icon: 'pi pi-plus', command: () => {
@@ -62,19 +54,21 @@ export class DashboardCrudLancamentosComponent implements OnInit {
     ];
   }
 
+  ngAfterViewInit(): void {
+    this.pesquisar();
+  }
+
   pesquisar() {
     if (this.pessoa.id != undefined || this.pessoa.id != null && this.pessoa.id > 0) {
-      this.displaySpinner = true;
+      this.lancamentos = [];
       this.filtro.pessoa = this.pessoa.id;
       this.lancamentosService.pesquisar(this.filtro)
         .then(response => {
           this.filtro.total = response.total;
           this.lancamentos = response.lancamentos;
-          this.displaySpinner = false;
         })
         .catch(erro => {
           this.toastyService.showError("Erro ao pesquisar lançamentos!");
-          this.displaySpinner = false;
         });
     }
   }
@@ -84,16 +78,17 @@ export class DashboardCrudLancamentosComponent implements OnInit {
     this.pesquisar();
   }
 
-  // resetForm(f: NgForm) {
-  //   f.resetForm();
-  //   setTimeout(function () {
-  //     this.lancamento = new Lancamento();
-  //   }.bind(this), 1);
-  // }
-
   novo() {
     this.lancamento = new Lancamento();
+    this.aux = 0;
     this.display = true;
+  }
+
+  cancelar(){
+    if(this.aux > 0){
+      this.retornoPersistencia.emit(true);
+    }
+    this.display = false;
   }
 
   salvar() {
@@ -102,10 +97,9 @@ export class DashboardCrudLancamentosComponent implements OnInit {
     this.lancamentosService.salvar(this.lancamento)
       .then(response => {
         this.pesquisar();
-        this.display = false;
+        this.aux++;
         this.lancamento = new Lancamento();
         this.toastyService.showSuccess("Lançamento adicionado com sucesso!");
-        this.retornoPersistencia.emit(true);
         this.displaySpinner = false;
       })
       .catch(erro => {

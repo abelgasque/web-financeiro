@@ -1,6 +1,7 @@
+<app-spinner [hidden]="!displaySpinner"></app-spinner>
 <p-table [value]="lancamentos" [rowHover]="true" [responsive]="true" [paginator]="true" [totalRecords]="filtro.total"
-    [loading]="loading" [rowsPerPageOptions]="[5,10,25,50]" [lazy]="true" [(rows)]="filtro.itensPorPagina"
-    (onPage)="aoMudarPagina($event)" #table [hidden]="displaySpinner">
+    [rowsPerPageOptions]="[5,10,25,50]" [lazy]="true" [(rows)]="filtro.itensPorPagina" (onPage)="aoMudarPagina($event)"
+    #table [hidden]="displaySpinner">
     <ng-template pTemplate="caption">
         <div class="ui-helper-clearfix" style="text-align: center">
             <div class="ui-g-12">
@@ -126,7 +127,7 @@
     <p-footer>
         <button pButton [label]="lancamento.id === 0 ? 'Adicionar' : 'Editar'" (click)="gerenciarPersistencia()"
             [disabled]="!f.valid"></button>
-        <button pButton label="Cancelar" (click)="display=false"></button>
+        <button pButton label="Cancelar" (click)="cancelar()"></button>
     </p-footer>
 </p-dialog>
 

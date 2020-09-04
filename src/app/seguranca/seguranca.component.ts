@@ -7,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SegurancaComponent implements OnInit {
 
+  displaySpinner: boolean = false;
+
   constructor() {}
 
   ngOnInit(): void {

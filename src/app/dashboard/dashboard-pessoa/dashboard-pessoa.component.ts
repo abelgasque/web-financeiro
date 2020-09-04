@@ -21,6 +21,11 @@ import { ErrorHandlerService } from 'src/app/core/error-handler.service';
 })
 export class DashboardPessoaComponent implements OnInit {
 
+  displayChartDinamic: boolean = true;
+  displayChartPieCategoria: boolean = true;
+  displayChartPieTipoAndCards: boolean = true;
+  displayCrudLancamentos: boolean = true;
+
   totaisReceitas: any[] = [];
   totaisDespesas: any[] = [];
 
@@ -31,6 +36,9 @@ export class DashboardPessoaComponent implements OnInit {
   displaySpinner: boolean = false;
   pessoa: Pessoa;
   ano: number = 2020;
+
+  pieChartData: any[]=[];
+  pieChartLabels: any[]=[];
 
   constructor(
     private dashboardService: DashboardService,
@@ -48,17 +56,6 @@ export class DashboardPessoaComponent implements OnInit {
 
   ngOnInit() { }
 
-  nextChartDinamic() {
-    this.ano++;
-    console.log(this.ano);
-    this.confirgurarGraficoDinamic(this.ano, this.pessoa.id);
-  }
-
-  prevChartDinamic() {
-    this.ano--;
-    this.confirgurarGraficoDinamic(this.ano, this.pessoa.id);
-  }
-
   getComponente() {
     this.usuarioService.buscarPorEmail(this.auth.jwtPayload.user_name)
       .then(usuario => {
@@ -73,22 +70,13 @@ export class DashboardPessoaComponent implements OnInit {
     }
   }
 
-  configurarCharts(pessoa: Pessoa) {
-    if (pessoa != null) {
-      this.configurarGraficoPizzaAndCards(pessoa.id);
-      this.confirgurarGraficoDinamic(this.ano, pessoa.id);
-    } else {
-      this.toastyService.showWarn("Pessoa não encontrada no sistema");
-      this.router.navigate(['']);
-    }
-  }
-
   buscarPessoaPorUsuarioById(id: number) {
     this.pessoasService.buscarPorUsuarioId(id)
-      .then(pessoa => {
-        if (pessoa != null) {
-          this.pessoa = pessoa;
-          this.configurarCharts(pessoa);
+      .then(response => {
+        if (response != null) {
+          this.configurarCharts(response.id);
+          this.pessoa = response;
+          this.displayCrudLancamentos = false;
         }
       })
       .catch(error => {
@@ -101,10 +89,34 @@ export class DashboardPessoaComponent implements OnInit {
       });
   }
 
+  configurarCharts(id: number) {
+    if (id != null || id != undefined) {
+      this.configurarGraficoPizzaAndCards(id);
+      this.confirgurarGraficoDinamic(this.ano, id);
+      this.configurarGraficoPiePorCategoria(id);
+    } else {
+      this.toastyService.showWarn("Pessoa não encontrada no sistema");
+      this.router.navigate(['']);
+    }
+  }
+
+  configurarGraficoPiePorCategoria(id: number) {
+    this.dashboardService.estatisticasLancamentosPorCategoria(id)
+      .then(dados => {
+        this.pieChartLabels = dados.map(dado => dado.categoria.nome);
+        this.pieChartData = dados.map(dado => dado.total);
+        this.displayChartPieCategoria = false;
+      })
+      .catch(erro => {
+        console.log(erro);
+      });
+  }
+
   configurarGraficoPizzaAndCards(id: number) {
     this.dashboardService.estatisticasLencamentosPorPessoaById(id)
       .then(dados => {
         if (dados.length > 0) {
+          console.log(dados);
           for (let i = 0; i < dados.length; i++) {
             if (dados[i].tipo == "RECEITA" && dados[i].total > 0) {
               this.receitas = dados[i].total;
@@ -115,6 +127,8 @@ export class DashboardPessoaComponent implements OnInit {
           }
           this.saldo = (this.receitas - this.despesas);
         }
+        this.displayChartPieCategoria = false;
+        this.displayChartPieTipoAndCards = false;
       })
       .catch(erro => {
         console.log(erro);
@@ -132,10 +146,11 @@ export class DashboardPessoaComponent implements OnInit {
               this.totaisDespesas.push(response[i].total);
             }
           }
-        }else{
+        } else {
           this.totaisDespesas = [];
           this.totaisReceitas = [];
         }
+        this.displayChartDinamic = false;
       })
       .catch(erro => {
         console.log(erro);

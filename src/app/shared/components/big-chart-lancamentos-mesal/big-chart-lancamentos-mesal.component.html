@@ -1,10 +1,11 @@
-<h1>Gráfico de lançamentos por mes {{ano}}.
-  <p-progressSpinner [style]="{width: '25px', height: '25px'}" strokeWidth="10" animationDuration=".5s"
-  [hidden]="!loading"></p-progressSpinner>
-</h1>
-<div style="display: block;">
+<div class="ui-g-12">
+  <h1>{{title}}</h1>
+</div>
+<div class="ui-g-12" style="display: block;">
   <canvas baseChart class="baseChart" [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions"
     [plugins]="barChartPlugins" [legend]="barChartLegend" [chartType]="barChartType" #chart>
   </canvas>
+</div>
+<div class="ui-g-12">
   <button mat-button (click)="randomize()">Gráfico de {{barChartType === 'bar'? 'linha':'barra'}}</button>
 </div>
