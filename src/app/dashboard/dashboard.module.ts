@@ -15,7 +15,6 @@ import {MatTabsModule} from '@angular/material/tabs';
 import {MatIconModule} from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 
-import { HighchartsChartModule } from 'highcharts-angular';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { CurrencyMaskModule } from 'ng2-currency-mask';
 import { TableModule } from 'primeng/table';
@@ -24,7 +23,6 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { DashboardComponent } from './dashboard.component';
 import { DashboardPessoaComponent } from './dashboard-pessoa/dashboard-pessoa.component';
 import { DashboardAdminComponent } from './dashboard-admin/dashboard-admin.component';
-import { TesteCursoComponent } from './teste-curso/teste-curso.component';
 import { DialogModule } from 'primeng/dialog';
 import { InputMaskModule } from 'primeng/inputmask';
 import { InputTextModule } from 'primeng/inputtext';
@@ -43,7 +41,7 @@ import { DashboardCrudLancamentosComponent } from './dashboard-crud-lancamentos/
     DashboardComponent, 
     DashboardPessoaComponent, 
     DashboardAdminComponent, 
-    TesteCursoComponent, DashboardCrudLancamentosComponent
+    DashboardCrudLancamentosComponent
   ],
   imports: [
     CommonModule,
@@ -59,7 +57,7 @@ import { DashboardCrudLancamentosComponent } from './dashboard-crud-lancamentos/
     MatTabsModule,
     MatIconModule,
     MatButtonModule,
-    HighchartsChartModule,
+    
     FlexLayoutModule,
     CurrencyMaskModule,
     TableModule,

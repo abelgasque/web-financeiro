@@ -9,6 +9,7 @@ import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
 import { LancamentosService } from 'src/app/lancamentos/lancamentos.service';
 import * as moment from 'moment';
 import { Table } from 'primeng/table';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard-crud-lancamentos',
@@ -17,10 +18,9 @@ import { Table } from 'primeng/table';
 })
 export class DashboardCrudLancamentosComponent implements OnInit {
 
-
   @Input() pessoa = new Pessoa();
   @Output() retornoPersistencia = new EventEmitter<Boolean>();
-  @ViewChild('tabela', {static: true}) table: Table;
+  @ViewChild('tabela', { static: true }) table: Table;
   lancamentos: any[] = [];
   display: boolean = false;
   lancamento = new Lancamento();
@@ -32,6 +32,8 @@ export class DashboardCrudLancamentosComponent implements OnInit {
   ptBr: any;
   filtro = new LancamentoFilter();
   displaySpinner: boolean = false;
+  routeLoading: boolean = false;
+  loading: boolean = true;
 
   constructor(
     public auth: AuthService,
@@ -40,18 +42,19 @@ export class DashboardCrudLancamentosComponent implements OnInit {
     public apoioService: ApoioService,
     private confirmationService: ConfirmationService,
     private lancamentosService: LancamentosService
-  ) {}
-
-  ngOnInit(): void {
+  ) {
     this.ptBr = this.apoioService.getCalendarioPtBr();
     this.carregarCategorias();
     setTimeout(() => {
       this.getTable();
-    }, 2000);
+      this.loading = false;
+    }, 5000);
   }
 
+  ngOnInit(): void { }
+
   getTable() {
-    if(this.pessoa.id != undefined || this.pessoa.id != null && this.pessoa.id > 0){
+    if (this.pessoa.id != undefined || this.pessoa.id != null && this.pessoa.id > 0) {
       this.displaySpinner = true;
       this.filtro.pessoa = this.pessoa.id;
       this.lancamentosService.pesquisar(this.filtro)

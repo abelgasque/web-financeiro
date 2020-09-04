@@ -1,0 +1,5 @@
+<h1>Gráfico lançamentos por tipo</h1>
+<canvas *ngIf="!routeLoading"
+baseChart [data]="pieChartData" [labels]="pieChartLabels" [chartType]="pieChartType" [options]="pieChartOptions"
+    [colors]="pieChartColors" [legend]="pieChartLegend">
+</canvas>

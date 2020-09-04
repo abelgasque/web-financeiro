@@ -1,14 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ChartType, ChartOptions, ChartDataSets } from 'chart.js';
 import { Label } from 'ng2-charts';
-import * as pluginDataLabels from 'chartjs-plugin-datalabels';
 import { DashboardService } from '../dashboard.service';
-import { AuthService } from 'src/app/seguranca/auth.service';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { environment } from 'src/environments/environment';
-import { throwError } from 'rxjs';
-import * as Highcharts from 'highcharts';
-import HC_exporting from 'highcharts/modules/exporting';
+import { Router, NavigationStart, NavigationEnd, NavigationCancel, NavigationError } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard-admin',
@@ -62,12 +56,28 @@ export class DashboardAdminComponent implements OnInit {
     { data: this.totaisReceitas, label: 'Receitas' }
   ];
   anoReferencia: number = 2020;
-  constructor(private dashboardService: DashboardService) { }
+  routeLoading: boolean = false;
 
-  ngOnInit(): void {
-    this.configurarGraficoPizza();
-    this.confirgurarGraficoDinamic(this.anoReferencia);
+  constructor(
+    private dashboardService: DashboardService,
+    private router: Router
+  ) {
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationStart) {
+        this.routeLoading = true;
+      }
+
+      if (event instanceof NavigationEnd ||
+        event instanceof NavigationCancel ||
+        event instanceof NavigationError) {
+        this.configurarGraficoPizza();
+        this.confirgurarGraficoDinamic(this.anoReferencia);
+        this.routeLoading = false;
+      }
+    });
   }
+
+  ngOnInit(): void { }
 
   configurarGraficoPizza() {
     this.dashboardService.estatisticasLancamentosPorCategoria()
@@ -85,7 +95,7 @@ export class DashboardAdminComponent implements OnInit {
       .then(response => {
         let receitas = response.filter(dado => dado.tipo === 'RECEITA');
         let despesas = response.filter(dado => dado.tipo === 'DESPESA');
-        for(let i=0;i<12;i++){
+        for (let i = 0; i < 12; i++) {
           this.totaisReceitas.push(receitas[i].total);
           this.totaisDespesas.push(despesas[i].total);
         }

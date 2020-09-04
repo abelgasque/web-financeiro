@@ -1,7 +1,7 @@
-<app-spinner [hidden]="!displaySpinner"></app-spinner>
-<p-table [value]="lancamentos" [rowHover]="true" [responsive]="true" [paginator]="true" [totalRecords]="filtro.total"
-    [rowsPerPageOptions]="[1,10,25,50]" [lazy]="true" [(rows)]="filtro.itensPorPagina" (onPage)="aoMudarPagina($event)"
-    #table>
+<p-table [value]="lancamentos" [rowHover]="true" [responsive]="true" [paginator]="true" 
+    [totalRecords]="filtro.total" [loading]="loading"
+    [rowsPerPageOptions]="[5,10,25,50]" [lazy]="true" [(rows)]="filtro.itensPorPagina" (onPage)="aoMudarPagina($event)"
+    #table [hidden]="displaySpinner">
     <ng-template pTemplate="caption">
         <div class="ui-helper-clearfix" style="text-align: center">
             Lista de lançamentos por pessoa
@@ -28,7 +28,7 @@
             <td>{{rowData.dataVencimento}}</td>
             <td>{{rowData.dataPagamento}} </td>
             <td>
-                <input currencyMask [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }"
+                <input class="input" currencyMask [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }"
                     [(ngModel)]="rowData.valor" disabled>
             </td>
             <td [style.color]="rowData.tipo === 'DESPESA' ? 'red' : 'blue'">
@@ -87,7 +87,7 @@
             <span class="ui-float-label">
                 <input pInputText type="text" name="valor" currencyMask
                     [options]="{ prefix: '', thousands: '.', decimal: ',' }" [(ngModel)]="lancamento.valor"
-                    #valor="ngModel" required>
+                    #valor="ngModel" required maxlength="12">
                 <label>Valor</label>
             </span>
             <small>Campo obrigatório</small>
@@ -108,7 +108,7 @@
         </div>
         <div class="ui-g-12 ui-fluid">
             <span class="ui-float-label">
-                <textarea rows="5" cols="30" pInputTextarea autoResize="autoResize"></textarea>
+                <textarea rows="5" cols="30" pInputTextarea autoResize="autoResize" maxlength="100"></textarea>
                 <label>Observação</label>
             </span>
             <small>Campo opcional</small>

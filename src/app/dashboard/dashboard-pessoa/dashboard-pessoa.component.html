@@ -31,7 +31,8 @@
         <mat-card class="cards-big-charts">
             <h1>Gráfico lançamentos por tipo</h1>
             <canvas baseChart [data]="pieChartData" [labels]="pieChartLabels" [chartType]="pieChartType"
-                [options]="pieChartOptions" [colors]="pieChartColors" [legend]="pieChartLegend">
+                [options]="pieChartOptions" [colors]="pieChartColors" [legend]="pieChartLegend"
+                *ngIf="!routeLoading">
             </canvas>
         </mat-card>
     </div>
@@ -39,7 +40,7 @@
         <mat-card class="cards-big-charts">
             <h1>Gráfico de lançamentos por mês. Ano referência {{ano}}</h1>
             <canvas class="bigChart" baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions"
-            [legend]="barChartLegend" [chartType]="barChartType"></canvas>
+            [legend]="barChartLegend" [chartType]="barChartType" *ngIf="!routeLoading"></canvas>
             <button pButton label="Gráfico de {{barChartType === 'bar'? 'linha':'barra'}}" (click)="randomize()"></button>
         </mat-card>
     </div>

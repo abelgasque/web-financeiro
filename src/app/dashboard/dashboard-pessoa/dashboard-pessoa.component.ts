@@ -1,6 +1,6 @@
 import { Component, OnInit, HostListener } from '@angular/core';
 import { Location } from '@angular/common';
-import { Router } from '@angular/router';
+import { Router, NavigationStart, NavigationEnd, NavigationCancel, NavigationError } from '@angular/router';
 
 import { DashboardService } from '../dashboard.service';
 import { Label } from 'ng2-charts';
@@ -70,6 +70,7 @@ export class DashboardPessoaComponent implements OnInit {
   displaySpinner: boolean = false;
   pessoa: Pessoa;
   ano: number = 2020;
+  routeLoading: boolean = false;
 
   constructor(
     private dashboardService: DashboardService,
@@ -79,13 +80,24 @@ export class DashboardPessoaComponent implements OnInit {
     public apoioService: ApoioService,
     private usuarioService: UsuariosService,
     private handler: ErrorHandlerService,
-    private router: Router,
-    private location: Location
-  ) { }
+    private router: Router
+  ) { 
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationStart) {
+        this.routeLoading = true;
+      }
 
-  ngOnInit() {
-    this.getComponente();
+      if (event instanceof NavigationEnd ||
+        event instanceof NavigationCancel ||
+        event instanceof NavigationError) 
+      {
+        this.getComponente();
+        this.routeLoading = false;
+      }
+    });
   }
+
+  ngOnInit() {}
 
   getComponente() {
     this.usuarioService.buscarPorEmail(this.auth.jwtPayload.user_name)
@@ -154,7 +166,6 @@ export class DashboardPessoaComponent implements OnInit {
   confirgurarGraficoDinamic(ano: number, idPessoa: number) {
     this.dashboardService.estatisticasLancamentosPorMes(ano, idPessoa)
       .then(response => {
-        console.log(response);
         let receitas = response.filter(dado => dado.tipo === 'RECEITA');
         let despesas = response.filter(dado => dado.tipo === 'DESPESA');
         for (let i = 0; i < 12; i++) {
