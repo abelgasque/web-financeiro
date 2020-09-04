@@ -21,19 +21,14 @@
     </div> -->
     <div class="ui-g-12">
         <mat-card class="cards-big-charts">
-            <h1>Gráfico de lançamentos por mês. Ano referência {{anoReferencia}}</h1>
-            <canvas class="bigChart" baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions"
-            [legend]="barChartLegend" [chartType]="barChartType"></canvas>
-            <button pButton label="Gráfico de {{barChartType === 'bar'? 'linha':'barra'}}" (click)="randomize()"></button>
-        </mat-card>
+            <app-big-chart-lancamentos-mesal [ano]="anoReferencia"
+            [receitas]="totaisReceitas" [despesas]="totaisDespesas"></app-big-chart-lancamentos-mesal>
+         </mat-card>
     </div>
     <div class="ui-g-12 ui-md-6 ui-fluid">
         <mat-card class="cards-big-charts">
-            <h1>Gráfico lançamentos por categoria</h1>
-            <canvas baseChart [data]="pieChartData" [labels]="pieChartLabels"
-            [chartType]="pieChartType" [options]="pieChartOptions"
-            [colors]="pieChartColors" [legend]="pieChartLegend">
-            </canvas>
+            <app-pie-lancamentos-categoria [labels]="pieChartLabels"
+            [data]="pieChartData"></app-pie-lancamentos-categoria>
         </mat-card>    
     </div>
 </div>

@@ -1,15 +1,14 @@
-<p-table [value]="lancamentos" [rowHover]="true" [responsive]="true" [paginator]="true" 
-    [totalRecords]="filtro.total" [loading]="loading"
-    [rowsPerPageOptions]="[5,10,25,50]" [lazy]="true" [(rows)]="filtro.itensPorPagina" (onPage)="aoMudarPagina($event)"
-    #table [hidden]="displaySpinner">
+<p-table [value]="lancamentos" [rowHover]="true" [responsive]="true" [paginator]="true" [totalRecords]="filtro.total"
+    [loading]="loading" [rowsPerPageOptions]="[5,10,25,50]" [lazy]="true" [(rows)]="filtro.itensPorPagina"
+    (onPage)="aoMudarPagina($event)" #table [hidden]="displaySpinner">
     <ng-template pTemplate="caption">
         <div class="ui-helper-clearfix" style="text-align: center">
-            Lista de lançamentos por pessoa
-            <button type="button" pButton class="ui-button-rounded" (click)="novo(f)" pButton iconPos="left"
-            style="float:right" icon="pi pi-plus"></button>
-            <button type="button" pButton class="ui-button-rounded" (click)="getTable()" pButton iconPos="left"
-            style="float:right" icon="pi pi-undo"></button>
-            
+            <div class="ui-g-12">
+                Lista de lançamentos por pessoa
+            </div>
+            <div class="ui-g-12">
+                <p-splitButton label="Filtrar" (onClick)="pesquisar()" [model]="items"></p-splitButton>
+            </div>
         </div>
     </ng-template>
     <ng-template pTemplate="header">
@@ -56,7 +55,7 @@
 
 <p-dialog [visible]="display" [modal]="true" [style]="{width: '95%'}" [draggable]="false" [closable]="false"
     [header]="lancamento.id === 0 ? 'Adicionar lançamento' : 'Edição de lançamentos'">
-    <form class="ui-g-12" #f="ngForm" autocomplete="off" (ngSubmit)="gerenciarPersistencia(f)">
+    <form class="ui-g-12" #f="ngForm" autocomplete="off" (ngSubmit)="gerenciarPersistencia()">
         <div class="ui-g-12 ui-md-6 ui-fluid">
             <span class="ui-float-label">
                 <input pInputText type="text" name="descricao" [(ngModel)]="lancamento.descricao" required minlength="5"
@@ -125,7 +124,7 @@
         </div>
     </form>
     <p-footer>
-        <button pButton [label]="lancamento.id === 0 ? 'Adicionar' : 'Editar'" (click)="gerenciarPersistencia(f)"
+        <button pButton [label]="lancamento.id === 0 ? 'Adicionar' : 'Editar'" (click)="gerenciarPersistencia()"
             [disabled]="!f.valid"></button>
         <button pButton label="Cancelar" (click)="display=false"></button>
     </p-footer>

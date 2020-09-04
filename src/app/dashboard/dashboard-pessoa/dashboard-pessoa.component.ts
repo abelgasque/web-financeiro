@@ -21,47 +21,8 @@ import { ErrorHandlerService } from 'src/app/core/error-handler.service';
 })
 export class DashboardPessoaComponent implements OnInit {
 
-  // Pie
-  pieChartOptions: ChartOptions = {
-    responsive: true,
-    legend: {
-      position: 'top',
-    },
-    plugins: {
-      datalabels: {
-        formatter: (value, ctx) => {
-          const label = ctx.chart.data.labels[ctx.dataIndex];
-          return label;
-        },
-      },
-    }
-  };
-  pieChartLabels: Label[] = [];
-  pieChartData: number[] = [];
-  pieChartType: ChartType = 'pie';
-  pieChartLegend = true;
-  pieChartColors = [
-    {
-      backgroundColor: ['rgba(118,180,250)', 'rgba(250, 107, 107)'],
-    },
-  ];
-
-  totaisReceitas = [];
-  totaisDespesas = [];
-  barChartOptions: ChartOptions = {
-    responsive: true,
-    scales: { xAxes: [{}], yAxes: [{}] },
-  };
-  barChartLabels: Label[] = [
-    'Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho',
-    'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'
-  ];
-  barChartType: ChartType = 'bar';
-  barChartLegend = true;
-  barChartData: ChartDataSets[] = [
-    { data: this.totaisDespesas, label: 'Despesas' },
-    { data: this.totaisReceitas, label: 'Receitas' }
-  ];
+  totaisReceitas: any[] = [];
+  totaisDespesas: any[] = [];
 
   saldo: number = 0.0;
   rendimentos: number = 0.0;
@@ -70,7 +31,6 @@ export class DashboardPessoaComponent implements OnInit {
   displaySpinner: boolean = false;
   pessoa: Pessoa;
   ano: number = 2020;
-  routeLoading: boolean = false;
 
   constructor(
     private dashboardService: DashboardService,
@@ -81,23 +41,23 @@ export class DashboardPessoaComponent implements OnInit {
     private usuarioService: UsuariosService,
     private handler: ErrorHandlerService,
     private router: Router
-  ) { 
-    this.router.events.subscribe((event) => {
-      if (event instanceof NavigationStart) {
-        this.routeLoading = true;
-      }
+  ) {
 
-      if (event instanceof NavigationEnd ||
-        event instanceof NavigationCancel ||
-        event instanceof NavigationError) 
-      {
-        this.getComponente();
-        this.routeLoading = false;
-      }
-    });
+    this.getComponente();
   }
 
-  ngOnInit() {}
+  ngOnInit() { }
+
+  nextChartDinamic() {
+    this.ano++;
+    console.log(this.ano);
+    this.confirgurarGraficoDinamic(this.ano, this.pessoa.id);
+  }
+
+  prevChartDinamic() {
+    this.ano--;
+    this.confirgurarGraficoDinamic(this.ano, this.pessoa.id);
+  }
 
   getComponente() {
     this.usuarioService.buscarPorEmail(this.auth.jwtPayload.user_name)
@@ -145,8 +105,6 @@ export class DashboardPessoaComponent implements OnInit {
     this.dashboardService.estatisticasLencamentosPorPessoaById(id)
       .then(dados => {
         if (dados.length > 0) {
-          this.pieChartLabels = dados.map(dado => dado.tipo);
-          this.pieChartData = dados.map(dado => dado.total);
           for (let i = 0; i < dados.length; i++) {
             if (dados[i].tipo == "RECEITA" && dados[i].total > 0) {
               this.receitas = dados[i].total;
@@ -166,23 +124,21 @@ export class DashboardPessoaComponent implements OnInit {
   confirgurarGraficoDinamic(ano: number, idPessoa: number) {
     this.dashboardService.estatisticasLancamentosPorMes(ano, idPessoa)
       .then(response => {
-        let receitas = response.filter(dado => dado.tipo === 'RECEITA');
-        let despesas = response.filter(dado => dado.tipo === 'DESPESA');
-        for (let i = 0; i < 12; i++) {
-          this.totaisReceitas.push(receitas[i].total);
-          this.totaisDespesas.push(despesas[i].total);
+        if (response.length > 0) {
+          for (let i = 0; i < response.length; i++) {
+            if (response[i].tipo == "RECEITA") {
+              this.totaisReceitas.push(response[i].total);
+            } else {
+              this.totaisDespesas.push(response[i].total);
+            }
+          }
+        }else{
+          this.totaisDespesas = [];
+          this.totaisReceitas = [];
         }
-        this.barChartData = [
-          { data: this.totaisDespesas, label: 'Despesas' },
-          { data: this.totaisReceitas, label: 'Receitas' }
-        ];
       })
       .catch(erro => {
         console.log(erro);
       });
-  }
-
-  public randomize(): void {
-    this.barChartType = this.barChartType === 'bar' ? 'line' : 'bar';
   }
 }

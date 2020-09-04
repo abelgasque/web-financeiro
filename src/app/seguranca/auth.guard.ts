@@ -29,14 +29,12 @@ export class AuthGuard implements CanActivate {
             this.router.navigate(['/seguranca','login-autenticacao']);
             return false;
           }
-
           return true;
         });
     } else if (next.data.roles && !this.auth.temQualquerPermissao(next.data.roles)) {
       this.router.navigate(['/nao-autorizado']);
       return false;
     }
-
     return true;
   }
   

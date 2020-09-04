@@ -5,7 +5,7 @@ import { NgForm } from '@angular/forms';
 import { CategoriaService } from 'src/app/util/categoria.service';
 import { ToastService } from 'src/app/shared/components/toast/toast.service';
 import { ApoioService } from 'src/app/util/apoio.service';
-import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
+import { ConfirmationService, LazyLoadEvent, MenuItem } from 'primeng/api';
 import { LancamentosService } from 'src/app/lancamentos/lancamentos.service';
 import * as moment from 'moment';
 import { Table } from 'primeng/table';
@@ -34,6 +34,7 @@ export class DashboardCrudLancamentosComponent implements OnInit {
   displaySpinner: boolean = false;
   routeLoading: boolean = false;
   loading: boolean = true;
+  items: MenuItem[];
 
   constructor(
     public auth: AuthService,
@@ -46,14 +47,22 @@ export class DashboardCrudLancamentosComponent implements OnInit {
     this.ptBr = this.apoioService.getCalendarioPtBr();
     this.carregarCategorias();
     setTimeout(() => {
-      this.getTable();
+      this.pesquisar();
       this.loading = false;
     }, 5000);
   }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+    this.items = [
+      {
+        label: 'Novo', icon: 'pi pi-plus', command: () => {
+          this.novo();
+        }
+      },
+    ];
+  }
 
-  getTable() {
+  pesquisar() {
     if (this.pessoa.id != undefined || this.pessoa.id != null && this.pessoa.id > 0) {
       this.displaySpinner = true;
       this.filtro.pessoa = this.pessoa.id;
@@ -72,29 +81,29 @@ export class DashboardCrudLancamentosComponent implements OnInit {
 
   aoMudarPagina(event: LazyLoadEvent) {
     this.filtro.pagina = event.first / event.rows;
-    this.getTable();
+    this.pesquisar();
   }
 
-  resetForm(f: NgForm) {
-    f.resetForm();
-    setTimeout(function () {
-      this.lancamento = new Lancamento();
-    }.bind(this), 1);
-  }
+  // resetForm(f: NgForm) {
+  //   f.resetForm();
+  //   setTimeout(function () {
+  //     this.lancamento = new Lancamento();
+  //   }.bind(this), 1);
+  // }
 
-  novo(f: NgForm) {
-    this.resetForm(f);
+  novo() {
+    this.lancamento = new Lancamento();
     this.display = true;
   }
 
-  salvar(f: NgForm) {
+  salvar() {
     this.displaySpinner = true;
     this.lancamento.pessoa = this.pessoa;
     this.lancamentosService.salvar(this.lancamento)
       .then(response => {
-        this.getTable();
+        this.pesquisar();
         this.display = false;
-        this.resetForm(f);
+        this.lancamento = new Lancamento();
         this.toastyService.showSuccess("Lançamento adicionado com sucesso!");
         this.retornoPersistencia.emit(true);
         this.displaySpinner = false;
@@ -106,14 +115,14 @@ export class DashboardCrudLancamentosComponent implements OnInit {
       });
   }
 
-  editar(f: NgForm) {
+  editar() {
     this.displaySpinner = true;
     this.lancamento.pessoa = this.pessoa;
     this.lancamentosService.editar(this.lancamento)
       .then(response => {
-        this.getTable();
+        this.pesquisar();
         this.display = false;
-        this.resetForm(f);
+        this.lancamento = new Lancamento();
         this.toastyService.showSuccess("Lancaçamento editado com sucesso!");
         this.retornoPersistencia.emit(true);
         this.displaySpinner = false;
@@ -125,20 +134,20 @@ export class DashboardCrudLancamentosComponent implements OnInit {
       });
   }
 
-  confirmarEdicao(form: NgForm) {
+  confirmarEdicao() {
     this.confirmationService.confirm({
       message: 'Tem certeza que deseja editar lançamento?',
       accept: () => {
-        this.editar(form);
+        this.editar();
       }
     });
   }
 
-  gerenciarPersistencia(f: NgForm) {
+  gerenciarPersistencia() {
     if (this.lancamento.id > 0) {
-      this.confirmarEdicao(f);
+      this.confirmarEdicao();
     } else {
-      this.salvar(f);
+      this.salvar();
     }
   }
 

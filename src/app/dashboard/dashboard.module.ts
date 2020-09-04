@@ -7,7 +7,7 @@ import { RouterModule } from '@angular/router';
 import { ChartsModule } from 'ng2-charts';
 
 import {AccordionModule} from 'primeng/accordion';
-import {ButtonModule} from 'primeng/button';
+import {SplitButtonModule} from 'primeng/splitbutton';
 
 import { MatDividerModule } from '@angular/material/divider';
 import {MatCardModule} from '@angular/material/card';
@@ -33,8 +33,7 @@ import { DropdownModule } from 'primeng/dropdown';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { FileUploadModule } from 'primeng/fileupload';
 import { DashboardCrudLancamentosComponent } from './dashboard-crud-lancamentos/dashboard-crud-lancamentos.component';
-
-
+import { ButtonModule } from 'primeng/button';
 
 @NgModule({
   declarations: [
@@ -50,16 +49,15 @@ import { DashboardCrudLancamentosComponent } from './dashboard-crud-lancamentos/
     RouterModule,
 
     ChartsModule,
-    MatDividerModule,    
-    ButtonModule,
-    AccordionModule,
+    FlexLayoutModule,
+    CurrencyMaskModule,
+
     MatCardModule,
     MatTabsModule,
     MatIconModule,
     MatButtonModule,
+    MatDividerModule, 
     
-    FlexLayoutModule,
-    CurrencyMaskModule,
     TableModule,
     DialogModule,
     InputMaskModule,
@@ -70,8 +68,11 @@ import { DashboardCrudLancamentosComponent } from './dashboard-crud-lancamentos/
     DropdownModule,
     ConfirmDialogModule,
     FileUploadModule,
-    SharedModule,
+    SplitButtonModule,
+    AccordionModule,
+    ButtonModule,
     
+    SharedModule
   ],
   exports:[
     DashboardPessoaComponent
