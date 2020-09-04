@@ -35,17 +35,18 @@
             </canvas>
         </mat-card>
     </div>
-    <!-- <div class="ui-g-12">
+    <div class="ui-g-12">
         <mat-card class="cards-big-charts">
-            <h1>Gráfico de lançamentos por dia</h1>
+            <h1>Gráfico de lançamentos por mês. Ano referência {{ano}}</h1>
             <canvas class="bigChart" baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions"
             [legend]="barChartLegend" [chartType]="barChartType"></canvas>
             <button pButton label="Gráfico de {{barChartType === 'bar'? 'linha':'barra'}}" (click)="randomize()"></button>
         </mat-card>
-    </div> -->
+    </div>
     <div class="ui-g-12">
         <mat-card>
-            <app-dashboard-crud-lancamentos [pessoa]="pessoa" (retornoPersistencia)="retornoCrudLancamento($event)">
+            <app-dashboard-crud-lancamentos
+            [pessoa]="pessoa" (retornoPersistencia)="retornoCrudLancamento($event)">
             </app-dashboard-crud-lancamentos>
         </mat-card>
     </div>

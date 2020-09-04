@@ -1,12 +1,15 @@
 <app-spinner [hidden]="!displaySpinner"></app-spinner>
 <p-table [value]="lancamentos" [rowHover]="true" [responsive]="true" [paginator]="true" [totalRecords]="filtro.total"
-    [rowsPerPageOptions]="[1,10,25,50]" [lazy]="true" [(rows)]="filtro.itensPorPagina"
-    (onPage)="aoMudarPagina($event)" #table>
+    [rowsPerPageOptions]="[1,10,25,50]" [lazy]="true" [(rows)]="filtro.itensPorPagina" (onPage)="aoMudarPagina($event)"
+    #table>
     <ng-template pTemplate="caption">
         <div class="ui-helper-clearfix" style="text-align: center">
             Lista de lançamentos por pessoa
             <button type="button" pButton class="ui-button-rounded" (click)="novo(f)" pButton iconPos="left"
-                style="float:right" icon="pi pi-plus" label="Novo"></button>
+            style="float:right" icon="pi pi-plus"></button>
+            <button type="button" pButton class="ui-button-rounded" (click)="getTable()" pButton iconPos="left"
+            style="float:right" icon="pi pi-undo"></button>
+            
         </div>
     </ng-template>
     <ng-template pTemplate="header">
@@ -15,7 +18,8 @@
             <th style="width: 8em;">Vencimento</th>
             <th style="width: 8em;">Pagamento</th>
             <th style="width: 14em;">Valor</th>
-            <th style="width: 7em;">Opções</th>
+            <th style="width: 8em;">Tipo</th>
+            <th style="width: 5em;">Opções</th>
         </tr>
     </ng-template>
     <ng-template pTemplate="body" let-rowData>
@@ -23,9 +27,12 @@
             <td>{{rowData.descricao}}</td>
             <td>{{rowData.dataVencimento}}</td>
             <td>{{rowData.dataPagamento}} </td>
-            <td [style.color]="rowData.tipo === 'DESPESA' ? 'red' : 'blue'">
+            <td>
                 <input currencyMask [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }"
                     [(ngModel)]="rowData.valor" disabled>
+            </td>
+            <td [style.color]="rowData.tipo === 'DESPESA' ? 'red' : 'blue'">
+                {{rowData.tipo}}
             </td>
             <td>
                 <button class="ui-button-rounded ui-button-secondary" pButton icon="pi pi-pencil"
@@ -38,6 +45,7 @@
             <td>
                 <h2>Sem dados para listar.</h2>
             </td>
+            <td></td>
             <td></td>
             <td></td>
             <td></td>

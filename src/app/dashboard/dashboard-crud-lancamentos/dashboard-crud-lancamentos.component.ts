@@ -89,11 +89,11 @@ export class DashboardCrudLancamentosComponent implements OnInit {
     this.lancamento.pessoa = this.pessoa;
     this.lancamentosService.salvar(this.lancamento)
       .then(response => {
-        this.retornoPersistencia.emit(true);
         this.getTable();
         this.display = false;
         this.resetForm(f);
         this.toastyService.showSuccess("Lançamento adicionado com sucesso!");
+        this.retornoPersistencia.emit(true);
         this.displaySpinner = false;
       })
       .catch(erro => {
@@ -108,11 +108,11 @@ export class DashboardCrudLancamentosComponent implements OnInit {
     this.lancamento.pessoa = this.pessoa;
     this.lancamentosService.editar(this.lancamento)
       .then(response => {
-        this.retornoPersistencia.emit(true);
         this.getTable();
         this.display = false;
         this.resetForm(f);
         this.toastyService.showSuccess("Lancaçamento editado com sucesso!");
+        this.retornoPersistencia.emit(true);
         this.displaySpinner = false;
       })
       .catch(erro => {
