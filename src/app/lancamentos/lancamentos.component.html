@@ -2,29 +2,28 @@
 <app-spinner [hidden]="!displaySpinner"></app-spinner>
 <app-toast></app-toast>
 <div class="ui-g">
-    <div class="ui-g-12 filtro ui-fluid"> 
+    <div class="ui-g-12 filtro ui-fluid">
         <div class="ui-g-12 ui-md-4">
             <span class="ui-float-label">
-                <input pInputText type="text" name="descricao" [(ngModel)]="filtro.descricao"  
-                maxlength="50"> 
+                <input pInputText type="text" name="descricao" [(ngModel)]="filtro.descricao" maxlength="50">
                 <label>Descrição</label>
             </span>
         </div>
         <div class="ui-g-6 ui-md-2">
             <span class="ui-float-label">
-                <p-calendar name="vencimentoDe" dateFormat="dd/mm/yy" showButtonBar="true"
-                readonlyInput="false"appendTo="body" showIcon="true" [locale]="ptBr"
-                [(ngModel)]="filtro.vencimentoDe" #vencimentoDe="ngModel"> 
+                <p-calendar name="vencimentoDe" dateFormat="dd/mm/yy" showButtonBar="true" readonlyInput="false"
+                    appendTo="body" showIcon="true" [locale]="ptBr" [(ngModel)]="filtro.vencimentoDe"
+                    #vencimentoDe="ngModel">
                 </p-calendar>
                 <label>Vencimento De</label>
             </span>
         </div>
         <div class="ui-g-6 ui-md-2">
             <span class="ui-float-label">
-                <p-calendar name="vencimentoAte" dateFormat="dd/mm/yy" showButtonBar="true"
-                readonlyInput="false"appendTo="body" showIcon="true" [locale]="ptBr"
-                [(ngModel)]="filtro.vencimentoAte" #vencimentoAte="ngModel">
-                </p-calendar> 
+                <p-calendar name="vencimentoAte" dateFormat="dd/mm/yy" showButtonBar="true" readonlyInput="false"
+                    appendTo="body" showIcon="true" [locale]="ptBr" [(ngModel)]="filtro.vencimentoAte"
+                    #vencimentoAte="ngModel">
+                </p-calendar>
                 <label>Vencimento Até</label>
             </span>
         </div>
@@ -33,14 +32,14 @@
         </div>
     </div>
     <div class="ui-g-12">
-        <p-table [value]="lancamentos" [rowHover]="true" [responsive]="true" [paginator]="true" 
-        [totalRecords]="filtro.total" [rowsPerPageOptions]="[10,25,50]" [lazy]="true"
-        [(rows)]="filtro.itensPorPagina"  (onLazyLoad)="aoMudarPagina($event)" #table>
-            <ng-template pTemplate="caption">  
+        <p-table [value]="lancamentos" [rowHover]="true" [responsive]="true" [paginator]="true"
+            [totalRecords]="filtro.total" [rowsPerPageOptions]="[10,25,50]" [lazy]="true"
+            [(rows)]="filtro.itensPorPagina" (onLazyLoad)="aoMudarPagina($event)" #table>
+            <ng-template pTemplate="caption">
                 <div class="ui-helper-clearfix" style="text-align: center">
                     Lista de lançamentos
-                    <button type="button" pButton class="ui-button-rounded" (click)="novoLancamento()"
-                    pButton iconPos="left" style="float:right" icon="pi pi-plus" label="Novo"></button>
+                    <button type="button" pButton class="ui-button-rounded" (click)="novoLancamento()" pButton
+                        iconPos="left" style="float:right" icon="pi pi-plus" label="Novo"></button>
                 </div>
             </ng-template>
             <ng-template pTemplate="header">
@@ -50,6 +49,7 @@
                     <th style="width: 8em;">Vencimento</th>
                     <th style="width: 8em;">Pagamento</th>
                     <th style="width: 14em;">Valor</th>
+                    <th style="width: 7em;">Tipo</th>
                     <th style="width: 7em;">Opções</th>
                 </tr>
             </ng-template>
@@ -57,23 +57,30 @@
                 <tr class="ui-selectable-row" style="text-align: center;">
                     <td>{{rowData.pessoa}}</td>
                     <td>{{rowData.descricao}}</td>
-                    <td>{{rowData.dataVencimento}}</td>
-                    <td>{{rowData.dataPagamento}} </td>
+                    <td>{{formatarDataTabela(rowData.dataVencimento)}}</td>
+                    <td>{{formatarDataTabela(rowData.dataPagamento)}} </td>
+                    <td>
+                        <input class="input" currencyMask [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }"
+                            [(ngModel)]="rowData.valor" disabled>
+                    </td>
                     <td [style.color]="rowData.tipo === 'DESPESA' ? 'red' : 'blue'">
-                        {{rowData.valor}} 
+                        {{rowData.tipo}}
                     </td>
                     <td>
-                        <button class="ui-button-rounded ui-button-secondary"
-                        pButton icon="pi pi-pencil" (click)="getLancamento(rowData.id)"></button>
-                        <button class="ui-button-rounded ui-button-secondary"
-                        pButton icon="pi pi-trash" (click)="confirmarExclusao(rowData.id)"
-                        [disabled]="!auth.temPermissao('ROLE_ADMINISTRADOR')"></button>
+                        <button class="ui-button-rounded ui-button-secondary" pButton icon="pi pi-pencil"
+                            (click)="getLancamento(rowData.id)"></button>
+                        <button class="ui-button-rounded ui-button-secondary" pButton icon="pi pi-trash"
+                            (click)="confirmarExclusao(rowData.id)"
+                            [disabled]="!auth.temPermissao('ROLE_ADMINISTRADOR')"></button>
                     </td>
                 </tr>
             </ng-template>
             <ng-template pTemplate="emptymessage">
                 <tr>
-                    <td><h2>Sem dados para listar.</h2></td>
+                    <td>
+                        <h2>Sem dados para listar.</h2>
+                    </td>
+                    <td></td>
                     <td></td>
                     <td></td>
                     <td></td>
@@ -85,17 +92,15 @@
     </div>
 </div>
 
-<app-lancamento-form [lancamento]="lancamentoForm" [display]="displayFormLancamento" 
-(eventDisplay)="displayFormLancamento=$event" 
-(retornoPersistencia)="getEventFormLancamento($event)"></app-lancamento-form>
+<app-lancamento-form [lancamento]="lancamentoForm" [display]="displayFormLancamento"
+    (eventDisplay)="displayFormLancamento=$event" (retornoPersistencia)="getEventFormLancamento($event)">
+</app-lancamento-form>
 
 <p-confirmDialog header="Alerta" icon="pi pi-exclamation-triangle" #confirmacao>
     <p-footer>
-        <button pButton class="ui-button-rounded ui-button-success"
-        type="button" icon="pi pi-check" label="Sim"
-        (click)="confirmacao.accept()"></button>
-        <button pButton class="ui-button-rounded ui-button-danger"
-        type="button" icon="pi pi-times" label="Não"
-        (click)="confirmacao.reject()"></button>
+        <button pButton class="ui-button-rounded ui-button-success" type="button" icon="pi pi-check" label="Sim"
+            (click)="confirmacao.accept()"></button>
+        <button pButton class="ui-button-rounded ui-button-danger" type="button" icon="pi pi-times" label="Não"
+            (click)="confirmacao.reject()"></button>
     </p-footer>
 </p-confirmDialog>

@@ -1,8 +1,13 @@
 .userBtn{
     background-color: transparent;
+    color: #fff;  
 }
+
 .userBtn img{
     padding: 2px auto 2px;
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
 }
 
 a img {

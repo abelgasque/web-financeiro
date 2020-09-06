@@ -8,7 +8,7 @@
                 Lista de lançamentos por pessoa
             </div>
             <div class="ui-g-12">
-                <p-splitButton label="Filtrar" (onClick)="pesquisar()" [model]="items"></p-splitButton>
+                <p-splitButton icon="pi pi-search" label="Pesquisar" (onClick)="pesquisar()" [model]="items"></p-splitButton>
             </div>
         </div>
     </ng-template>
@@ -25,8 +25,8 @@
     <ng-template pTemplate="body" let-rowData>
         <tr class="ui-selectable-row" style="text-align: center;">
             <td>{{rowData.descricao}}</td>
-            <td>{{rowData.dataVencimento}}</td>
-            <td>{{rowData.dataPagamento}} </td>
+            <td>{{formatarDataTabela(rowData.dataVencimento)}}</td>
+            <td>{{formatarDataTabela(rowData.dataPagamento)}} </td>
             <td>
                 <input class="input" currencyMask [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }"
                     [(ngModel)]="rowData.valor" disabled>

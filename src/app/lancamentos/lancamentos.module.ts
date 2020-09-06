@@ -20,17 +20,20 @@ import {ConfirmDialogModule} from 'primeng/confirmdialog';
 import {ConfirmationService} from 'primeng/api';
 import {FileUploadModule} from 'primeng/fileupload';
 import {TooltipModule} from 'primeng/tooltip';
+import {SplitButtonModule} from 'primeng/splitbutton';
 
 import { SharedModule } from 'src/app/shared/shared.module';
 import { CategoriaService } from 'src/app/util/categoria.service';
 import { PessoasService } from '../pessoas/pessoas.service';
 import { LancamentosComponent } from './lancamentos.component';
 import { LancamentoFormComponent } from './lancamento-form/lancamento-form.component';
+import { LancamentosGridComponent } from './lancamentos-grid/lancamentos-grid.component';
 
 @NgModule({
   declarations: [
     LancamentosComponent,
-    LancamentoFormComponent
+    LancamentoFormComponent,
+    LancamentosGridComponent
   ],
   imports: [
     CommonModule,
@@ -52,7 +55,8 @@ import { LancamentoFormComponent } from './lancamento-form/lancamento-form.compo
     InputTextareaModule,
     ConfirmDialogModule,
     FileUploadModule,
-    TooltipModule
+    TooltipModule,
+    SplitButtonModule
   ],
   providers: [
     ConfirmationService,

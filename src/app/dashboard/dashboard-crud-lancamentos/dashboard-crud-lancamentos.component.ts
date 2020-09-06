@@ -58,6 +58,10 @@ export class DashboardCrudLancamentosComponent implements AfterViewInit {
     this.pesquisar();
   }
 
+  formatarDataTabela(data: string){
+    return moment(data).format("DD/MM/YYYY");
+  }
+
   pesquisar() {
     if (this.pessoa.id != undefined || this.pessoa.id != null && this.pessoa.id > 0) {
       this.lancamentos = [];

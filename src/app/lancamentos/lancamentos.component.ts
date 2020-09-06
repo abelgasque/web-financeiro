@@ -34,8 +34,10 @@ export class LancamentosComponent implements OnInit {
     this.ptBr = apoioService.getCalendarioPtBr();
   }
 
-  ngOnInit(): void {
-    this.pesquisar();
+  ngOnInit(): void {}
+
+  formatarDataTabela(data: string) {
+    return moment(data).format("DD/MM/YYYY");
   }
 
   getEventFormLancamento(lancamento: Lancamento){

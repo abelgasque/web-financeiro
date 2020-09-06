@@ -9,9 +9,11 @@
             Financeiro
         </a>
         <span class="example-spacer"></span>
-        <a mat-fab class="userBtn" color="primary" [matMenuTriggerFor]="menu" *ngIf="auth.temPermissao('ROLE_PESSOA')">
+        <button mat-button class="userBtn" color="primary" [matMenuTriggerFor]="menu"
+            *ngIf="auth.temPermissao('ROLE_PESSOA')">
             <img src="../../../../assets/img/usuario.jpg">
-        </a>
+            {{ auth.jwtPayload?.nome }}
+        </button>
         <a mat-button [routerLink]="['/seguranca','login-autenticacao']" [hidden]="gerenciarBtnNavbar">
             <mat-icon>login</mat-icon>Login
         </a>
