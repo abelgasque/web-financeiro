@@ -37,8 +37,8 @@ export class DashboardPessoaComponent implements OnInit {
   pessoa: Pessoa;
   ano: number = 2020;
 
-  pieChartData: any[]=[];
-  pieChartLabels: any[]=[];
+  pieChartData: any[] = [];
+  pieChartLabels: any[] = [];
 
   constructor(
     private dashboardService: DashboardService,
@@ -49,19 +49,17 @@ export class DashboardPessoaComponent implements OnInit {
     private usuarioService: UsuariosService,
     private handler: ErrorHandlerService,
     private router: Router
-  ) {
+  ) { }
 
-    this.getComponente();
-  }
-
-  ngOnInit() { }
-
-  getComponente() {
-    this.usuarioService.buscarPorEmail(this.auth.jwtPayload.user_name)
-      .then(usuario => {
-        this.buscarPessoaPorUsuarioById(usuario.id);
-      })
-      .catch(error => { this.handler.handle(error) });
+  ngOnInit() {
+    let retorno = this.apoioService.getIdUsuarioStorage();
+    const idUsuario: number = +retorno;
+    if (idUsuario != null && idUsuario != undefined && idUsuario > 0) {
+      this.buscarPessoaPorUsuarioById(idUsuario);
+    } else {
+      this.router.navigate(['']);
+      this.toastyService.showWarn("Pessoa não encontrada no sistema");
+    }
   }
 
   retornoCrudLancamento(retorno: boolean) {
@@ -90,14 +88,9 @@ export class DashboardPessoaComponent implements OnInit {
   }
 
   configurarCharts(id: number) {
-    if (id != null || id != undefined) {
-      this.configurarGraficoPizzaAndCards(id);
-      this.confirgurarGraficoDinamic(this.ano, id);
-      this.configurarGraficoPiePorCategoria(id);
-    } else {
-      this.toastyService.showWarn("Pessoa não encontrada no sistema");
-      this.router.navigate(['']);
-    }
+    this.configurarGraficoPizzaAndCards(id);
+    this.confirgurarGraficoDinamic(this.ano, id);
+    this.configurarGraficoPiePorCategoria(id);
   }
 
   configurarGraficoPiePorCategoria(id: number) {

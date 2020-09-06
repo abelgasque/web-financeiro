@@ -1,5 +1,5 @@
-import { Component, OnInit, Inject } from '@angular/core';
-import { SpinnerComponent } from 'src/app/shared/components/spinner/spinner.component';
+import { Component, OnInit } from '@angular/core';
+import AOS from 'aos';
 
 @Component({
   selector: 'app-home',
@@ -10,7 +10,7 @@ export class HomeComponent implements OnInit {
 
   constructor() { }
 
-  
-  ngOnInit(): void {}
-
+  ngOnInit(): void { 
+    AOS.init();
+  }
 }

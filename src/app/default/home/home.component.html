@@ -1,11 +1,168 @@
-<div class="container">
-  <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="20px">
-    <ul class="title">
-      <li><h1>Bem vindo ao sistema gestão financeiro</h1></li>
-      <li><p>Aplicação foi desenvolvida com seguintes frameworks:</p></li>
-      <li><a href='https://spring.io/'>Spring Framework</a> e <a href='https://docs.oracle.com/javase/8/docs/api/'>Java 8</a> para código server-side</li>
-      <li><a href='https://angular.io/'>Angular 9</a> e <a href='http://www.typescriptlang.org/'>TypeScript</a> para código client-side</li>
-      <li><a href='https://material.angular.io/'>Angular Material</a> e <a href='https://primefaces.org/'>PrimeNg</a> para layout e estilo</li>
-    </ul>
+<app-toast></app-toast>
+<div class="body">
+  <div class="ui-g">
+    <div class="ui-g-12 header">
+      <ul class="title" data-aos="fade-down" data-aos-duration="1000">
+        <li data-aos="fade-down" data-aos-duration="3000">
+          <h1 class="title-home">Sistema de controle financeiro</h1>
+        </li>
+        <li data-aos="fade-down" data-aos-duration="3000">
+          <p>Aplicação foi desenvolvida com seguintes frameworks:</p>
+        </li>
+        <li data-aos="fade-down" data-aos-duration="3000"><a href='https://spring.io/'>Spring Framework</a> e <a
+            href='https://docs.oracle.com/javase/8/docs/api/'>Java
+            8</a> para código server-side
+        </li>
+        <li data-aos="fade-down" data-aos-duration="3000"><a href='https://angular.io/'>Angular 9</a> e <a
+            href='http://www.typescriptlang.org/'>TypeScript</a> para
+          código client-side
+        </li>
+        <li data-aos="fade-down" data-aos-duration="3000">
+          <a href='https://material.angular.io/'>Angular Material</a> e <a href='https://primefaces.org/'>PrimeNg</a>
+          para layout e estilo
+        </li>
+      </ul>
+    </div>
+    <div class="ui-g-12">
+      <mat-card class="ui-g-12 ui-md-offset-6 ui-md-6" data-aos="fade-right" data-aos-duration="1000">
+        <mat-card-content>
+          <h1>O que é controle financeiro?</h1>
+          <p>O controle financeiro baseia-se avaliação da condição financeira da empresa e na coordenação das atividades
+            para essa finalidade. É através de relatórios financeiros que esse controle é possível. Assim, baseia-se em
+            dados patrimoniais e na situação do fluxo de caixa da empresa.</p>
+          <p>O processo de controle financeiro e do fluxo de caixa se baseia no registro de contas. Ou seja, das contas
+            a
+            pagar e a receber, registro de caixa das entradas e saídas, controle de estoque, controle bancário, entre
+            outros. Além disso, a análise patrimonial também é realizada com a finalidade de comparar a situação
+            financeira do negócio. Para isso, é preciso catalogar os bens da empresa, o capital de giro, as tendências
+            de crescimento, endividamento e rentabilidade.</p>
+          <a href="https://blog.egestor.com.br/importancia-controle-financeiro-eficiente/">
+            https://blog.egestor.com.br/importancia-controle-financeiro-eficiente/
+          </a>
+        </mat-card-content>
+      </mat-card>
+    </div>
+    <div class="ui-g-12">
+      <mat-card class="ui-g-12 ui-md-6" data-aos="fade-left" data-aos-duration="1000">
+        <mat-card-content>
+          <h1>Conheça seus ganhos e seus gastos</h1>
+          <p>
+            Para um controle financeiro pessoal de qualidade você deve começar conhecendo quais são os seus ganhos e
+            quais são os seus gastos fixos. Isso é necessário porque nem sempre as pessoas sabem exatamente o quanto
+            ganham ou o quanto do seu salário está mensalmente comprometido.
+          </p>
+          <p>
+            Por isso, anote todos os seus rendimentos líquidos do mês, incluindo o salário e rendas extras. Também anote
+            todos os seus gastos fixos ou recorrentes para saber quanto você gasta todo mês. Ao final, diminua o quanto
+            você ganha do quanto você gasta para ter uma ideia de quanto você tem disponível por mês. Se a conta não
+            fecha, você tem um motivo a mais para começar a fazer o controle financeiro.
+          </p>
+          <a href="https://financaspessoais.organizze.com.br/controle-financeiro-pessoal-aprenda-a-fazer-o-seu/">
+            https://financaspessoais.organizze.com.br/controle-financeiro-pessoal-aprenda-a-fazer-o-seu/
+          </a>
+        </mat-card-content>
+      </mat-card>
+    </div>
+    <div class="ui-g-12">
+      <mat-card class="ui-g-12 ui-md-offset-6 ui-md-6" data-aos="fade-right" data-aos-duration="1000">
+        <mat-card-content>
+          <h1>Divida seus gastos por tipo</h1>
+          <p>
+            Depois de identificar seus gastos, separá-los por tipo pode ajudar a entender quais são os gastos supérfluos
+            e onde você está gastando mais dinheiro. Para isso, você pode criar categorias. Geralmente, as mais
+            utilizadas são:</p>
+          <p>
+            Moradia <br>
+            Supermercado<br>
+            TV / Internet / Telefone<br>
+            Transporte<br>
+            Lazer<br>
+            Saúde<br>
+            Bares e Restaurantes<br>
+          </p>
+          <p>
+            Identifique qual porcentagem da sua renda é gasta com cada categoria e qual o valor em dinheiro. Dessa
+            forma, você poderá ter um parâmetro de quanto gasta em média e onde está gastando mais do que o normal.
+          </p>
+          <a href="https://blog.toroinvestimentos.com.br/controle-financeiro-pessoal">
+            https://blog.toroinvestimentos.com.br/controle-financeiro-pessoal
+          </a>
+        </mat-card-content>
+      </mat-card>
+    </div>
+    <div class="ui-g-12">
+      <mat-card class="ui-g-12 ui-md-6" data-aos="fade-left" data-aos-duration="1000">
+        <mat-card-content>
+          <h1>Mantenha a organização</h1>
+          <p>
+            A organização também precisa fazer parte do seu controle financeiro pessoal, especialmente quando se fala do
+            controle de entrada e saída de valores. Toda movimentação precisa estar bem detalhada e conter o valor
+            exato, a data e o motivo da compra.
+          </p>
+          <p>
+            Isso é importante para que você saiba exatamente para onde o seu dinheiro foi no final do mês e faça uma
+            avaliação do que você fez de certo e do que você fez de errado. Se você apenas fizer um lançamento numérico,
+            grandes são as chances de que chegue ao final do mês, e você não se lembre da referência daquele valor.
+          </p>
+          <p>
+            Por isso, mantenha tudo organizado para que você não se perca em seu próprio controle financeiro e saiba
+            sempre quais foram os seus gastos.
+          </p>
+          <a href="https://financaspessoais.organizze.com.br/controle-financeiro-pessoal-aprenda-a-fazer-o-seu/">
+            https://financaspessoais.organizze.com.br/controle-financeiro-pessoal-aprenda-a-fazer-o-seu/
+          </a>
+        </mat-card-content>
+      </mat-card>
+    </div>
+    <div class="ui-g-12">
+      <mat-card class="ui-g-12 ui-md-offset-6 ui-md-6" data-aos="fade-right" data-aos-duration="1000">
+        <mat-card-content>
+          <h1>Qual a importância em unir o controle financeiro ao planejamento?</h1>
+          <p>
+            É por meio do controle financeiro que uma empresa se mantém ativa e operando no mercado de forma
+            sustentável; afinal de contas, fica difícil executar qualquer tipo de operação com o caixa zerado ou mesmo
+            sem um bom capital de giro.
+          </p>
+          <p>
+            O controle financeiro e o planejamento são ferramentas indissociáveis, ou seja, é preciso planejar as
+            finanças e controlar cada passo da sua execução, de forma que se possa ter um controle pleno do capital
+            empregado e, assim, poder analisar a saúde financeira real do negócio. Aqui vale a regra: não basta apenas
+            registrar cada movimentação financeira da empresa, é preciso monitorar e acompanhar cada lançamento — e esta
+            é uma das funções do controle financeiro.
+          </p>
+          <p>
+            Estamos falando, portanto, de um processo cíclico. Afinal, para realizar um bom planejamento, precisamos
+            sempre nos apoiar em dados concretos, que serão utilizados para definir metas, objetivos e planos de ação.
+            Todos esses dados são recolhidos durante a análise dos indicadores de desempenho, o que ocorre durante a
+            fase de controle do negócio.
+          </p>
+          <a href="https://www.flua.com.br/blog/controle-financeiro-e-planejamento-por-que-sao-importantes/">
+            https://www.flua.com.br/blog/controle-financeiro-e-planejamento-por-que-sao-importantes/
+          </a>
+        </mat-card-content>
+      </mat-card>
+    </div>
+    <div class="ui-g-12">
+      <mat-card class="ui-g-12 ui-md-6" data-aos="fade-left" data-aos-duration="1000">
+        <mat-card-content>
+          <h1>Estabeleça metas</h1>
+          <p>
+            Para controlar as despesas, inclusive, você pode estabelecer metas de orçamento. Essas metas podem funcionar
+            tanto na redução de gastos quanto no aumento da economia em si. Uma meta, por exemplo, pode ser de diminuir
+            em 20% o valor da conta de luz para o próximo mês. Outra meta pode incluir guardar 15% do seu salário todos
+            os meses.
+          </p>
+          <p>
+            Criar metas para o seu orçamento é importante porque o controle financeiro também precisa ter um objetivo,
+            ou seja, você não deve fazer um controle financeiro apenas para saber o que gasta, mas também para possuir
+            uma postura ativa para gerar mais economia.
+          </p>
+          <a href="https://financaspessoais.organizze.com.br/controle-financeiro-pessoal-aprenda-a-fazer-o-seu/">
+            https://financaspessoais.organizze.com.br/controle-financeiro-pessoal-aprenda-a-fazer-o-seu/
+          </a>
+        </mat-card-content>
+      </mat-card>
+    </div>
   </div>
 </div>
+<app-footer></app-footer>

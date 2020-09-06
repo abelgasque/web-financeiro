@@ -1,18 +1,41 @@
-div{
+.body{
+    background-image:  url(../../../assets/img/fundo-home.jpg);
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+.header{
+    margin-top: 50px;
+}
+
+.mat-card{
+    min-height: 300px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+
+}
+
+.title-home{
+    font-size: 40px;
+    color: #fff;
+    padding: 10px;
+}
+.title{
+    text-align: center;
+    background:rgba(0,0,0,0.8);
+    color: #fff;
     padding: 10px;
 }
 
-.title{
+img{
     height: 300px;
-    width: 100%;
-    text-align: center;
-    padding-top: 50px;
+    width: 300px;
 }
 
 .ui-g{
     padding-top: 30px;
     text-align: center;
-    background-color: #fff;
+    background-color: none;
 }
 ul li{
     list-style-type: none;

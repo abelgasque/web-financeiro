@@ -1,69 +1,82 @@
 <mat-toolbar color="primary">
-  <mat-toolbar-row>
-    <a mat-icon-button (click)="this.sideBarOpen = !this.sideBarOpen">
-      <mat-icon>menu</mat-icon>
-    </a>
-    <a mat-button [routerLink]="['']">Financeiro</a>
-    <span class="example-spacer"></span>
-    <a mat-button [routerLink]="['/seguranca','login-autenticacao']">
-      <mat-icon>login</mat-icon>Login
-    </a>
-  </mat-toolbar-row>
+    <mat-toolbar-row>
+        <a mat-icon-button (click)="this.sideBarOpen = !this.sideBarOpen"
+            *ngIf="auth.temPermissao('ROLE_ADMINISTRADOR')">
+            <mat-icon>menu</mat-icon>
+        </a>
+        <a mat-button [routerLink]="['']">
+            <mat-icon>insert_chart</mat-icon>
+            Financeiro
+        </a>
+        <span class="example-spacer"></span>
+        <a mat-fab class="userBtn" color="primary" [matMenuTriggerFor]="menu" *ngIf="auth.temPermissao('ROLE_PESSOA')">
+            <img src="../../../../assets/img/usuario.jpg">
+        </a>
+        <a mat-button [routerLink]="['/seguranca','login-autenticacao']" [hidden]="gerenciarBtnNavbar">
+            <mat-icon>login</mat-icon>Login
+        </a>
+    </mat-toolbar-row>
 </mat-toolbar>
 
-<p-sidebar [(visible)]="sideBarOpen" [showCloseIcon]="false" >
-  <p-scrollPanel [style]="{width: '100%', height: '100%'}" styleClass="custombar">  
-    <div class="ui-g-12">
-      <a mat-icon-button (click)="this.sideBarOpen = !this.sideBarOpen">
-        <mat-icon>close</mat-icon>
-      </a>
+<mat-menu #menu="matMenu" yPosition="above">
+    <div class="ui-g-12 ui-fluid header" mat-menu-item>
+        <img class="img center" src="../../../../assets/img/usuario.jpg">
+        <h4 class="people">{{ auth.jwtPayload?.nome }}</h4>
+        <h4 class="people">{{ auth.jwtPayload?.user_name }}</h4>
     </div>
-    <div class="ui-g-12">
-      <img class="imgUser" src="../../../../assets/img/usuario.jpg">
-      <p *ngIf="auth.jwtPayload==null?false:true">{{ auth.jwtPayload?.nome }}</p>
-      <p *ngIf="auth.jwtPayload==null?false:true">{{ auth.jwtPayload?.user_name }}</p>
-    </div> 
-    <mat-selection-list [multiple]="false">
-      <div mat-subheader>Menu</div>
-      <mat-list-option>
-        <mat-icon mat-list-icon>home</mat-icon>
-        <a routerLinkActive="select" [routerLink]="['']">Home</a>
-      </mat-list-option>
-      <mat-list-option *ngIf="auth.temPermissao('ROLE_PESSOA')">
-        <mat-icon mat-list-icon>dashboard</mat-icon>
-        <a routerLinkActive="select" [routerLink]="['/dashboard' ,'pessoa']">Dashboard</a>
-      </mat-list-option>
-      <mat-divider></mat-divider>
-      <div mat-subheader>Sistema</div>
-      <mat-list-option *ngIf="auth.temPermissao('ROLE_ADMINISTRADOR')">
-        <mat-icon mat-list-icon>dashboard</mat-icon>
-        <a routerLinkActive="select" [routerLink]="['/dashboard' ,'admin']">Dashboard</a>
-      </mat-list-option>
-      <mat-list-option *ngIf="auth.temPermissao('ROLE_ADMINISTRADOR')">
-        <mat-icon mat-list-icon>add</mat-icon>
-        <a [routerLink]="['/lancamentos']" routerLinkActive="select">Lançamentos</a>
-      </mat-list-option>
-      <mat-list-option *ngIf="auth.temPermissao('ROLE_ADMINISTRADOR')">
-        <mat-icon mat-list-icon>list</mat-icon>
-        <a [routerLink]="['/pessoas']" routerLinkActive="select">Pessoas</a>
-      </mat-list-option>
-      <mat-list-option *ngIf="auth.temPermissao('ROLE_ADMINISTRADOR')">
-        <mat-icon mat-list-icon>people</mat-icon>
-        <a [routerLink]="['/usuarios']" routerLinkActive="select">Usuários</a>
-      </mat-list-option>
-      <mat-list-option *ngIf="auth.temPermissao('ROLE_ADMINISTRADOR')">
-        <mat-icon mat-list-icon>list</mat-icon>
-        <a [routerLink]="['/relatorios', 'lancamentos']" routerLinkActive="select">Relatórios</a>
-      </mat-list-option>
-      <mat-divider *ngIf="auth.temPermissao('ROLE_ADMINISTRADOR')"></mat-divider>
-      <mat-list-option [hidden]="!gerenciarBtnNavbar">
-        <mat-icon mat-list-icon>login</mat-icon>
-        <a href="javascript:;" (click)="logout()">Logout</a>
-      </mat-list-option>
-      <mat-list-option [hidden]="gerenciarBtnNavbar">
-        <mat-icon mat-list-icon>login</mat-icon>
-        <a href="javascript:;" [routerLink]="['/seguranca','login-autenticacao']">Login</a>
-      </mat-list-option>
-    </mat-selection-list>
-  </p-scrollPanel>
+    <a mat-menu-item routerLinkActive="select" [routerLink]="['/dashboard' ,'pessoa']">
+        <mat-icon>dashboard</mat-icon>
+        <span>Dashboard</span>
+    </a>
+    <a mat-menu-item (click)="logout()">
+        <mat-icon>login</mat-icon>
+        <span>Logout</span>
+    </a>
+</mat-menu>
+
+<p-sidebar [(visible)]="sideBarOpen" [showCloseIcon]="false" [modal]="false">
+    <p-scrollPanel [style]="{width: '100%', height: '100%'}" styleClass="custombar">
+        <div class="ui-g-12">
+            <a mat-icon-button (click)="this.sideBarOpen = !this.sideBarOpen">
+                <mat-icon>close</mat-icon>
+            </a>
+        </div>
+        <div class="ui-g-12">
+            <img class="imgUser" src="../../../../assets/img/usuario.jpg">
+            <p *ngIf="auth.jwtPayload==null?false:true">{{ auth.jwtPayload?.nome }}</p>
+            <p *ngIf="auth.jwtPayload==null?false:true">{{ auth.jwtPayload?.user_name }}</p>
+        </div>
+        <mat-selection-list [multiple]="false">
+            <div mat-subheader>Menu</div>
+            <mat-list-option>
+                <mat-icon mat-list-icon>dashboard</mat-icon>
+                <a routerLinkActive="select" [routerLink]="['/dashboard' ,'admin']">Dashboard</a>
+            </mat-list-option>
+            <mat-list-option>
+                <mat-icon mat-list-icon>add</mat-icon>
+                <a [routerLink]="['/lancamentos']" routerLinkActive="select">Lançamentos</a>
+            </mat-list-option>
+            <mat-list-option>
+                <mat-icon mat-list-icon>list</mat-icon>
+                <a [routerLink]="['/pessoas']" routerLinkActive="select">Pessoas</a>
+            </mat-list-option>
+            <mat-list-option>
+                <mat-icon mat-list-icon>people</mat-icon>
+                <a [routerLink]="['/usuarios']" routerLinkActive="select">Usuários</a>
+            </mat-list-option>
+            <mat-list-option>
+                <mat-icon mat-list-icon>list</mat-icon>
+                <a [routerLink]="['/relatorios', 'lancamentos']" routerLinkActive="select">Relatórios</a>
+            </mat-list-option>
+            <mat-divider></mat-divider>
+            <mat-list-option [hidden]="!gerenciarBtnNavbar">
+                <mat-icon mat-list-icon>login</mat-icon>
+                <a href="javascript:;" (click)="logout()">Logout</a>
+            </mat-list-option>
+            <mat-list-option [hidden]="gerenciarBtnNavbar">
+                <mat-icon mat-list-icon>login</mat-icon>
+                <a href="javascript:;" [routerLink]="['/seguranca','login-autenticacao']">Login</a>
+            </mat-list-option>
+        </mat-selection-list>
+    </p-scrollPanel>
 </p-sidebar>

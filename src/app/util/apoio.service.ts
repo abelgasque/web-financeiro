@@ -8,6 +8,18 @@ export class ApoioService {
 
   constructor(private http: HttpClient) { }
 
+  armazenarIdUsuarioStorage(idUsuario: number) {
+    localStorage.setItem("idUsuario", idUsuario.toString());
+  }
+
+  limparIdUsuarioStorage() {
+    localStorage.removeItem("idUsuario");
+  }
+
+  getIdUsuarioStorage() {
+    return localStorage.getItem("idUsuario");
+  }
+
   getCalendarioPtBr(){
     let data = {
       firstDayOfWeek: 0,

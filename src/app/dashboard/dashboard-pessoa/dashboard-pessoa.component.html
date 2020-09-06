@@ -1,9 +1,6 @@
 <app-spinner [hidden]="!displaySpinner"></app-spinner>
 <app-toast></app-toast>
 <div class="ui-g">
-    <div class="ui-g-12">
-        <h1 style="text-align: center;">Bem-vindo {{ auth.jwtPayload?.nome }}</h1>
-    </div>
     <div class="ui-g-12 ui-fluid">
         <div class="ui-g-12 ui-md-4">
             <mat-card [style.backgroundColor]="this.saldo < 0 ? 'rgb(238, 160, 160)': 'rgb(199, 245, 199)'">

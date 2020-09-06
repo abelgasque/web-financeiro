@@ -14,6 +14,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { SharedModule } from 'src/app/shared/shared.module';
 import { HomeComponent } from './home/home.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
 @NgModule({
@@ -25,6 +26,7 @@ import { HomeComponent } from './home/home.component';
     CommonModule,
     FormsModule,
     RouterModule,
+    BrowserAnimationsModule,
     
     MatTabsModule,
     MatIconModule,

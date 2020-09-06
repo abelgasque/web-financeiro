@@ -19,13 +19,13 @@ export class DashboardService {
     this.lancamentosUrl =`${environment.apiUrl}/lancamentos/estatisticas`;
   }
 
-  estatisticasLencamentosPorPessoaById(id: number): Promise<any>{
-    return this.http.get<Promise<Array<any>>>(`${this.lancamentosUrl}/por-pessoa-by-id/${id}`)
+  estatisticasLencamentosPorPessoaById(idPessoa: number): Promise<any>{
+    return this.http.get<Promise<Array<any>>>(`${this.lancamentosUrl}/por-pessoa-by-id/${idPessoa}`)
     .toPromise();
   }
 
-  estatisticasLancamentosPorCategoria(id: number): Promise<any> {
-    return this.http.get<Promise<Array<any>>>(`${this.lancamentosUrl}/por-categoria/${id}`)
+  estatisticasLancamentosPorCategoria(idPessoa: number): Promise<any> {
+    return this.http.get<Promise<Array<any>>>(`${this.lancamentosUrl}/por-categoria/${idPessoa}`)
     .toPromise();
   }
 
