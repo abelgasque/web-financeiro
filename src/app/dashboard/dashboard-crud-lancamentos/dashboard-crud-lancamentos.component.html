@@ -25,8 +25,8 @@
     <ng-template pTemplate="body" let-rowData>
         <tr class="ui-selectable-row" style="text-align: center;">
             <td>{{rowData.descricao}}</td>
-            <td>{{formatarDataTabela(rowData.dataVencimento)}}</td>
-            <td>{{formatarDataTabela(rowData.dataPagamento)}} </td>
+            <td>{{this.apoioService.formatarDataStringPtBr(rowData.dataVencimento)}}</td>
+            <td>{{this.apoioService.formatarDataStringPtBr(rowData.dataPagamento)}} </td>
             <td>
                 <input class="input" currencyMask [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }"
                     [(ngModel)]="rowData.valor" disabled>

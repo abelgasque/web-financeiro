@@ -48,7 +48,11 @@ export class UsuarioFormComponent implements OnInit {
     })
     .catch(error => {
       console.log(error);
-      this.toastService.showError("Erro ao adicionar usuário!");
+      if(error.status == 409){
+        this.toastService.showError(error.error.message);
+      }else{
+        this.toastService.showError("Erro ao adicionar usuário!");
+      }
     });
   }
 
@@ -61,7 +65,11 @@ export class UsuarioFormComponent implements OnInit {
     })
     .catch(error => {
       console.log(error);
-      this.toastService.showError("Erro ao editar usuário!");
+      if(error.status == 409){
+        this.toastService.showError(error.error.message);
+      }else{
+        this.toastService.showError("Erro ao editar usuário!");
+      }
     });
   }
 

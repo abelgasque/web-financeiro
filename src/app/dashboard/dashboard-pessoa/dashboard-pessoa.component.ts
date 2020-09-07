@@ -1,18 +1,10 @@
-import { Component, OnInit, HostListener } from '@angular/core';
-import { Location } from '@angular/common';
-import { Router, NavigationStart, NavigationEnd, NavigationCancel, NavigationError } from '@angular/router';
-
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { DashboardService } from '../dashboard.service';
-import { Label } from 'ng2-charts';
-import { ChartType, ChartOptions, ChartDataSets } from 'chart.js';
 import { Pessoa } from 'src/app/core/model';
 import { AuthService } from 'src/app/seguranca/auth.service';
-import { PessoasService } from 'src/app/pessoas/pessoas.service';
 import { ToastService } from 'src/app/shared/components/toast/toast.service';
 import { ApoioService } from 'src/app/util/apoio.service';
-import { UsuariosService } from 'src/app/usuarios/usuarios.service';
-import { ErrorHandlerService } from 'src/app/core/error-handler.service';
-
 
 @Component({
   selector: 'app-dashboard-pessoa',
@@ -23,19 +15,20 @@ export class DashboardPessoaComponent implements OnInit {
 
   displayChartDinamic: boolean = true;
   displayChartPieCategoria: boolean = true;
-  displayChartPieTipoAndCards: boolean = true;
+  displayChartPieTipo: boolean = true;
+  displayCards: boolean = true;
   displayCrudLancamentos: boolean = true;
-
-  totaisReceitas: any[] = [];
-  totaisDespesas: any[] = [];
-
-  saldo: number = 0.0;
-  rendimentos: number = 0.0;
-  receitas: number = 0.0;
-  despesas: number = 0.0;
   displaySpinner: boolean = false;
-  pessoa: Pessoa;
-  ano: number = 2020;
+
+  receitasPieCategoria: any[] = [];
+  despesasPieCategoria: any[] = [];
+  receitasPieTipo: number = 0.0;
+  despesasPieTipo: number = 0.0;
+  saldoCard: number = 0.0;
+  rendimentosCard: number = 0.0;
+  receitasCard: number = 0.0;
+  despesasCard: number = 0.0;
+  ano: number = new Date().getUTCFullYear();
 
   pieChartData: any[] = [];
   pieChartLabels: any[] = [];
@@ -43,19 +36,17 @@ export class DashboardPessoaComponent implements OnInit {
   constructor(
     private dashboardService: DashboardService,
     public auth: AuthService,
-    private pessoasService: PessoasService,
     private toastyService: ToastService,
     public apoioService: ApoioService,
-    private usuarioService: UsuariosService,
-    private handler: ErrorHandlerService,
     private router: Router
   ) { }
 
   ngOnInit() {
-    let retorno = this.apoioService.getIdUsuarioStorage();
-    const idUsuario: number = +retorno;
-    if (idUsuario != null && idUsuario != undefined && idUsuario > 0) {
-      this.buscarPessoaPorUsuarioById(idUsuario);
+    let retorno = this.apoioService.getIdPessoaStorage();
+    const idPessoa: number = +retorno;
+    if (idPessoa != null && idPessoa != undefined && idPessoa > 0) {
+      this.configurarCharts(idPessoa);
+      this.displayCrudLancamentos = false;
     } else {
       this.router.navigate(['']);
       this.toastyService.showWarn("Pessoa não encontrada no sistema");
@@ -66,25 +57,6 @@ export class DashboardPessoaComponent implements OnInit {
     if (retorno == true) {
       location.reload();
     }
-  }
-
-  buscarPessoaPorUsuarioById(id: number) {
-    this.pessoasService.buscarPorUsuarioId(id)
-      .then(response => {
-        if (response != null) {
-          this.configurarCharts(response.id);
-          this.pessoa = response;
-          this.displayCrudLancamentos = false;
-        }
-      })
-      .catch(error => {
-        if (error.status === 404) {
-          this.toastyService.showWarn("Pessoa não encontrada no sistema");
-          this.router.navigate(['']);
-        } else {
-          this.handler.handle(error);
-        }
-      });
   }
 
   configurarCharts(id: number) {
@@ -109,19 +81,18 @@ export class DashboardPessoaComponent implements OnInit {
     this.dashboardService.estatisticasLencamentosPorPessoaById(id)
       .then(dados => {
         if (dados.length > 0) {
-          console.log(dados);
           for (let i = 0; i < dados.length; i++) {
             if (dados[i].tipo == "RECEITA" && dados[i].total > 0) {
-              this.receitas = dados[i].total;
+              this.receitasCard += dados[i].total;
             }
             if (dados[i].tipo == "DESPESA" && dados[i].total > 0) {
-              this.despesas = dados[i].total;
+              this.despesasCard += dados[i].total;
             }
           }
-          this.saldo = (this.receitas - this.despesas);
+          this.saldoCard = (this.receitasCard - this.despesasCard);
         }
         this.displayChartPieCategoria = false;
-        this.displayChartPieTipoAndCards = false;
+        this.displayCards = false;
       })
       .catch(erro => {
         console.log(erro);
@@ -132,17 +103,23 @@ export class DashboardPessoaComponent implements OnInit {
     this.dashboardService.estatisticasLancamentosPorMes(ano, idPessoa)
       .then(response => {
         if (response.length > 0) {
+          let data = new Date();
           for (let i = 0; i < response.length; i++) {
             if (response[i].tipo == "RECEITA") {
-              this.totaisReceitas.push(response[i].total);
+              this.receitasPieCategoria.push(response[i].total);
             } else {
-              this.totaisDespesas.push(response[i].total);
+              this.despesasPieCategoria.push(response[i].total);
+            }
+            if (data.getMonth() + 1 == response[i].mes) {
+              if (response[i].tipo == "RECEITA" && response[i].total > 0) {
+                this.receitasPieTipo += response[i].total;
+              } else {
+                this.despesasPieTipo += response[i].total;
+              }
             }
           }
-        } else {
-          this.totaisDespesas = [];
-          this.totaisReceitas = [];
         }
+        this.displayChartPieTipo = false;
         this.displayChartDinamic = false;
       })
       .catch(erro => {

@@ -1,0 +1,136 @@
+<app-spinner [hidden]="!displaySpinner"></app-spinner>
+<app-toast></app-toast>
+<app-navbar></app-navbar>
+<div class="ui-g">
+    <h1 class="ui-g-12">{{pessoa.id==0?'Adicionar ':'Edição de '}}pessoa</h1>
+    <div class="ui-g-12">
+        <form class="ui-g-12" autocomplete="off" #f="ngForm" autocomplete="off" (ngSubmit)="gerenciarPersistencia(f)">
+            <div class="ui-g-12 ui-md-4 ui-fluid">
+                <h1>Usuario</h1>
+                <div class="ui-g-12">
+                    <span class="ui-float-label">
+                        <input pInputText type="text" name="email" [(ngModel)]="pessoa.usuario.email" required
+                            maxlength="50" [disabled]="pessoa.id>0">
+                        <label>E-mail</label>
+                    </span>
+                    <small>Campo obrigatório</small>
+                </div>
+                <div class="ui-g-12 ui-md-6" [hidden]="pessoa.id>0">
+                    <span class="ui-float-label">
+                        <input pPassword type="password" name="senha" [(ngModel)]="pessoa.usuario.senha" maxlength="12"
+                            [feedback]="false">
+                        <label>Senha</label>
+                    </span>
+                    <small>Campo obrigatório</small>
+                </div>
+                <div class="ui-g-12 ui-md-6" [hidden]="pessoa.id>0">
+                    <span class="ui-float-label">
+                        <input pPassword type="password" name="confirmarSenha" [(ngModel)]="confirmarSenha"
+                            maxlength="12" [feedback]="false">
+                        <label>Confirmar senha</label>
+                    </span>
+                    <small>Campo obrigatório</small>
+                </div>
+                <div class="ui-g-12 ui-md-6" [hidden]="pessoa.id==0">
+                    <a mat-button type="button">Alterar senha</a>
+                </div>
+            </div>
+            <div class="ui-g-12 ui-md-4 ui-fluid">
+                <h1>Dados pessoais</h1>
+                <div class="ui-g-12 ui-md-8">
+                    <span class="ui-float-label">
+                        <input pInputText type="text" name="nome" [(ngModel)]="pessoa.nome" required maxlength="30">
+                        <label>Nome</label>
+                    </span>
+                    <small>Campo obrigatório</small>
+                </div>
+                <div class="ui-g-12 ui-md-4">
+                    <span class="ui-float-label">
+                        <p-inputMask mask="999.999.999-99" name="cpf" [(ngModel)]="pessoa.cpf" required></p-inputMask>
+                        <label>CPF</label>
+                    </span>
+                    <small>Campo obrigatório</small>
+                </div>
+
+            </div>
+            <div class="ui-g-12 ui-md-4 ui-fluid">
+                <h1>Endereço</h1>
+                <div class="ui-g-6 ui-md-4">
+                    <div class="ui-inputgroup">
+                        <span class="ui-float-label">
+                            <input pInputText type="text" name="cep" [(ngModel)]="pessoa.endereco.cep">
+                            <label>CEP</label>
+                        </span>
+                        <button type="button" icon="pi pi-search" (click)="getEnderecoPorCep(pessoa.endereco.cep)"
+                            pButton></button>
+                    </div>
+                    <small>Campo opcional</small>
+                </div>
+                <div class="ui-g-6 ui-md-2">
+                    <span class="ui-float-label">
+                        <input pInputText type="text" name="uf" [(ngModel)]="pessoa.endereco.uf" disabled
+                            maxlength="30">
+                        <label>UF</label>
+                    </span>
+                    <small>Opcional</small>
+                </div>
+                <div class="ui-g-6">
+                    <span class="ui-float-label">
+                        <input pInputText type="text" name="cidade" [(ngModel)]="pessoa.endereco.cidade" disabled
+                            maxlength="30">
+                        <label>Cidade</label>
+                    </span>
+                    <small>Campo opcional</small>
+                </div>
+                <div class="ui-g-6">
+                    <span class="ui-float-label">
+                        <input pInputText type="text" name="bairro" [(ngModel)]="pessoa.endereco.bairro" disabled
+                            maxlength="30">
+                        <label>Bairro</label>
+                    </span>
+                    <small>Campo opcional</small>
+                </div>
+                <div class="ui-g-6">
+                    <span class="ui-float-label">
+                        <input pInputText type="text" name="logradouro" [(ngModel)]="pessoa.endereco.logradouro"
+                            disabled maxlength="30">
+                        <label>Logradouro</label>
+                    </span>
+                    <small>Campo opcional</small>
+                </div>
+                <div class="ui-g-6">
+                    <span class="ui-float-label">
+                        <input pInputText type="text" name="complemento" [(ngModel)]="pessoa.endereco.complemento"
+                            maxlength="30">
+                        <label>Complemento</label>
+                    </span>
+                    <small>Campo opcional</small>
+                </div>
+                <div class="ui-g-6">
+                    <span class="ui-float-label">
+                        <input pInputText type="text" name="numero" [(ngModel)]="pessoa.endereco.numero" maxlength="30">
+                        <label>Número</label>
+                    </span>
+                    <small>Opcional</small>
+                </div>
+            </div>
+            <div class="ui-g-12" [hidden]="pessoa.id==0">
+                <app-pessoa-contato-form [contatos]="pessoa.contatos"></app-pessoa-contato-form>
+            </div>
+            <div class="ui-g-12">
+                <a mat-button type="button" [disabled]="!f.valid"
+                    (click)="gerenciarPersistencia(f)">{{pessoa.id==0?'Adicionar ':'Edição'}}</a>
+                <a mat-button type="button" (click)="cancelar()">Cancelar</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<p-confirmDialog header="Alerta" icon="pi pi-exclamation-triangle" #confirmacao>
+    <p-footer>
+        <button pButton class="ui-button-rounded ui-button-success" type="button" icon="pi pi-check" label="Sim"
+            (click)="confirmacao.accept()"></button>
+        <button pButton class="ui-button-rounded ui-button-danger" type="button" icon="pi pi-times" label="Não"
+            (click)="confirmacao.reject()"></button>
+    </p-footer>
+</p-confirmDialog>

@@ -12,81 +12,90 @@ import { SegurancaComponent } from './seguranca/seguranca.component';
 import { LoginFormComponent } from './seguranca/login-form/login-form.component'
 import { NaoAutorizadoComponent } from './core/nao-autorizado.component';
 import { PaginaNaoEncontradaComponent } from './core/pagina-nao-encontrada.component';
-import { UsuarioCadastroComponent } from './seguranca/usuario-cadastro/usuario-cadastro.component';
 import { RelatoriosComponent } from './relatorios/relatorios.component';
 import { RelatorioLancamentosComponent } from './relatorios/relatorio-lancamentos/relatorio-lancamentos.component';
 import { HomeComponent } from './default/home/home.component';
 import { UsuariosComponent } from './usuarios/usuarios.component';
+import { SegurancaPessoaFormComponent } from './seguranca/seguranca-pessoa-form/seguranca-pessoa-form.component';
 
 const routes: Routes = [
-  { 
-    path: 'usuarios', 
-    component:  UsuariosComponent, 
+  {
+    path: 'usuarios',
+    component: UsuariosComponent,
     canActivate: [AuthGuard],
-    data: { roles:['ROLE_ADMINISTRADOR']},
+    data: { roles: ['ROLE_ADMINISTRADOR'] },
   },
-  { 
-    path: 'lancamentos', 
-    component:  LancamentosComponent, 
+  {
+    path: 'lancamentos',
+    component: LancamentosComponent,
     canActivate: [AuthGuard],
-    data: { roles:['ROLE_ADMINISTRADOR']}
+    data: { roles: ['ROLE_ADMINISTRADOR'] }
   },
-  { 
-    path: 'pessoas', 
-    component:  PessoasComponent, 
+  {
+    path: 'pessoas',
+    component: PessoasComponent,
     canActivate: [AuthGuard],
-    data: { roles:['ROLE_ADMINISTRADOR']}
+    data: { roles: ['ROLE_ADMINISTRADOR'] }
   },
-  { path: 'dashboard', 
-    component:  DashboardComponent,
+  {
+    path: 'dashboard',
+    component: DashboardComponent,
     canActivate: [AuthGuard],
-    data: { roles:['ROLE_ADMINISTRADOR', 'ROLE_PESSOA']},
+    data: { roles: ['ROLE_ADMINISTRADOR', 'ROLE_PESSOA'] },
     children: [
       {
-        path: 'admin', 
-        component:  DashboardAdminComponent, 
+        path: 'admin',
+        component: DashboardAdminComponent,
         canActivate: [AuthGuard],
-        data: { roles:['ROLE_ADMINISTRADOR']},
+        data: { roles: ['ROLE_ADMINISTRADOR'] },
       },
       {
-        path: 'pessoa', 
-        component:  DashboardPessoaComponent, 
+        path: 'pessoa',
+        component: DashboardPessoaComponent,
         canActivate: [AuthGuard],
-        // data: { roles:['ROLE_PESSOA']},
+        data: { roles: ['ROLE_PESSOA'] },
       }
     ]
   },
-  { path: 'relatorios', 
-    component:  RelatoriosComponent, 
+  {
+    path: 'relatorios',
+    component: RelatoriosComponent,
     canActivate: [AuthGuard],
-    data: { roles:['ROLE_ADMINISTRADOR']},
+    data: { roles: ['ROLE_ADMINISTRADOR'] },
     children: [
-      { 
-        path: 'lancamentos', 
+      {
+        path: 'lancamentos',
         component: RelatorioLancamentosComponent,
         canActivate: [AuthGuard],
-        data: { roles:['ROLE_ADMINISTRADOR']}
+        data: { roles: ['ROLE_ADMINISTRADOR'] }
       },
     ]
-  }, 
-  { path: 'seguranca', 
+  },
+  {
+    path: 'seguranca',
     component: SegurancaComponent,
     children: [
-      { 
-        path: 'login-autenticacao', 
-        component: LoginFormComponent, 
+      {
+        path: 'login-autenticacao',
+        component: LoginFormComponent,
       },
-      { 
-        path: 'usuario-cadastro', 
-        component: UsuarioCadastroComponent, 
+      {
+        path: 'pessoa/adicionar',
+        component: SegurancaPessoaFormComponent,
+      },
+      {
+        path: 'pessoa/editar',
+        component: SegurancaPessoaFormComponent,
+        data: { roles: ['ROLE_PESSOA'] }
       }
     ]
   },
-  { path: '',  component:  DefaultComponent, 
-      children: [
-        { path: '' , component: HomeComponent }
-      ] 
-    },
+  {
+    path: '', component: DefaultComponent,
+    children: [
+      { path: '', component: HomeComponent }
+    ]
+  },
   { path: '', redirectTo: '', pathMatch: 'full' },
   { path: 'nao-autorizado', component: NaoAutorizadoComponent },
   { path: 'pagina-nao-encontrada', component: PaginaNaoEncontradaComponent },

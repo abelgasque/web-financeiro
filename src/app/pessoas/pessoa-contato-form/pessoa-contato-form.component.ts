@@ -9,7 +9,7 @@ import { NgForm } from '@angular/forms';
 })
 export class PessoaContatoFormComponent implements OnInit {
 
-  @Input() pessoa: Pessoa;
+  @Input() contatos: Array<Contato>;
   displayFormContato: boolean = false;
   contatoForm = new Contato();
   contatoIndex: number;
@@ -19,25 +19,26 @@ export class PessoaContatoFormComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  novoContato(form: NgForm){
+  novoContato(form: NgForm) {
     form.resetForm();
     this.contatoForm = new Contato();
-    this.contatoIndex = this.pessoa.contatos.length;
+    this.contatoIndex = this.contatos.length;
     this.displayFormContato = true;
   }
 
   prepararEdicaoContato(contato: Contato, index: number) {
     this.contatoForm = this.clonarContato(contato);
     this.contatoIndex = index;
+    this.displayFormContato = true;
   }
 
   confirmarContato(form: NgForm) {
-    this.pessoa.contatos.push(this.clonarContato(this.contatoForm));
+    this.contatos[this.contatoIndex] = this.clonarContato(this.contatoForm);
     form.reset();
   }
 
   removerContato(index: number) {
-    this.pessoa.contatos.splice(index, 1);
+    this.contatos.splice(index, 1);
   }
 
   clonarContato(contato: Contato): Contato {

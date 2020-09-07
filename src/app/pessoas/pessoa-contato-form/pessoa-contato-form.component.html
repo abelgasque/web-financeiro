@@ -1,10 +1,10 @@
 <div class="ui-g">
-    <p-table [value]="pessoa.contatos" [responsive]="true">
-        <ng-template pTemplate="caption">  
+    <p-table [value]="contatos" [responsive]="true" [paginator]="true" [rowsPerPageOptions]="[5,10,25,50]"
+        [rows]="10">
+        <ng-template pTemplate="caption">
             <div class="ui-helper-clearfix" style="text-align: center">
-                <button type="button" pButton class="ui-button-rounded"
-                pButton iconPos="left" style="float:right" icon="pi pi-plus" label="Novo"
-                (click)="novoContato(formContato)"></button>
+                <button type="button" pButton class="ui-button-rounded" pButton iconPos="left" style="float:right"
+                    icon="pi pi-plus" label="Novo" (click)="novoContato(formContato)"></button>
             </div>
         </ng-template>
         <ng-template pTemplate="header">
@@ -21,18 +21,18 @@
                 <td>{{rowData.email}}</td>
                 <td>{{rowData.telefone}}</td>
                 <td class="opcoes">
-                    <button class="ui-button-success ui-button-rounded"
-                    pButton type="button" icon="pi pi-pencil" 
-                    (click)="prepararEdicaoContato(rowData, rowIndex)"></button>
-                    <button class="ui-button-success ui-button-rounded"
-                    pButton icon="pi pi-trash" type="button"
-                    (click)="removerContato(rowIndex)"></button>
+                    <button class="ui-button-success ui-button-rounded" pButton type="button" icon="pi pi-pencil"
+                        (click)="prepararEdicaoContato(rowData, rowIndex)"></button>
+                    <button class="ui-button-success ui-button-rounded" pButton icon="pi pi-trash" type="button"
+                        (click)="removerContato(rowIndex)"></button>
                 </td>
             </tr>
         </ng-template>
         <ng-template pTemplate="emptymessage">
             <tr>
-                <td><h2>Sem dados para listar.</h2></td>
+                <td>
+                    <h2>Sem dados para listar.</h2>
+                </td>
                 <td></td>
                 <td></td>
                 <td></td>
@@ -42,38 +42,37 @@
 </div>
 
 <p-dialog [(visible)]="displayFormContato" [modal]="true" [style]="{width: '50%'}" [baseZIndex]="10000"
-[header]="contatoForm.id === 0 ? 'Novo contato' : 'Edição de contato'">
-    <form class="ui-g-12 ui-fluid" autocomplete="off" 
-    #formContato="ngForm" (ngSubmit)="confirmarContato(formContato)">
-        <div class="ui-g-12 ui-md-8">
-            <span class="ui-float-label">
-                <input pInputText type="text" name="nome" 
-                [(ngModel)]="contatoForm.nome" #nome="ngModel" required> 
-                <label>Nome</label>
-            </span>
-            <small>Campo obrigatório</small>
-        </div>
-        <div class="ui-g-12 ui-md-4">
-            <span class="ui-float-label">
-                <p-inputMask mask="(99) 9999-9999" name="telefone" 
-                [(ngModel)]="contatoForm.telefone" #telefone="ngModel" required></p-inputMask>
-                <label>Telefone</label>
-            </span>
-            <small>Campo obrigatório</small>
+    [header]="contatoForm.id === 0 ? 'Novo contato' : 'Edição de contato'" [draggable]="false">
+    <form class="ui-g-12" autocomplete="off" #formContato="ngForm" (ngSubmit)="confirmarContato(formContato)">
+        <div class="ui-g-12 ui-fluid">
+            <div class="ui-g-12 ui-md-8">
+                <span class="ui-float-label">
+                    <input pInputText type="text" name="nome" [(ngModel)]="contatoForm.nome" #nome="ngModel" required>
+                    <label>Nome</label>
+                </span>
+                <small>Campo obrigatório</small>
+            </div>
+            <div class="ui-g-12 ui-md-4">
+                <span class="ui-float-label">
+                    <p-inputMask mask="(99) 9999-9999" name="telefone" [(ngModel)]="contatoForm.telefone"
+                        #telefone="ngModel" required></p-inputMask>
+                    <label>Telefone</label>
+                </span>
+                <small>Campo obrigatório</small>
+            </div>
+            <div class="ui-g-12">
+                <span class="ui-float-label">
+                    <input pInputText type="text" name="email" [(ngModel)]="contatoForm.email" #email="ngModel"
+                        required>
+                    <label>E-mail</label>
+                </span>
+                <small>Campo obrigatório</small>
+            </div>
         </div>
         <div class="ui-g-12">
-            <span class="ui-float-label">
-                <input pInputText type="text" name="email" 
-                [(ngModel)]="contatoForm.email" 
-                #email="ngModel" required> 
-                <label>E-mail</label>
-            </span>
-            <small>Campo obrigatório</small>
-        </div>
-        <div class="ui-g-12">
-            <button pButton type="button" label="Salvar" [disabled]="!formContato.valid"
-            (click)="confirmarContato(formContato)"></button>
+            <button pButton type="button" [label]="contatoForm.id==0?'Adicionar':'Editar'"
+                [disabled]="!formContato.valid" (click)="confirmarContato(formContato)"></button>
             <button pButton type="button" label="Cancelar" (click)="displayFormContato= false"></button>
         </div>
-    </form>    
+    </form>
 </p-dialog>

@@ -1,12 +1,2 @@
 <app-toast></app-toast>
-<app-spinner [hidden]="!displaySpinner"></app-spinner>
-<div class="body ui-g" fxLayout="row" fxLayoutAlign="center center" >
-    <mat-card class="card ui-g-12" fxLayoutAlign="center center">
-        <router-outlet></router-outlet>
-    </mat-card>
-    <div class=" ui-g-12" fxLayoutAlign="center center">
-        <a mat-button [routerLink]="['']" routerLinkActive="active-link">
-            Voltar ao inicio
-        </a>
-    </div>
-</div>
+<router-outlet></router-outlet>

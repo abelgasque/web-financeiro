@@ -1,5 +1,15 @@
-.form{
-    margin-top: 25px;
+.ui-g{
+    height: 100% !important;
+    width:  100% !important;
+    background-image: url(../../../assets/img/fundo-login.png);
+    background-repeat: no-repeat;
+}
+
+.box{
+    background:rgba(0,0,0,0.5);
+    color: #fff;
+    width: 350px;
+    height: 300px;
 }
 
 .img{
@@ -10,21 +20,16 @@
     width: 100px;
 }
 
+
 .login{
     font-size:30px;
     font-weight: bold;
 }
 
 a{
-    color: #fff;
-    text-align: center;
+    color: #fff;  
 }
 
 a:hover{
-    color: #fff;
-}
-
-ul{
-    text-align: center;
-    list-style: none;
+    color: #fff;    
 }

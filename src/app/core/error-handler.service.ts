@@ -10,10 +10,7 @@ import { ToastService } from '../shared/components/toast/toast.service';
 })
 export class ErrorHandlerService {
 
-  constructor(
-    private toasty: ToastService,
-    private router: Router
-  ) { }
+  constructor(private toasty: ToastService) { }
 
   handle(errorResponse: any) {
     let msg: string;
@@ -34,6 +31,8 @@ export class ErrorHandlerService {
 
       console.error('Ocorreu um erro', errorResponse);
 
+    } else if (errorResponse.status === 404){
+      msg = errorResponse.error.message;
     } else {
       msg = 'Erro ao processar serviço remoto. Tente novamente.';
       console.log('Ocorreu um erro', errorResponse);

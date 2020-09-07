@@ -3,42 +3,40 @@
 <div class="ui-g">
     <div class="ui-g-12 ui-fluid">
         <div class="ui-g-12 ui-md-4">
-            <mat-card [style.backgroundColor]="this.saldo < 0 ? 'rgb(238, 160, 160)': 'rgb(199, 245, 199)'">
-                <app-cards-header-dashboard *ngIf="!displayChartPieTipoAndCards" [title]="'Rendimentos'"
-                    [valor]="saldo"></app-cards-header-dashboard>
-                <p-progressSpinner *ngIf="displayChartPieTipoAndCards" [style]="{width: '55px', height: '55px'}"
-                    strokeWidth="10" animationDuration=".5s">
+            <mat-card [style.backgroundColor]="this.saldoCard < 0 ? 'rgb(238, 160, 160)': 'rgb(199, 245, 199)'">
+                <app-cards-header-dashboard *ngIf="!displayCards" [title]="'Rendimentos'" [valor]="saldoCard">
+                </app-cards-header-dashboard>
+                <p-progressSpinner *ngIf="displayCards" [style]="{width: '55px', height: '55px'}" strokeWidth="10"
+                    animationDuration=".5s">
                 </p-progressSpinner>
             </mat-card>
         </div>
         <div class="ui-g-12 ui-md-4">
             <mat-card class="cardReceita">
-                <app-cards-header-dashboard *ngIf="!displayChartPieTipoAndCards" [title]="'Receitas'"
-                    [valor]="receitas">
+                <app-cards-header-dashboard *ngIf="!displayCards" [title]="'Receitas'" [valor]="receitasCard">
                 </app-cards-header-dashboard>
-                <p-progressSpinner *ngIf="displayChartPieTipoAndCards" [style]="{width: '55px', height: '55px'}"
-                    strokeWidth="10" animationDuration=".5s">
+                <p-progressSpinner *ngIf="displayCards" [style]="{width: '55px', height: '55px'}" strokeWidth="10"
+                    animationDuration=".5s">
                 </p-progressSpinner>
             </mat-card>
         </div>
         <div class="ui-g-12 ui-md-4">
             <mat-card class="cardDespesa">
-                <app-cards-header-dashboard *ngIf="!displayChartPieTipoAndCards" [title]="'Despesas'"
-                    [valor]="despesas">
+                <app-cards-header-dashboard *ngIf="!displayCards" [title]="'Despesas'" [valor]="despesasCard">
                 </app-cards-header-dashboard>
-                <p-progressSpinner *ngIf="displayChartPieTipoAndCards" [style]="{width: '55px', height: '55px'}"
-                    strokeWidth="10" animationDuration=".5s">
+                <p-progressSpinner *ngIf="displayCards" [style]="{width: '55px', height: '55px'}" strokeWidth="10"
+                    animationDuration=".5s">
                 </p-progressSpinner>
             </mat-card>
         </div>
     </div>
     <div class="ui-g-12 ui-md-6 ui-fluid">
         <mat-card class="cards-big-charts">
-            <app-pie-lancamentos-tipo *ngIf="!displayChartPieTipoAndCards" [title]="'Total lançamentos por tipo'"
-                [receitas]="receitas" [despesas]="despesas">
+            <app-pie-lancamentos-tipo *ngIf="!displayChartPieTipo" [title]="'Lançamentos mensal por tipo'"
+                [receitas]="receitasPieTipo" [despesas]="despesasPieTipo">
             </app-pie-lancamentos-tipo>
-            <p-progressSpinner *ngIf="displayChartPieTipoAndCards" [style]="{width: '55px', height: '55px'}"
-                strokeWidth="10" animationDuration=".5s">
+            <p-progressSpinner *ngIf="displayChartPieTipo" [style]="{width: '55px', height: '55px'}" strokeWidth="10"
+                animationDuration=".5s">
             </p-progressSpinner>
         </mat-card>
     </div>
@@ -55,7 +53,8 @@
     <div class="ui-g-12">
         <mat-card class="cards-big-charts">
             <app-big-chart-lancamentos-mesal *ngIf="!displayChartDinamic" [title]="'Lançamentos mensais '+ano"
-                [ano]="ano" [receitas]="totaisReceitas" [despesas]="totaisDespesas"></app-big-chart-lancamentos-mesal>
+                [ano]="ano" [receitas]="receitasPieCategoria" [despesas]="despesasPieCategoria">
+            </app-big-chart-lancamentos-mesal>
             <p-progressSpinner *ngIf="displayChartDinamic" [style]="{width: '55px', height: '55px'}" strokeWidth="10"
                 animationDuration=".5s">
             </p-progressSpinner>
@@ -63,7 +62,7 @@
     </div>
     <div class="ui-g-12">
         <mat-card>
-            <app-dashboard-crud-lancamentos *ngIf="!displayCrudLancamentos" [pessoa]="pessoa"
+            <app-dashboard-crud-lancamentos *ngIf="!displayCrudLancamentos"
                 (retornoPersistencia)="retornoCrudLancamento($event)">
             </app-dashboard-crud-lancamentos>
             <p-progressSpinner *ngIf="displayCrudLancamentos" [style]="{width: '55px', height: '55px'}" strokeWidth="10"

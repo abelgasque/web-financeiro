@@ -46,6 +46,9 @@ import { PessoaContatoFormComponent } from './pessoa-contato-form/pessoa-contato
   providers:[
     ApoioService,
     ConfirmationService
+  ],
+  exports:[
+    PessoaContatoFormComponent
   ]
 })
 export class PessoasModule { }

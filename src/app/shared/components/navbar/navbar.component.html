@@ -21,7 +21,7 @@
 </mat-toolbar>
 
 <mat-menu #menu="matMenu" yPosition="above">
-    <div class="ui-g-12 ui-fluid header" mat-menu-item>
+    <div class="ui-g-12 ui-fluid header" mat-menu-item routerLinkActive="select" (click)="gerenciarConta()">
         <img class="img center" src="../../../../assets/img/usuario.jpg">
         <h4 class="people">{{ auth.jwtPayload?.nome }}</h4>
         <h4 class="people">{{ auth.jwtPayload?.user_name }}</h4>
@@ -73,11 +73,11 @@
             <mat-divider></mat-divider>
             <mat-list-option [hidden]="!gerenciarBtnNavbar">
                 <mat-icon mat-list-icon>login</mat-icon>
-                <a href="javascript:;" (click)="logout()">Logout</a>
+                <a routerLinkActive="select" (click)="logout()">Logout</a>
             </mat-list-option>
             <mat-list-option [hidden]="gerenciarBtnNavbar">
                 <mat-icon mat-list-icon>login</mat-icon>
-                <a href="javascript:;" [routerLink]="['/seguranca','login-autenticacao']">Login</a>
+                <a [routerLink]="['/seguranca','login-autenticacao']" routerLinkActive="select">Login</a>
             </mat-list-option>
         </mat-selection-list>
     </p-scrollPanel>

@@ -1,43 +1,46 @@
 <app-spinner [hidden]="!displaySpinner"></app-spinner>
-<div fxLayout="row" fxLayoutAlign="center center">
-    <img class="img" src="../../../assets/img/box-login.png">
-    <span class="login">Login</span>
-</div>
-<form class="form" #f="ngForm" autocomplete="off" (ngSubmit)="validar()">
-    <div class="ui-g-12 ui-fluid">
-        <span class="ui-float-label">
-            <input pInputText type="text" name="email" [(ngModel)]="usuario.email"
-                minlength="5" maxlength="50" required> 
-            <label>E-mail</label>
-        </span>
-        <small>Exemplo@dominio.com</small>
+<div class="ui-g" fxLayout="row" fxLayoutAlign="center center">
+    <div class="box">
+        <div fxLayout="row" fxLayoutAlign="center center">
+            <img class="img" src="../../../assets/img/box-login.png">
+            <span class="login">Login</span>
+        </div>
+        <form #f="ngForm" autocomplete="off" (ngSubmit)="validar()">
+            <div class="ui-g-12 ui-fluid">
+                <span class="ui-float-label">
+                    <input pInputText type="text" name="email" [(ngModel)]="usuario.email" minlength="5" maxlength="50"
+                        required>
+                    <label>E-mail</label>
+                </span>
+                <small>Exemplo@dominio.com</small>
+            </div>
+            <div class="ui-g-12 ui-fluid">
+                <span class="ui-float-label">
+                    <input pInputText type="password" name="senha" [(ngModel)]="usuario.senha" minlength="5"
+                        maxlength="50" required>
+                    <label>Senha</label>
+                </span>
+            </div>
+            <div class="ui-g-12 ui-fluid">
+                <button pButton type="submit" label="Entrar" [disabled]="!f.valid"></button>
+            </div>
+        </form>
+        <div class="ui-g-12 ui-fluid">
+            <!-- <div class="ui-g-6">
+                <a mat-button>
+                    Perdeu sua senha?
+                </a>
+            </div> -->
+            <div class="ui-g-6">
+                <a mat-button [routerLink]="['/seguranca','pessoa', 'adicionar']" routerLinkActive="select">
+                    Cadastrar-se
+                </a>
+            </div>
+        </div>
     </div>
-    <div class="ui-g-12 ui-fluid">
-        <span class="ui-float-label">
-            <input pInputText type="password" name="senha" [(ngModel)]="usuario.senha"
-                minlength="5" maxlength="50" required> 
-            <label>Senha</label>
-        </span>
-    </div>
-    <div class="ui-g-12 ui-fluid">
-        <button pButton type="submit" label="Entrar"
-        [disabled]="!f.valid"></button>
-    </div>
-</form>
-<div class="ui-g-12 ui-fluid">
-    <!-- <div class="ui-g-6">
-        <a mat-button>
-            Perdeu sua senha?
+    <div class=" ui-g-12" fxLayoutAlign="center center">
+        <a mat-button [routerLink]="['']" routerLinkActive="active-link">
+            Voltar ao inicio
         </a>
-    </div> -->
-    <div class="ui-g-6">
-        <button mat-button (click)="display=true">
-            Cadastrar-se
-        </button>
     </div>
 </div>
-
-<p-dialog [visible]="display" [modal]="true" [closable]="false" [showHeader]="false"
-[style]="{width: '40%'}" [draggable]="false">
-    <app-usuario-cadastro (retornoPersistencia)="display=$event"></app-usuario-cadastro>
-</p-dialog>

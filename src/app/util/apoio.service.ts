@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import * as moment from 'moment';
 
 @Injectable({
   providedIn: 'root'
@@ -7,6 +8,22 @@ import { HttpClient } from '@angular/common/http';
 export class ApoioService {
 
   constructor(private http: HttpClient) { }
+
+  formatarDataStringPtBr(data: string) {
+    return moment(data).format("DD/MM/YYYY");
+  }
+
+  armazenarIdPessoaStorage(idPessoa: number) {
+    localStorage.setItem("idPessoa", idPessoa.toString());
+  }
+
+  limparIdPessoaStorage() {
+    localStorage.removeItem("idPessoa");
+  }
+
+  getIdPessoaStorage() {
+    return localStorage.getItem("idPessoa");
+  }
 
   armazenarIdUsuarioStorage(idUsuario: number) {
     localStorage.setItem("idUsuario", idUsuario.toString());

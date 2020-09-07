@@ -3,6 +3,7 @@ import { AuthService } from 'src/app/seguranca/auth.service';
 import { LogoutService } from 'src/app/seguranca/logout.service';
 import { ErrorHandlerService } from 'src/app/core/error-handler.service';
 import { Router } from '@angular/router';
+import { ApoioService } from 'src/app/util/apoio.service';
 
 @Component({
   selector: 'app-navbar',
@@ -20,13 +21,16 @@ export class NavbarComponent implements OnInit {
     public auth: AuthService,
     private logoutService: LogoutService,
     private errorHandler: ErrorHandlerService,
-    private router: Router
+    private router: Router,
+    private apoioService: ApoioService
   ) { 
     this.get();
   }
 
-  ngOnInit(): void {
-    
+  ngOnInit(): void {}
+
+  gerenciarConta(){
+    this.router.navigate(['/seguranca','pessoa','editar']);
   }
 
   get(){

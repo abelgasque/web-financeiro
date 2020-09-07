@@ -10,6 +10,8 @@ import { MatCardModule } from '@angular/material/card';
 import { InputTextModule } from 'primeng/inputtext';
 import { PasswordModule } from 'primeng/password';
 import { ButtonModule } from 'primeng/button';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { ConfirmationService } from 'primeng/api';
 
 import { AuthGuard } from './auth.guard'
 import { environment } from '../../environments/environment';
@@ -17,9 +19,10 @@ import { LoginFormComponent } from './login-form/login-form.component';
 import { SegurancaComponent } from './seguranca.component';
 import { SharedModule } from '../shared/shared.module';
 import { LogoutService } from './logout.service';
-import { UsuarioCadastroComponent } from './usuario-cadastro/usuario-cadastro.component';
 import { DialogModule } from 'primeng/dialog';
 import { InputMaskModule } from 'primeng/inputmask';
+import { SegurancaPessoaFormComponent } from './seguranca-pessoa-form/seguranca-pessoa-form.component';
+import { PessoasModule } from '../pessoas/pessoas.module';
 
 export function tokenGetter() {
   return localStorage.getItem("access_token");
@@ -29,7 +32,7 @@ export function tokenGetter() {
   declarations: [
     SegurancaComponent,
     LoginFormComponent,
-    UsuarioCadastroComponent
+    SegurancaPessoaFormComponent
   ],
   imports: [
     CommonModule,
@@ -49,14 +52,17 @@ export function tokenGetter() {
     PasswordModule,
     ButtonModule,
     InputMaskModule,
-    
+    ConfirmDialogModule,
+
     MatCardModule,
-    MatButtonModule,    
-    
+    MatButtonModule,
+
     SharedModule,
-    
+    PessoasModule
+
   ],
   providers: [
+    ConfirmationService,
     LogoutService,
     AuthGuard
   ]

@@ -1,7 +1,6 @@
-import { Component, OnInit, Input, Output, EventEmitter, ViewChild, AfterViewInit } from '@angular/core';
-import { LancamentoFilter, Lancamento, Pessoa } from 'src/app/core/model';
+import { Component, Output, EventEmitter, ViewChild, AfterViewInit } from '@angular/core';
+import { LancamentoFilter, Lancamento } from 'src/app/core/model';
 import { AuthService } from 'src/app/seguranca/auth.service';
-import { NgForm } from '@angular/forms';
 import { CategoriaService } from 'src/app/util/categoria.service';
 import { ToastService } from 'src/app/shared/components/toast/toast.service';
 import { ApoioService } from 'src/app/util/apoio.service';
@@ -9,7 +8,6 @@ import { ConfirmationService, LazyLoadEvent, MenuItem } from 'primeng/api';
 import { LancamentosService } from 'src/app/lancamentos/lancamentos.service';
 import * as moment from 'moment';
 import { Table } from 'primeng/table';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard-crud-lancamentos',
@@ -18,7 +16,6 @@ import { Router } from '@angular/router';
 })
 export class DashboardCrudLancamentosComponent implements AfterViewInit {
 
-  @Input() pessoa = new Pessoa();
   @Output() retornoPersistencia = new EventEmitter<Boolean>();
   @ViewChild('tabela', { static: true }) table: Table;
   lancamentos: any[] = [];
@@ -34,6 +31,7 @@ export class DashboardCrudLancamentosComponent implements AfterViewInit {
   displaySpinner: boolean = false;
   items: MenuItem[];
   aux: number = 0;
+  idPessoa: number;
 
   constructor(
     public auth: AuthService,
@@ -55,26 +53,23 @@ export class DashboardCrudLancamentosComponent implements AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    this.pesquisar();
-  }
-
-  formatarDataTabela(data: string){
-    return moment(data).format("DD/MM/YYYY");
+    this.idPessoa = +this.apoioService.getIdPessoaStorage();
+    if ( this.idPessoa != undefined ||  this.idPessoa != null &&  this.idPessoa > 0) {
+      this.pesquisar();
+    }
   }
 
   pesquisar() {
-    if (this.pessoa.id != undefined || this.pessoa.id != null && this.pessoa.id > 0) {
-      this.lancamentos = [];
-      this.filtro.pessoa = this.pessoa.id;
-      this.lancamentosService.pesquisar(this.filtro)
-        .then(response => {
-          this.filtro.total = response.total;
-          this.lancamentos = response.lancamentos;
-        })
-        .catch(erro => {
-          this.toastyService.showError("Erro ao pesquisar lançamentos!");
-        });
-    }
+    this.lancamentos = [];
+    this.filtro.pessoa =  this.idPessoa;
+    this.lancamentosService.pesquisar(this.filtro)
+      .then(response => {
+        this.filtro.total = response.total;
+        this.lancamentos = response.lancamentos;
+      })
+      .catch(erro => {
+        this.toastyService.showError("Erro ao pesquisar lançamentos!");
+      });
   }
 
   aoMudarPagina(event: LazyLoadEvent) {
@@ -88,8 +83,8 @@ export class DashboardCrudLancamentosComponent implements AfterViewInit {
     this.display = true;
   }
 
-  cancelar(){
-    if(this.aux > 0){
+  cancelar() {
+    if (this.aux > 0) {
       this.retornoPersistencia.emit(true);
     }
     this.display = false;
@@ -97,7 +92,7 @@ export class DashboardCrudLancamentosComponent implements AfterViewInit {
 
   salvar() {
     this.displaySpinner = true;
-    this.lancamento.pessoa = this.pessoa;
+    this.lancamento.pessoa.id =  this.idPessoa;
     this.lancamentosService.salvar(this.lancamento)
       .then(response => {
         this.pesquisar();
@@ -115,7 +110,7 @@ export class DashboardCrudLancamentosComponent implements AfterViewInit {
 
   editar() {
     this.displaySpinner = true;
-    this.lancamento.pessoa = this.pessoa;
+    this.lancamento.pessoa.id =  this.idPessoa;
     this.lancamentosService.editar(this.lancamento)
       .then(response => {
         this.pesquisar();
